@@ -2,16 +2,612 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Subjects</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Subjects | Learning Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --analog: #ef4444;
+            --ai: #8b5cf6;
+            --stats: #f59e0b;
+            --linux: #10b981;
+            --network: #3b82f6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            padding: 4rem 0;
+        }
+
+        .section-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-intro h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .section-intro p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .subject-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .subject-card.analog::before { background: var(--analog); }
+        .subject-card.ai::before { background: var(--ai); }
+        .subject-card.stats::before { background: var(--stats); }
+        .subject-card.linux::before { background: var(--linux); }
+        .subject-card.network::before { background: var(--network); }
+
+        .subject-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-icon {
+            font-size: 3rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .subject-title {
+            flex: 1;
+        }
+
+        .subject-title h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .subject-title .topic-count {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .subject-description {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .subject-highlights {
+            margin-bottom: 2rem;
+        }
+
+        .subject-highlights h4 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .highlight-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .highlight-list li {
+            padding: 0.25rem 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .highlight-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .subject-card.analog .highlight-list li::before { color: var(--analog); }
+        .subject-card.ai .highlight-list li::before { color: var(--ai); }
+        .subject-card.stats .highlight-list li::before { color: var(--stats); }
+        .subject-card.linux .highlight-list li::before { color: var(--linux); }
+        .subject-card.network .highlight-list li::before { color: var(--network); }
+
+        .progress-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-info {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .progress-number {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .progress-bar {
+            background: var(--border);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .subject-card.analog .progress-fill { background: var(--analog); }
+        .subject-card.ai .progress-fill { background: var(--ai); }
+        .subject-card.stats .progress-fill { background: var(--stats); }
+        .subject-card.linux .progress-fill { background: var(--linux); }
+        .subject-card.network .progress-fill { background: var(--network); }
+
+        .subject-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .subject-link:hover {
+            background: var(--primary-dark);
+            transform: translateX(2px);
+        }
+
+        .subject-card.analog .subject-link { background: var(--analog); }
+        .subject-card.ai .subject-link { background: var(--ai); }
+        .subject-card.stats .subject-link { background: var(--stats); }
+        .subject-card.linux .subject-link { background: var(--linux); }
+        .subject-card.network .subject-link { background: var(--network); }
+
+        .subject-card.analog .subject-link:hover { background: #dc2626; }
+        .subject-card.ai .subject-link:hover { background: #7c3aed; }
+        .subject-card.stats .subject-link:hover { background: #d97706; }
+        .subject-card.linux .subject-link:hover { background: #059669; }
+        .subject-card.network .subject-link:hover { background: #2563eb; }
+
+        .overview-stats {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .overview-stats h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-card {
+                padding: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Subjects</h1>
-    <ul>
-        <li><a href="subjects/analog-design/index.html">Analog Design</a></li>
-        <li><a href="subjects/ai-ml/index.html">AI/ML</a></li>
-        <li><a href="subjects/statistics/index.html">Statistics</a></li>
-        <li><a href="subjects/linux/index.html">Linux</a></li>
-        <li><a href="subjects/networking/index.html">Networking</a></li>
-    </ul>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">🎓 Learning Journey</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="subjects.html" class="active">Subjects</a></li>
+                    <li><a href="progress.html">Progress</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="container">
+            <h1>📚 Learning Subjects</h1>
+            <p>Five comprehensive technical subjects, each with 40 detailed weekly topics</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="section-intro">
+                <h2>Structured Learning Path</h2>
+                <p>
+                    Each subject represents a deep dive into critical technical knowledge areas. 
+                    With 40 weekly topics per subject, this journey covers 220 comprehensive learning modules 
+                    designed to build expertise from fundamentals to advanced applications.
+                </p>
+            </div>
+
+            <div class="subjects-grid">
+                <div class="subject-card analog">
+                    <div class="subject-header">
+                        <span class="subject-icon">📡</span>
+                        <div class="subject-title">
+                            <h3>Analog Design</h3>
+                            <div class="topic-count">40 Weekly Topics</div>
+                        </div>
+                    </div>
+                    <p class="subject-description">
+                        Master advanced analog circuit techniques from low-noise amplifiers to high-speed data converters. 
+                        Cover device physics, circuit analysis, and practical design trade-offs in modern CMOS and bipolar technologies.
+                    </p>
+                    <div class="subject-highlights">
+                        <h4>Key Areas:</h4>
+                        <ul class="highlight-list">
+                            <li>Low-noise amplifier design & optimization</li>
+                            <li>ADC/DAC architectures & calibration</li>
+                            <li>RF circuit design & power management</li>
+                            <li>Operational amplifiers & voltage references</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-info">
+                            Progress: <span class="progress-number">1 of 40 topics</span>
+                        </div>
+                        <div class="progress-info">2.5%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 2.5%"></div>
+                    </div>
+                    <a href="subjects/analog-design/index.html" class="subject-link">
+                        Explore Topics →
+                    </a>
+                </div>
+
+                <div class="subject-card ai">
+                    <div class="subject-header">
+                        <span class="subject-icon">🤖</span>
+                        <div class="subject-title">
+                            <h3>AI / Machine Learning</h3>
+                            <div class="topic-count">40 Weekly Topics</div>
+                        </div>
+                    </div>
+                    <p class="subject-description">
+                        Deep dive into modern AI techniques from neural networks to large language models. 
+                        Build both theoretical understanding and practical implementation skills for cutting-edge AI systems.
+                    </p>
+                    <div class="subject-highlights">
+                        <h4>Key Areas:</h4>
+                        <ul class="highlight-list">
+                            <li>Deep learning architectures (CNNs, RNNs, Transformers)</li>
+                            <li>Generative AI & multimodal systems</li>
+                            <li>Mathematical foundations & optimization</li>
+                            <li>MLOps & production deployment</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-info">
+                            Progress: <span class="progress-number">0 of 40 topics</span>
+                        </div>
+                        <div class="progress-info">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <a href="subjects/ai-ml/index.html" class="subject-link">
+                        Explore Topics →
+                    </a>
+                </div>
+
+                <div class="subject-card stats">
+                    <div class="subject-header">
+                        <span class="subject-icon">📊</span>
+                        <div class="subject-title">
+                            <h3>Statistics</h3>
+                            <div class="topic-count">40 Weekly Topics</div>
+                        </div>
+                    </div>
+                    <p class="subject-description">
+                        Master statistical thinking from probability foundations to advanced inference and modeling. 
+                        Cover both frequentist and Bayesian approaches with emphasis on computational implementation.
+                    </p>
+                    <div class="subject-highlights">
+                        <h4>Key Areas:</h4>
+                        <ul class="highlight-list">
+                            <li>Probability theory & statistical inference</li>
+                            <li>Regression modeling & causal analysis</li>
+                            <li>Bayesian statistics & MCMC methods</li>
+                            <li>Experimental design & A/B testing</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-info">
+                            Progress: <span class="progress-number">0 of 40 topics</span>
+                        </div>
+                        <div class="progress-info">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <a href="subjects/statistics/index.html" class="subject-link">
+                        Explore Topics →
+                    </a>
+                </div>
+
+                <div class="subject-card linux">
+                    <div class="subject-header">
+                        <span class="subject-icon">🐧</span>
+                        <div class="subject-title">
+                            <h3>Linux System Administration</h3>
+                            <div class="topic-count">40 Weekly Topics</div>
+                        </div>
+                    </div>
+                    <p class="subject-description">
+                        Enterprise Linux management from command line fundamentals to advanced automation. 
+                        Build expertise in system administration, containerization, and modern DevOps practices.
+                    </p>
+                    <div class="subject-highlights">
+                        <h4>Key Areas:</h4>
+                        <ul class="highlight-list">
+                            <li>System fundamentals & service management</li>
+                            <li>Networking, security & performance tuning</li>
+                            <li>Containerization & virtualization</li>
+                            <li>DevOps tools & infrastructure automation</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-info">
+                            Progress: <span class="progress-number">0 of 40 topics</span>
+                        </div>
+                        <div class="progress-info">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <a href="subjects/linux/index.html" class="subject-link">
+                        Explore Topics →
+                    </a>
+                </div>
+
+                <div class="subject-card network">
+                    <div class="subject-header">
+                        <span class="subject-icon">🌐</span>
+                        <div class="subject-title">
+                            <h3>Networking</h3>
+                            <div class="topic-count">40 Weekly Topics</div>
+                        </div>
+                    </div>
+                    <p class="subject-description">
+                        Build expertise in network protocols, infrastructure design, and modern cloud networking. 
+                        Cover traditional networking foundations through software-defined and automated approaches.
+                    </p>
+                    <div class="subject-highlights">
+                        <h4>Key Areas:</h4>
+                        <ul class="highlight-list">
+                            <li>Network fundamentals (OSI, TCP/IP, routing)</li>
+                            <li>Enterprise infrastructure & security</li>
+                            <li>Cloud networking & SDN technologies</li>
+                            <li>Network automation & monitoring</li>
+                        </ul>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-info">
+                            Progress: <span class="progress-number">0 of 40 topics</span>
+                        </div>
+                        <div class="progress-info">0%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <a href="subjects/networking/index.html" class="subject-link">
+                        Explore Topics →
+                    </a>
+                </div>
+            </div>
+
+            <div class="overview-stats">
+                <h3>Learning Journey Overview</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">220</div>
+                        <div class="stat-label">Total Topics</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">44</div>
+                        <div class="stat-label">Weeks</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">0.5%</div>
+                        <div class="stat-label">Progress</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Learning Journey. Documenting 44 weeks of continuous technical education.</p>
+        </div>
+    </footer>
 </body>
 </html>
