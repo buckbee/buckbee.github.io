@@ -1,1 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Design | Learning Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary: #ef4444;
+            --primary-dark: #dc2626;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .back-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumb {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            background: var(--surface);
+            margin: 2rem auto;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        h2:first-child {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 1.35rem;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .topic-card {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .topic-card.completed {
+            border-left-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .topic-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .topic-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .topic-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .topic-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-planned {
+            background: var(--border);
+            color: var(--text-light);
+        }
+
+        .topic-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .topic-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../../index.html" class="back-link">←</a>
+                <div class="breadcrumb">
+                    <a href="../../index.html">Home</a> / 
+                    <a href="../../subjects.html">Subjects</a> / 
+                    Analog Design
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="container">
+            <h1>📡 Analog Design</h1>
+            <p>Master advanced analog circuit techniques, from low-noise amplifiers to high-speed data converters</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h2>🎯 Subject Overview</h2>
+            <p>
+                Analog design is the art and science of creating circuits that process continuous signals in the real world. 
+                This subject covers advanced topics in analog integrated circuit design, focusing on CMOS and bipolar 
+                technologies used in modern electronic systems.
+            </p>
+            
+            <p>
+                From precision operational amplifiers to gigahertz RF circuits, analog design requires deep understanding 
+                of device physics, circuit analysis, and practical design trade-offs. This 40-week journey will take you 
+                from fundamental building blocks to complete system-level designs.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">40</div>
+                    <div class="stat-label">Weekly Topics</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">36</div>
+                    <div class="stat-label">Remaining</div>
+                </div>
+            </div>
+
+            <h2>🎓 Learning Goals</h2>
+            <p>By the end of this 40-week journey, you will master:</p>
+            
+            <h3>🔬 Core Analog Fundamentals</h3>
+            <ul>
+                <li><strong>Device Physics:</strong> Deep understanding of MOS and bipolar transistor behavior, parasitic effects, and process variations</li>
+                <li><strong>Small-Signal Analysis:</strong> Advanced techniques for analyzing complex multi-stage amplifiers and feedback systems</li>
+                <li><strong>Noise Analysis:</strong> Comprehensive noise modeling, optimization techniques, and measurement methods</li>
+                <li><strong>Frequency Response:</strong> Pole-zero analysis, compensation techniques, and stability analysis</li>
+            </ul>
+
+            <h3>⚡ Advanced Circuit Techniques</h3>
+            <ul>
+                <li><strong>Operational Amplifiers:</strong> Design of high-performance op-amps with rail-to-rail operation and low offset</li>
+                <li><strong>Comparators:</strong> High-speed voltage comparators with hysteresis and precision timing</li>
+                <li><strong>Voltage References:</strong> Bandgap references, temperature compensation, and precision voltage sources</li>
+                <li><strong>Current Sources:</strong> Precision current mirrors, current references, and bias circuits</li>
+            </ul>
+
+            <h3>🔄 Data Conversion Systems</h3>
+            <ul>
+                <li><strong>ADC Architectures:</strong> SAR, Delta-Sigma, pipeline, and flash converters with performance trade-offs</li>
+                <li><strong>DAC Design:</strong> Current steering, R-2R, and sigma-delta DACs for different applications</li>
+                <li><strong>Sample-and-Hold:</strong> High-speed sampling circuits with low distortion and fast settling</li>
+                <li><strong>Digital Calibration:</strong> Background calibration techniques for improving converter performance</li>
+            </ul>
+
+            <h3>📡 RF & High-Speed Design</h3>
+            <ul>
+                <li><strong>Low-Noise Amplifiers:</strong> RF LNA design with simultaneous noise and input matching</li>
+                <li><strong>Mixers & Oscillators:</strong> Gilbert cell mixers, VCOs, and phase-locked loops</li>
+                <li><strong>Power Amplifiers:</strong> Class A/B/D amplifiers with efficiency optimization</li>
+                <li><strong>High-Speed Interfaces:</strong> CML logic, differential signaling, and equalization techniques</li>
+            </ul>
+
+            <h3>🔋 Power Management</h3>
+            <ul>
+                <li><strong>Linear Regulators:</strong> LDO design with fast transient response and low dropout</li>
+                <li><strong>Switching Regulators:</strong> Buck, boost, and buck-boost converter design</li>
+                <li><strong>Power Factor Correction:</strong> Active PFC circuits for AC-DC conversion</li>
+                <li><strong>Battery Management:</strong> Charging circuits, protection, and fuel gauging</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Design Philosophy:</strong> Throughout this journey, we'll emphasize practical design considerations 
+                including process variations, temperature effects, packaging constraints, and cost optimization. 
+                Every topic includes both theoretical analysis and hands-on simulation work.
+            </div>
+
+            <h2>📚 Weekly Topics</h2>
+            <div class="topics-grid">
+                <div class="topic-card completed">
+                    <div class="topic-title">Week 1: Noise Optimization in LNAs</div>
+                    <div class="topic-description">
+                        Noise sources, noise figure calculations, and optimal source impedance for minimum noise.
+                    </div>
+                    <div class="topic-meta">
+                        <span>Completed Oct 6, 2025</span>
+                        <a href="week01-noise-optimisation.html" class="topic-link">View Notes →</a>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">Week 2: Cascade vs Cascode Amplifiers</div>
+                    <div class="topic-description">
+                        Comparing cascade and cascode topologies for high-gain, high-frequency applications.
+                    </div>
+                    <div class="topic-meta">
+                        <span>Week 2</span>
+                        <span class="topic-status status-planned">Planned</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">Week 3: Current Steering DAC Design</div>
+                    <div class="topic-description">
+                        High-speed current steering DACs with dynamic element matching and calibration.
+                    </div>
+                    <div class="topic-meta">
+                        <span>Week 3</span>
+                        <span class="topic-status status-planned">Planned</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">Week 4: Bandgap Voltage References</div>
+                    <div class="topic-description">
+                        Temperature-stable voltage references using bandgap principles and curvature correction.
+                    </div>
+                    <div class="topic-meta">
+                        <span>Week 4</span>
+                        <span class="topic-status status-planned">Planned</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">Week 5: Delta-Sigma Modulator Design</div>
+                    <div class="topic-description">
+                        Single-bit and multi-bit delta-sigma modulators for high-resolution ADCs.
+                    </div>
+                    <div class="topic-meta">
+                        <span>Week 5</span>
+                        <span class="topic-status status-planned">Planned</span>
+                    </div>
+                </div>
+
+                <div class="topic-card">
+                    <div class="topic-title">Week 6: Operational Amplifier Design</div>
+                    <div class="topic-description">
+                        Two-stage op-amp design with Miller compensation and rail-to-rail operation.
+                    </div>
+                    <div class="topic-meta">
+                        <span>Week 6</span>
+                        <span class="topic-status status-planned">Planned</span>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; text-align: center; color: var(--text-light);">
+                <em>More topics will be added as the journey progresses...</em>
+            </p>
+
+            <h2>🛠️ Tools & Resources</h2>
+            <ul>
+                <li><strong>Simulation:</strong> LTspice, Cadence Virtuoso, SPICE models</li>
+                <li><strong>Textbooks:</strong> Razavi, Allen & Holberg, Gray & Meyer</li>
+                <li><strong>Measurement:</strong> Network analyzer, spectrum analyzer, oscilloscope</li>
+                <li><strong>Layout:</strong> Matching techniques, parasitic extraction, DRC/LVS</li>
+            </ul>
+
+            <h2>🎯 Success Metrics</h2>
+            <ul>
+                <li>Complete theoretical analysis for each circuit topology</li>
+                <li>Successful SPICE simulation with performance verification</li>
+                <li>Understanding of practical design trade-offs and limitations</li>
+                <li>Ability to optimize designs for specific performance targets</li>
+                <li>Knowledge of layout considerations and parasitic effects</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html> 

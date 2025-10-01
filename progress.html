@@ -416,8 +416,8 @@
                     week: 1,
                     days: [
                         { subject: 'analog', topic: 'Noise optimization in LNAs', completed: true },
-                        { subject: 'ai', topic: 'Gradient descent variants', completed: true },
-                        { subject: 'stats', topic: 'Bayes theorem', completed: true },
+                        { subject: 'ai', topic: 'Gradient descent variants', completed: false },
+                        { subject: 'stats', topic: 'Bayes theorem', completed: false },
                         { subject: 'linux', topic: 'Systemd unit files', completed: false },
                         { subject: 'network', topic: 'OSI model review', completed: false }
                     ]
@@ -425,9 +425,9 @@
                 {
                     week: 2,
                     days: [
-                        { subject: 'analog', topic: 'Cascade vs cascode', completed: true },
+                        { subject: 'analog', topic: 'Cascade vs cascode', completed: false },
                         { subject: 'ai', topic: 'Backpropagation math', completed: false },
-                        { subject: 'stats', topic: 'Conditional probability', completed: true },
+                        { subject: 'stats', topic: 'Conditional probability', completed: false },
                         { subject: 'linux', topic: 'Systemd timers', completed: false },
                         { subject: 'network', topic: 'IPv4 subnetting', completed: false }
                     ]
@@ -437,9 +437,9 @@
                     days: [
                         { subject: 'analog', topic: 'Current steering', completed: false },
                         { subject: 'ai', topic: 'Activation functions', completed: false },
-                        { subject: 'stats', topic: 'Discrete distributions', completed: true },
-                        { subject: 'linux', topic: 'Journalctl', completed: true },
-                        { subject: 'network', topic: 'IPv6 addressing', completed: true }
+                        { subject: 'stats', topic: 'Discrete distributions', completed: false },
+                        { subject: 'linux', topic: 'Journalctl', completed: false },
+                        { subject: 'network', topic: 'IPv6 addressing', completed: false }
                     ]
                 }
                 // Add more weeks as needed...
@@ -510,17 +510,9 @@
         generateCalendar();
         updateStats();
 
-        // Add click handlers to mark as complete
-        document.querySelectorAll('.day-cell.incomplete:not(.review)').forEach(cell => {
-            cell.addEventListener('click', function() {
-                if (!this.classList.contains('review')) {
-                    this.classList.remove('incomplete');
-                    this.classList.add('completed');
-                    this.textContent = '✓';
-                    updateStats();
-                }
-            });
-        });
+        // Initialize display
+        generateCalendar();
+        updateStats();
     </script>
 </body>
 </html>
