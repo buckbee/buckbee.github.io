@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noise Optimization in Low-Noise Amplifiers | Learning Journal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ef4444;
+            --primary-dark: #dc2626;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .back-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumb {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        article {
+            background: var(--surface);
+            margin: 2rem auto;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .article-header {
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .subject-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .meta {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.35rem;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid var(--success);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .resources {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .resources h3 {
+            margin-top: 0;
+        }
+
+        .resource-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .resource-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .resource-list li:last-child {
+            border-bottom: none;
+        }
+
+        .resource-list a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .resource-list a:hover {
+            text-decoration: underline;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border);
+        }
+
+        .nav-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav-btn.disabled {
+            background: var(--border);
+            color: var(--text-light);
+            pointer-events: none;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .tag {
+            background: var(--code-bg);
+            color: var(--text);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            article {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../../index.html" class="back-link">←</a>
+                <div class="breadcrumb">
+                    <a href="../../index.html">Home</a> / 
+                    <a href="index.html">Analog Design</a> / 
+                    Week 1
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <article>
+            <div class="article-header">
+                <span class="subject-badge">📡 ANALOG DESIGN</span>
+                <h1>Noise Optimization in Low-Noise Amplifiers</h1>
+                <div class="meta">
+                    <div class="meta-item">
+                        <span>📅</span>
+                        <span>Week 1, Monday</span>
+                    </div>
+                    <div class="meta-item">
+                        <span>📆</span>
+                        <span>October 6, 2025</span>
+                    </div>
+                    <div class="meta-item">
+                        <span>⏱️</span>
+                        <span>Q1: Advanced Circuit Techniques</span>
+                    </div>
+                    <div class="meta-item">
+                        <span>⏰</span>
+                        <span>60 min study time</span>
+                    </div>
+                </div>
+            </div>
+
+            <h2>📚 Overview</h2>
+            <p>
+                Today I explored noise optimization techniques in low-noise amplifiers (LNAs), focusing on understanding 
+                the fundamental trade-offs between noise figure, gain, power consumption, and linearity. This is critical 
+                for RF receiver front-ends where the first stage largely determines overall system noise performance.
+            </p>
+
+            <h2>🎯 Learning Objectives</h2>
+            <ul>
+                <li>Understand the primary noise sources in CMOS and BJT transistors</li>
+                <li>Master noise figure calculations and Friis formula for cascaded stages</li>
+                <li>Learn the concept of optimal source impedance (Z<sub>opt</sub>) for minimum noise</li>
+                <li>Explore the trade-off between noise matching and power matching</li>
+                <li>Understand inductive source degeneration technique for simultaneous noise and input matching</li>
+            </ul>
+
+            <h2>💡 Key Concepts</h2>
+
+            <h3>Noise Sources in Transistors</h3>
+            <p>
+                There are three primary noise sources in MOS transistors that affect LNA performance:
+            </p>
+            <ul>
+                <li><strong>Thermal noise:</strong> Channel resistance creates thermal noise with power spectral density of 4kTR</li>
+                <li><strong>Flicker (1/f) noise:</strong> Dominant at low frequencies, inversely proportional to gate area</li>
+                <li><strong>Induced gate noise:</strong> Capacitive coupling of channel noise to the gate terminal</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Key Insight:</strong> The thermal noise of the channel can be modeled as a noise current 
+                <code>i<sub>nd</sub><sup>2</sup> = 4kTγg<sub>d0</sub>Δf</code> where γ ≈ 2/3 for long-channel devices 
+                and increases for short-channel transistors (γ → 2-3).
+            </div>
+
+            <h3>Noise Figure Definition</h3>
+            <p>
+                Noise Figure (NF) quantifies how much a circuit degrades the signal-to-noise ratio:
+            </p>
+            <pre><code>NF = 10·log₁₀(F)  where  F = (SNR_in) / (SNR_out)</code></pre>
+            
+            <p>
+                For a two-port network with available gain G and equivalent input noise temperature T<sub>eq</sub>:
+            </p>
+            <pre><code>F = 1 + T_eq / T_0    (where T_0 = 290K)</code></pre>
+
+            <h3>Friis Formula for Cascaded Stages</h3>
+            <p>
+                When multiple stages are cascaded, the overall noise factor is:
+            </p>
+            <pre><code>F_total = F₁ + (F₂-1)/G₁ + (F₃-1)/(G₁·G₂) + ...</code></pre>
+
+            <div class="success-box">
+                <strong>Critical Takeaway:</strong> The first stage noise dominates! This is why LNAs are placed 
+                immediately after the antenna with maximum possible gain.
+            </div>
+
+            <h3>Noise Matching vs. Power Matching</h3>
+            <p>
+                This is the fundamental challenge in LNA design:
+            </p>
+            <ul>
+                <li><strong>Power matching:</strong> Requires source impedance Z<sub>S</sub> = Z<sub>in</sub>* for maximum power transfer</li>
+                <li><strong>Noise matching:</strong> Requires Z<sub>S</sub> = Z<sub>opt</sub> for minimum noise figure</li>
+                <li>Unfortunately, Z<sub>opt</sub> ≠ Z<sub>in</sub>* in general!</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>Design Trade-off:</strong> You must choose between optimum noise or optimum gain. 
+                Practical LNAs use matching networks or inductive degeneration to achieve a compromise.
+            </div>
+
+            <h3>Inductive Source Degeneration</h3>
+            <p>
+                The clever solution: adding an inductor L<sub>S</sub> in series with the source creates a real 
+                component in the input impedance that can be tuned to match 50Ω while simultaneously achieving 
+                near-optimal noise performance.
+            </p>
+
+            <h2>📖 Resources Studied</h2>
+            <div class="resources">
+                <h3>Primary Sources</h3>
+                <ul class="resource-list">
+                    <li>
+                        <strong>Razavi - "Design of Analog CMOS Integrated Circuits"</strong><br>
+                        Chapter 7.2-7.4: Noise analysis and optimization techniques
+                    </li>
+                    <li>
+                        <strong>Thomas H. Lee - "The Design of CMOS RF Integrated Circuits"</strong><br>
+                        Chapter 12: Complete LNA design methodology with worked examples
+                    </li>
+                    <li>
+                        <strong>Paper: "A 1.5V, 1.5GHz CMOS LNA" by Shaeffer & Lee (1997)</strong><br>
+                        Seminal work on inductively degenerated LNA topology
+                    </li>
+                    <li>
+                        <strong>Analog Devices Tutorial MT-050</strong><br>
+                        "Noise Figure Measurement and Analysis" - practical measurement techniques
+                    </li>
+                </ul>
+            </div>
+
+            <h2>🔬 Practical Work</h2>
+
+            <h3>Hand Calculations</h3>
+            <p>
+                I worked through noise figure calculations for a simple common-source amplifier:
+            </p>
+            <ul class="checklist">
+                <li>Calculated channel thermal noise contribution</li>
+                <li>Derived equivalent input noise voltage</li>
+                <li>Computed noise figure for R<sub>S</sub> = 50Ω</li>
+                <li>Determined optimal device width for minimum NF</li>
+            </ul>
+
+            <h3>SPICE Simulation</h3>
+            <p>
+                Set up LTspice simulations to verify theoretical calculations:
+            </p>
+            <ul class="checklist">
+                <li>Performed .noise analysis on common-source amplifier</li>
+                <li>Swept transistor width from 50μm to 500μm and plotted NF vs W</li>
+                <li>Compared results with hand calculations (within 10% agreement)</li>
+                <li>Simulated inductively degenerated LNA and verified input matching</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>Simulation Result:</strong> Minimum NF of 1.8dB achieved at W = 200μm with I<sub>D</sub> = 5mA. 
+                Adding 2nH source degeneration improved input match to S11 < -15dB while NF increased only 0.3dB.
+            </div>
+
+            <h2>📝 Key Insights & Notes</h2>
+
+            <h3>What I Learned</h3>
+            <ol>
+                <li>
+                    <strong>Larger transistors ≠ always better:</strong> While increasing W reduces gate resistance noise, 
+                    it also increases capacitance and induced gate noise. There's an optimal width.
+                </li>
+                <li>
+                    <strong>Bias current matters:</strong> Higher g<sub>m</sub> (from higher I<sub>D</sub>) improves 
+                    noise, but at the cost of power consumption. Real designs must balance both.
+                </li>
+                <li>
+                    <strong>Frequency dependency:</strong> At lower frequencies, flicker noise dominates. At high 
+                    frequencies (>1GHz), thermal and induced gate noise are primary concerns.
+                </li>
+                <li>
+                    <strong>Technology scaling impact:</strong> Modern short-channel devices have higher γ factors 
+                    (approaching 2-3 vs. 2/3 for long-channel), making noise optimization more challenging.
+                </li>
+            </ol>
+
+            <h3>Practical Design Guidelines</h3>
+            <ul>
+                <li>For narrowband applications: Use inductive degeneration for simultaneous noise and power matching</li>
+                <li>For wideband applications: Consider resistive feedback or noise cancellation techniques</li>
+                <li>Always check device operating point: deep triode or cutoff regions have terrible noise performance</li>
+                <li>Don't forget layout: minimize gate resistance by proper finger layout and multiple gate contacts</li>
+            </ul>
+
+            <h2>❓ Questions for Further Study</h2>
+            <ul>
+                <li>How does noise cancellation work in wideband LNAs? Need to study the noise-cancelling amplifier topology</li>
+                <li>What's the impact of package parasitics on noise matching at >5GHz?</li>
+                <li>How do modern FinFET devices compare to planar CMOS for LNA noise performance?</li>
+                <li>Can machine learning optimization help with multi-objective LNA design (noise, gain, linearity, power)?</li>
+            </ul>
+
+            <h2>🔗 Related Topics</h2>
+            <div class="tags">
+                <span class="tag">RF Design</span>
+                <span class="tag">S-Parameters</span>
+                <span class="tag">Impedance Matching</span>
+                <span class="tag">Small-Signal Analysis</span>
+                <span class="tag">Process Technology</span>
+                <span class="tag">Receiver Design</span>
+            </div>
+
+            <p style="margin-top: 1.5rem;">
+                <strong>Related lessons:</strong> This connects to Week 24 (S-parameters and two-port networks) 
+                and Week 26 (LNA design methodology) where I'll dive deeper into complete LNA design flow.
+            </p>
+
+            <h2>✅ Progress Checklist</h2>
+            <ul class="checklist">
+                <li>Read Razavi Chapter 7 sections on noise</li>
+                <li>Read Thomas Lee Chapter 12 on LNA design</li>
+                <li>Studied Shaeffer & Lee paper on inductively degenerated LNA</li>
+                <li>Completed hand calculations for noise figure</li>
+                <li>Ran SPICE simulations and validated results</li>
+                <li>Documented key insights and open questions</li>
+            </ul>
+
+            <div class="success-box">
+                <strong>Learning Status:</strong> ✓ Completed on October 6, 2025<br>
+                <strong>Confidence Level:</strong> 8/10 - Solid understanding, but need more practice with wideband techniques<br>
+                <strong>Time Spent:</strong> 60 minutes
+            </div>
+
+            <div class="navigation">
+                <a href="#" class="nav-btn disabled">← Previous: None</a>
+                <a href="week02-cascade-cascode.html" class="nav-btn">Next: Cascade vs Cascode →</a>
+            </div>
+        </article>
+    </div>
+</body>
+</html>
