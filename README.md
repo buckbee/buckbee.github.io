@@ -117,4 +117,4 @@ This learning journal is shared under the MIT License. Feel free to use the stru
 
 ---
 
-*"Not a resistor - wire just does this"*  --/\/\/--
+*"Not a resistor - wire just does this"*  --/\\/\\/--
