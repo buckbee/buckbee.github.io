@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Learning Journey 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --analog: #ef4444;
+            --ai: #8b5cf6;
+            --stats: #f59e0b;
+            --linux: #10b981;
+            --network: #3b82f6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .subject-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .subject-card.analog { border-top-color: var(--analog); }
+        .subject-card.ai { border-top-color: var(--ai); }
+        .subject-card.stats { border-top-color: var(--stats); }
+        .subject-card.linux { border-top-color: var(--linux); }
+        .subject-card.network { border-top-color: var(--network); }
+
+        .subject-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-card .progress-bar {
+            background: var(--border);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .subject-card .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.5s ease;
+        }
+
+        .subject-card.analog .progress-fill { background: var(--analog); }
+        .subject-card.ai .progress-fill { background: var(--ai); }
+        .subject-card.stats .progress-fill { background: var(--stats); }
+        .subject-card.linux .progress-fill { background: var(--linux); }
+        .subject-card.network .progress-fill { background: var(--network); }
+
+        .subject-card p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .section {
+            padding: 3rem 0;
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .recent-posts {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .post-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .post-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-card h3 a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .post-card h3 a:hover {
+            color: var(--primary);
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">🎓 Learning Journey 2025</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="subjects.html">Subjects</a></li>
+                    <li><a href="progress.html">Progress</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="container">
+            <h1>44-Week Learning Journey</h1>
+            <p>Mastering Analog Design, AI/ML, Statistics, Linux & Networking</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Subjects</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">220</div>
+                <div class="stat-label">Total Topics</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">7%</div>
+                <div class="stat-label">Progress</div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2>Learning Subjects</h2>
+            <div class="subjects-grid">
+                <div class="subject-card analog">
+                    <h3>📡 Analog Design</h3>
+                    <p>Advanced circuit techniques, data converters, RF design, and power management</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 10%"></div>
+                    </div>
+                    <p><strong>4 of 40 topics completed</strong></p>
+                    <a href="subjects/analog-design/index.html" class="btn">View Topics</a>
+                </div>
+
+                <div class="subject-card ai">
+                    <h3>🤖 AI / ML</h3>
+                    <p>Deep learning, transformers, GANs, and MLOps practices</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 5%"></div>
+                    </div>
+                    <p><strong>2 of 40 topics completed</strong></p>
+                    <a href="subjects/ai-ml/index.html" class="btn">View Topics</a>
+                </div>
+
+                <div class="subject-card stats">
+                    <h3>📊 Statistics</h3>
+                    <p>Probability, inference, regression, and causal analysis</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 12%"></div>
+                    </div>
+                    <p><strong>5 of 40 topics completed</strong></p>
+                    <a href="subjects/statistics/index.html" class="btn">View Topics</a>
+                </div>
+
+                <div class="subject-card linux">
+                    <h3>🐧 Linux Admin</h3>
+                    <p>System administration, storage, networking, and automation</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 8%"></div>
+                    </div>
+                    <p><strong>3 of 40 topics completed</strong></p>
+                    <a href="subjects/linux/index.html" class="btn">View Topics</a>
+                </div>
+
+                <div class="subject-card network">
+                    <h3>🌐 Networking</h3>
+                    <p>Network fundamentals, home lab, cloud services, and DevOps</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 3%"></div>
+                    </div>
+                    <p><strong>1 of 40 topics completed</strong></p>
+                    <a href="subjects/networking/index.html" class="btn">View Topics</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Recent Learning Posts</h2>
+            <div class="recent-posts">
+                <div class="post-card">
+                    <div class="post-meta">
+                        <span>📡 Analog Design</span>
+                        <span>•</span>
+                        <span>Week 1</span>
+                        <span>•</span>
+                        <span>Oct 6, 2025</span>
+                    </div>
+                    <h3><a href="subjects/analog-design/week01-noise-optimization.html">Noise Optimization in Low-Noise Amplifiers</a></h3>
+                    <p>Explored noise sources in LNAs, noise figure calculations, and the trade-off between noise matching and power matching...</p>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-meta">
+                        <span>🤖 AI/ML</span>
+                        <span>•</span>
+                        <span>Week 1</span>
+                        <span>•</span>
+                        <span>Oct 7, 2025</span>
+                    </div>
+                    <h3><a href="subjects/ai-ml/week01-gradient-descent.html">Gradient Descent Variants</a></h3>
+                    <p>Compared SGD, momentum, and Adam optimizers. Implemented from scratch and visualized convergence behavior...</p>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-meta">
+                        <span>📊 Statistics</span>
+                        <span>•</span>
+                        <span>Week 1</span>
+                        <span>•</span>
+                        <span>Oct 8, 2025</span>
+                    </div>
+                    <h3><a href="subjects/statistics/week01-bayes-theorem.html">Bayes' Theorem Applications</a></h3>
+                    <p>Studied Bayesian inference with practical examples: medical testing, spam filtering, and A/B testing...</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 My Learning Journey. Documenting 44 weeks of continuous learning.</p>
+        </div>
+    </footer>
+</body>
+</html>
