@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Progress Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --analog: #ef4444;
+            --ai: #8b5cf6;
+            --stats: #f59e0b;
+            --linux: #10b981;
+            --network: #3b82f6;
+            --completed: #10b981;
+            --incomplete: #e2e8f0;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --surface: #ffffff;
+            --background: #f8fafc;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            padding: 2rem;
+        }
+
+        .tracker-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .legend {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: auto repeat(5, 1fr);
+            gap: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .week-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            padding: 0.5rem;
+        }
+
+        .day-label {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text);
+            padding: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .day-cell {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            position: relative;
+        }
+
+        .day-cell:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .day-cell.completed {
+            opacity: 1;
+        }
+
+        .day-cell.incomplete {
+            background: var(--incomplete) !important;
+            color: var(--text-light);
+        }
+
+        .day-cell.review {
+            background: repeating-linear-gradient(
+                45deg,
+                #fbbf24,
+                #fbbf24 10px,
+                #f59e0b 10px,
+                #f59e0b 20px
+            );
+        }
+
+        .day-cell.analog { background: var(--analog); }
+        .day-cell.ai { background: var(--ai); }
+        .day-cell.stats { background: var(--stats); }
+        .day-cell.linux { background: var(--linux); }
+        .day-cell.network { background: var(--network); }
+
+        .tooltip {
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--text);
+        }
+
+        .day-cell:hover .tooltip {
+            opacity: 1;
+        }
+
+        .subject-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .subject-card {
+            background: var(--surface);
+            border: 2px solid var(--incomplete);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .subject-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .subject-card.analog { border-color: var(--analog); }
+        .subject-card.ai { border-color: var(--ai); }
+        .subject-card.stats { border-color: var(--stats); }
+        .subject-card.linux { border-color: var(--linux); }
+        .subject-card.network { border-color: var(--network); }
+
+        .subject-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-icon {
+            font-size: 1.5rem;
+        }
+
+        .subject-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar-container {
+            background: var(--incomplete);
+            height: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .subject-card.analog .progress-bar-fill { background: var(--analog); }
+        .subject-card.ai .progress-bar-fill { background: var(--ai); }
+        .subject-card.stats .progress-bar-fill { background: var(--stats); }
+        .subject-card.linux .progress-bar-fill { background: var(--linux); }
+        .subject-card.network .progress-bar-fill { background: var(--network); }
+
+        .subject-stats {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .calendar-grid {
+                font-size: 0.7rem;
+            }
+            
+            .day-cell {
+                font-size: 0.6rem;
+            }
+
+            .stats-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="tracker-container">
+        <h1>📊 44-Week Learning Progress Tracker</h1>
+
+        <div class="stats-overview">
+            <div class="stat-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="stat-number" id="total-completed">15</div>
+                <div class="stat-label">Topics Completed</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="stat-number" id="completion-percent">7%</div>
+                <div class="stat-label">Overall Progress</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="stat-number" id="current-week">3</div>
+                <div class="stat-label">Current Week</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <div class="stat-number" id="streak">15</div>
+                <div class="stat-label">Day Streak</div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--analog);"></div>
+                <span>Analog Design</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--ai);"></div>
+                <span>AI/ML</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--stats);"></div>
+                <span>Statistics</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--linux);"></div>
+                <span>Linux</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--network);"></div>
+                <span>Networking</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color review"></div>
+                <span>Review Week</span>
+            </div>
+        </div>
+
+        <div class="calendar-grid" id="calendar"></div>
+
+        <div class="subject-breakdown">
+            <div class="subject-card analog">
+                <div class="subject-header">
+                    <span class="subject-icon">📡</span>
+                    <span class="subject-name">Analog Design</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 10%;">10%</div>
+                </div>
+                <div class="subject-stats">
+                    <span>4 / 40 topics</span>
+                    <span>36 remaining</span>
+                </div>
+            </div>
+
+            <div class="subject-card ai">
+                <div class="subject-header">
+                    <span class="subject-icon">🤖</span>
+                    <span class="subject-name">AI / ML</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 5%;">5%</div>
+                </div>
+                <div class="subject-stats">
+                    <span>2 / 40 topics</span>
+                    <span>38 remaining</span>
+                </div>
+            </div>
+
+            <div class="subject-card stats">
+                <div class="subject-header">
+                    <span class="subject-icon">📊</span>
+                    <span class="subject-name">Statistics</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 12%;">12%</div>
+                </div>
+                <div class="subject-stats">
+                    <span>5 / 40 topics</span>
+                    <span>35 remaining</span>
+                </div>
+            </div>
+
+            <div class="subject-card linux">
+                <div class="subject-header">
+                    <span class="subject-icon">🐧</span>
+                    <span class="subject-name">Linux Admin</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 8%;">8%</div>
+                </div>
+                <div class="subject-stats">
+                    <span>3 / 40 topics</span>
+                    <span>37 remaining</span>
+                </div>
+            </div>
+
+            <div class="subject-card network">
+                <div class="subject-header">
+                    <span class="subject-icon">🌐</span>
+                    <span class="subject-name">Networking</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 3%;">3%</div>
+                </div>
+                <div class="subject-stats">
+                    <span>1 / 40 topics</span>
+                    <span>39 remaining</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data structure - you'll update this as you progress
+        const learningData = {
+            weeks: [
+                {
+                    week: 1,
+                    days: [
+                        { subject: 'analog', topic: 'Noise optimization in LNAs', completed: true },
+                        { subject: 'ai', topic: 'Gradient descent variants', completed: true },
+                        { subject: 'stats', topic: 'Bayes theorem', completed: true },
+                        { subject: 'linux', topic: 'Systemd unit files', completed: false },
+                        { subject: 'network', topic: 'OSI model review', completed: false }
+                    ]
+                },
+                {
+                    week: 2,
+                    days: [
+                        { subject: 'analog', topic: 'Cascade vs cascode', completed: true },
+                        { subject: 'ai', topic: 'Backpropagation math', completed: false },
+                        { subject: 'stats', topic: 'Conditional probability', completed: true },
+                        { subject: 'linux', topic: 'Systemd timers', completed: false },
+                        { subject: 'network', topic: 'IPv4 subnetting', completed: false }
+                    ]
+                },
+                {
+                    week: 3,
+                    days: [
+                        { subject: 'analog', topic: 'Current steering', completed: false },
+                        { subject: 'ai', topic: 'Activation functions', completed: false },
+                        { subject: 'stats', topic: 'Discrete distributions', completed: true },
+                        { subject: 'linux', topic: 'Journalctl', completed: true },
+                        { subject: 'network', topic: 'IPv6 addressing', completed: true }
+                    ]
+                }
+                // Add more weeks as needed...
+            ]
+        };
+
+        // Generate calendar
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            
+            // Add day headers
+            calendar.innerHTML = '<div class="week-label"></div>';
+            ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].forEach(day => {
+                calendar.innerHTML += `<div class="day-label">${day}</div>`;
+            });
+
+            // Generate weeks (44 weeks total, but showing first 10 for demo)
+            for (let week = 1; week <= 44; week++) {
+                calendar.innerHTML += `<div class="week-label">W${week}</div>`;
+                
+                const weekData = learningData.weeks.find(w => w.week === week);
+                
+                for (let day = 0; day < 5; day++) {
+                    let cellClass = 'day-cell incomplete';
+                    let topic = 'Not started';
+                    
+                    // Review weeks (11, 22, 33, 44)
+                    if ([11, 22, 33, 44].includes(week)) {
+                        cellClass = 'day-cell review';
+                        topic = 'Review Week';
+                    } else if (weekData && weekData.days[day]) {
+                        const dayData = weekData.days[day];
+                        cellClass = `day-cell ${dayData.subject} ${dayData.completed ? 'completed' : 'incomplete'}`;
+                        topic = dayData.topic;
+                    }
+                    
+                    const subjects = ['Analog', 'AI/ML', 'Stats', 'Linux', 'Network'];
+                    
+                    calendar.innerHTML += `
+                        <div class="${cellClass}">
+                            ${weekData && weekData.days[day] && weekData.days[day].completed ? '✓' : ''}
+                            <div class="tooltip">
+                                <strong>${subjects[day]}</strong><br>
+                                Week ${week}<br>
+                                ${topic}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Calculate statistics
+        function updateStats() {
+            let completed = 0;
+            learningData.weeks.forEach(week => {
+                week.days.forEach(day => {
+                    if (day.completed) completed++;
+                });
+            });
+            
+            document.getElementById('total-completed').textContent = completed;
+            document.getElementById('completion-percent').textContent = 
+                Math.round((completed / 220) * 100) + '%';
+        }
+
+        // Initialize
+        generateCalendar();
+        updateStats();
+
+        // Add click handlers to mark as complete
+        document.querySelectorAll('.day-cell.incomplete:not(.review)').forEach(cell => {
+            cell.addEventListener('click', function() {
+                if (!this.classList.contains('review')) {
+                    this.classList.remove('incomplete');
+                    this.classList.add('completed');
+                    this.textContent = '✓';
+                    updateStats();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
