@@ -25,6 +25,8 @@
             --stats: #f59e0b;
             --linux: #10b981;
             --network: #3b82f6;
+            --bootcamp: #F4B942;
+            --bootcamp-dark: #d89f2a;
         }
 
         body {
@@ -304,6 +306,83 @@
         .subject-card.linux .subject-link:hover { background: #059669; }
         .subject-card.network .subject-link:hover { background: #2563eb; }
 
+        /* Bootcamp Section Styling */
+        .bootcamp-section {
+            background: linear-gradient(135deg, var(--bootcamp) 0%, var(--bootcamp-dark) 100%);
+            margin: 4rem 0;
+            padding: 3rem 0;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .bootcamp-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .bootcamp-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .bootcamp-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .bootcamp-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .bootcamp-feature {
+            background: var(--background);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--bootcamp);
+        }
+
+        .bootcamp-feature h4 {
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .bootcamp-feature p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .bootcamp-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--bootcamp);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--bootcamp);
+            font-size: 1.05rem;
+        }
+
+        .bootcamp-btn:hover {
+            background: var(--bootcamp-dark);
+            border-color: var(--bootcamp-dark);
+            transform: translateY(-2px);
+        }
+
         .overview-stats {
             background: var(--surface);
             padding: 2rem;
@@ -379,6 +458,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="subjects.html" class="active">Subjects</a></li>
                     <li><a href="progress.html">Progress</a></li>
+                    <li><a href="subjects/data-science-bootcamp/index.html">Bootcamp</a></li>
                     <li><a href="about.html">About</a></li>
                 </ul>
             </nav>
@@ -576,6 +656,41 @@
                     </div>
                     <a href="subjects/networking/index.html" class="subject-link">
                         Explore Topics →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Data Science Bootcamp Section -->
+            <div class="bootcamp-section">
+                <div class="bootcamp-content">
+                    <h2>🚀 Data Science Career Bootcamp</h2>
+                    <p>
+                        Accelerated career preparation program focused on the Finnish data science market. 
+                        This intensive bootcamp combines technical skill development with practical career guidance, 
+                        designed to bridge the gap from learning to landing your first data science role.
+                    </p>
+                    
+                    <div class="bootcamp-features">
+                        <div class="bootcamp-feature">
+                            <h4>Market Research</h4>
+                            <p>Deep analysis of Finnish data science job market, salary trends, and employer expectations</p>
+                        </div>
+                        <div class="bootcamp-feature">
+                            <h4>Technical Skills</h4>
+                            <p>Python programming, machine learning, data visualization, and statistical analysis</p>
+                        </div>
+                        <div class="bootcamp-feature">
+                            <h4>Portfolio Development</h4>
+                            <p>Industry-relevant projects showcasing real-world problem-solving capabilities</p>
+                        </div>
+                        <div class="bootcamp-feature">
+                            <h4>Career Preparation</h4>
+                            <p>Interview prep, networking strategies, and professional development in Finland</p>
+                        </div>
+                    </div>
+                    
+                    <a href="subjects/data-science-bootcamp/index.html" class="bootcamp-btn">
+                        Start Bootcamp Journey →
                     </a>
                 </div>
             </div>

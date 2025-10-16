@@ -25,6 +25,8 @@
             --stats: #f59e0b;
             --linux: #10b981;
             --network: #3b82f6;
+            --bootcamp: #F4B942;
+            --bootcamp-dark: #d89f2a;
         }
 
         body {
@@ -174,6 +176,55 @@
         .subject-card.linux .progress-fill { background: var(--linux); }
         .subject-card.network .progress-fill { background: var(--network); }
 
+        /* Bootcamp styling */
+        .bootcamp-section {
+            background: linear-gradient(135deg, var(--bootcamp) 0%, var(--bootcamp-dark) 100%);
+            margin: 4rem 0;
+            padding: 3rem 0;
+            border-radius: 16px;
+            color: var(--text);
+        }
+
+        .bootcamp-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .bootcamp-card h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .bootcamp-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .bootcamp-btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: var(--bootcamp);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--bootcamp);
+        }
+
+        .bootcamp-btn:hover {
+            background: var(--bootcamp-dark);
+            border-color: var(--bootcamp-dark);
+            transform: translateY(-2px);
+        }
+
         .subject-card p {
             color: var(--text-light);
             margin-bottom: 1rem;
@@ -266,6 +317,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="subjects.html">Subjects</a></li>
                     <li><a href="progress.html">Progress</a></li>
+                    <li><a href="subjects/data-science-bootcamp/index.html">Bootcamp</a></li>
                     <li><a href="about.html">About</a></li>
                 </ul>
             </nav>
@@ -353,6 +405,22 @@
                 </div>
             </div>
         </section>
+
+        <div class="bootcamp-section">
+            <div class="container">
+                <div class="bootcamp-card">
+                    <h3>🚀 Data Science Bootcamp</h3>
+                    <p>
+                        Comprehensive study plans and interview preparation for Data Science careers in Finland. 
+                        Work at your own pace through Python, SQL, Machine Learning, and more with practical 
+                        exercises and real-world projects.
+                    </p>
+                    <a href="subjects/data-science-bootcamp/index.html" class="bootcamp-btn">
+                        Explore Bootcamp →
+                    </a>
+                </div>
+            </div>
+        </div>
 
         <section class="section">
             <h2>Recent Learning Posts</h2>
