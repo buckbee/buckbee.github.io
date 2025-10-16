@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Mastery | Data Science Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bootcamp: #F4B942;
+            --bootcamp-dark: #d89f2a;
+            --bootcamp-light: #fef3c7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.bootcamp-link {
+            color: var(--bootcamp-dark);
+            font-weight: 600;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--bootcamp) 0%, var(--bootcamp-dark) 100%);
+            color: var(--text);
+            padding: 3rem 0;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .meta {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .breadcrumb {
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--bootcamp-dark);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .content-area {
+            min-width: 0;
+        }
+
+        .tab-navigation {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        .tab-list {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            border-color: var(--bootcamp);
+            background: var(--bootcamp-light);
+        }
+
+        .tab-button.active {
+            background: var(--bootcamp);
+            border-color: var(--bootcamp);
+            color: var(--text);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--surface);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .tab-content h3 {
+            font-size: 1.25rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .tab-content h4 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .tab-content p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .tab-content ul, .tab-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .tab-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+
+        .tab-content code {
+            background: var(--bootcamp-light);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .tab-content pre {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .tab-content pre code {
+            background: transparent;
+            padding: 0;
+            color: #f1f5f9;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .completion-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bootcamp-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .completion-checkbox:hover {
+            background: var(--bootcamp);
+        }
+
+        .checkbox-box {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--bootcamp-dark);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .checkbox-box.checked {
+            background: var(--bootcamp);
+        }
+
+        .checkbox-box.checked::after {
+            content: '✓';
+            color: var(--text);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .checkbox-label {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .sidebar-links {
+            list-style: none;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .sidebar-links a:hover {
+            color: var(--bootcamp-dark);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bootcamp);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .back-button:hover {
+            background: var(--bootcamp-dark);
+        }
+
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            color: var(--bootcamp);
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 968px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .tab-list {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">🎓 Learning Journey</div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../subjects.html">Subjects</a></li>
+                    <li><a href="../../progress.html">Progress</a></li>
+                    <li><a href="index.html" class="bootcamp-link">Bootcamp</a></li>
+                    <li><a href="../../about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>🗄️ SQL Mastery</h1>
+            <div class="meta">6-Week Comprehensive Study Plan</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> / <a href="../../subjects.html">Subjects</a> / <a href="index.html">Data Science Bootcamp</a> / <span>SQL Study Plan</span>
+        </div>
+
+        <div class="main-layout">
+            <div class="content-area">
+                <div class="tab-navigation">
+                    <div class="tab-list">
+                        <button class="tab-button active" data-tab="overview">Overview</button>
+                        <button class="tab-button" data-tab="week1-2">Week 1-2</button>
+                        <button class="tab-button" data-tab="week3">Week 3</button>
+                        <button class="tab-button" data-tab="week4">Week 4</button>
+                        <button class="tab-button" data-tab="week5">Week 5</button>
+                        <button class="tab-button" data-tab="week6">Week 6</button>
+                        <button class="tab-button" data-tab="assessment">Assessment</button>
+                    </div>
+                </div>
+
+                <!-- Overview Tab -->
+                <div class="tab-content active" id="overview">
+                    <h2>Study Plan Overview</h2>
+                    <p>
+                        Master SQL from complex queries to query optimization. This 6-week plan covers everything from 
+                        window functions and CTEs to performance tuning and advanced analytics needed for data science roles.
+                    </p>
+
+                    <h3>What You'll Learn</h3>
+                    <ul>
+                        <li>Complex queries with multiple joins and subqueries</li>
+                        <li>Window functions for advanced analytics</li>
+                        <li>Query optimization and performance tuning</li>
+                        <li>Data manipulation (INSERT, UPDATE, DELETE)</li>
+                        <li>Advanced aggregations and pivoting</li>
+                        <li>Working with real-world data warehouses</li>
+                    </ul>
+
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li>Basic SQL knowledge (SELECT, WHERE, JOIN)</li>
+                        <li>Understanding of relational database concepts</li>
+                        <li>Familiarity with basic aggregations (COUNT, SUM, AVG)</li>
+                    </ul>
+
+                    <h3>Learning Resources</h3>
+                    <ul>
+                        <li><strong>Practice Platforms:</strong> LeetCode SQL, HackerRank, DataLemur</li>
+                        <li><strong>Books:</strong> "SQL Performance Explained" by Markus Winand</li>
+                        <li><strong>Documentation:</strong> PostgreSQL, MySQL, SQL Server docs</li>
+                        <li><strong>Courses:</strong> Mode Analytics SQL Tutorial, Khan Academy</li>
+                    </ul>
+
+                    <h3>Database Setup</h3>
+                    <p>For practice, you'll need access to a SQL database. Options include:</p>
+                    <ul>
+                        <li><strong>Local:</strong> Install PostgreSQL or MySQL locally</li>
+                        <li><strong>Cloud:</strong> Use SQLite online, db-fiddle.com, or SQL Fiddle</li>
+                        <li><strong>Sample Databases:</strong> Download Northwind, Sakila, or AdventureWorks</li>
+                    </ul>
+
+                    <h3>Weekly Time Commitment</h3>
+                    <ul>
+                        <li>Conceptual learning: 2-3 hours</li>
+                        <li>Practice problems: 4-5 hours</li>
+                        <li>Projects: 2-3 hours</li>
+                        <li>Total: 8-11 hours per week</li>
+                    </ul>
+                </div>
+
+                <!-- Week 1-2 Tab -->
+                <div class="tab-content" id="week1-2">
+                    <h2>Week 1-2: Complex Queries & Window Functions</h2>
+
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Master INSERT, UPDATE, and DELETE operations</li>
+                        <li>Use transactions effectively</li>
+                        <li>Implement bulk operations</li>
+                        <li>Handle data integrity constraints</li>
+                        <li>Use UPSERT (INSERT ... ON CONFLICT)</li>
+                    </ul>
+
+                    <h3>INSERT Operations</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Single and multiple row inserts</li>
+                        <li>INSERT with subqueries</li>
+                        <li>RETURNING clause</li>
+                        <li>Bulk inserts from CSV/file</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Single row insert
+INSERT INTO customers (customer_name, email, country)
+VALUES ('John Doe', 'john@example.com', 'Finland');
+
+-- Multiple rows
+INSERT INTO products (product_name, price, category)
+VALUES 
+    ('Laptop', 999.99, 'Electronics'),
+    ('Mouse', 29.99, 'Electronics'),
+    ('Keyboard', 79.99, 'Electronics');
+
+-- Insert with subquery
+INSERT INTO archived_orders (order_id, customer_id, order_date, total)
+SELECT order_id, customer_id, order_date, order_total
+FROM orders
+WHERE order_date < '2023-01-01';
+
+-- Insert with RETURNING (get inserted ID)
+INSERT INTO customers (customer_name, email)
+VALUES ('Jane Smith', 'jane@example.com')
+RETURNING customer_id, created_at;</code></pre>
+
+                    <h3>UPDATE Operations</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Conditional updates with WHERE</li>
+                        <li>UPDATE with JOIN (FROM clause)</li>
+                        <li>UPDATE with CASE statements</li>
+                        <li>Bulk updates</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Basic update
+UPDATE products
+SET price = price * 1.1
+WHERE category = 'Electronics';
+
+-- Update with JOIN
+UPDATE orders o
+SET status = 'Shipped'
+FROM customers c
+WHERE o.customer_id = c.customer_id
+  AND c.country = 'Finland'
+  AND o.order_date > '2024-01-01';
+
+-- Conditional update with CASE
+UPDATE employees
+SET salary = CASE
+    WHEN performance_rating = 'Excellent' THEN salary * 1.15
+    WHEN performance_rating = 'Good' THEN salary * 1.10
+    WHEN performance_rating = 'Average' THEN salary * 1.05
+    ELSE salary
+END
+WHERE last_review_date >= '2024-01-01';
+
+-- Update with subquery
+UPDATE products
+SET average_rating = (
+    SELECT AVG(rating)
+    FROM reviews
+    WHERE reviews.product_id = products.product_id
+);</code></pre>
+
+                    <h3>DELETE Operations</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Safe deletion practices</li>
+                        <li>DELETE with JOIN</li>
+                        <li>CASCADE deletes</li>
+                        <li>Soft deletes vs hard deletes</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Basic delete
+DELETE FROM orders
+WHERE order_date < '2020-01-01';
+
+-- Delete with subquery
+DELETE FROM customers
+WHERE customer_id IN (
+    SELECT customer_id
+    FROM orders
+    GROUP BY customer_id
+    HAVING MAX(order_date) < '2022-01-01'
+);
+
+-- Delete with JOIN (PostgreSQL)
+DELETE FROM order_items oi
+USING orders o
+WHERE oi.order_id = o.order_id
+  AND o.status = 'Cancelled';
+
+-- Soft delete (preferred for data retention)
+UPDATE customers
+SET deleted_at = CURRENT_TIMESTAMP,
+    status = 'Inactive'
+WHERE customer_id = 12345;</code></pre>
+
+                    <h3>Transactions & ACID Properties</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>BEGIN, COMMIT, ROLLBACK</li>
+                        <li>SAVEPOINT for partial rollbacks</li>
+                        <li>Transaction isolation levels</li>
+                        <li>Handling concurrent updates</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Basic transaction
+BEGIN;
+
+UPDATE accounts 
+SET balance = balance - 100 
+WHERE account_id = 1;
+
+UPDATE accounts 
+SET balance = balance + 100 
+WHERE account_id = 2;
+
+COMMIT;
+
+-- Transaction with SAVEPOINT
+BEGIN;
+
+INSERT INTO orders (customer_id, order_total) 
+VALUES (123, 500.00);
+
+SAVEPOINT before_items;
+
+INSERT INTO order_items (order_id, product_id, quantity)
+VALUES (LASTVAL(), 456, 2);
+
+-- If something goes wrong with items
+ROLLBACK TO SAVEPOINT before_items;
+
+-- Continue with other operations
+COMMIT;</code></pre>
+
+                    <h3>UPSERT (INSERT ... ON CONFLICT)</h3>
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Insert or update if exists
+INSERT INTO user_stats (user_id, login_count, last_login)
+VALUES (123, 1, CURRENT_TIMESTAMP)
+ON CONFLICT (user_id) 
+DO UPDATE SET 
+    login_count = user_stats.login_count + 1,
+    last_login = EXCLUDED.last_login;
+
+-- Insert or do nothing
+INSERT INTO unique_visitors (user_id, visit_date)
+VALUES (456, '2024-01-15')
+ON CONFLICT (user_id, visit_date) DO NOTHING;</code></pre>
+
+                    <h3>Week 5 Practice Problems</h3>
+                    <ol>
+                        <li>Implement a safe order cancellation process with transaction</li>
+                        <li>Create a bulk update script for price adjustments by category</li>
+                        <li>Write an UPSERT query for maintaining daily user statistics</li>
+                        <li>Archive old records while maintaining referential integrity</li>
+                        <li>Implement a soft delete system with recovery functionality</li>
+                    </ol>
+                </div>
+
+                <!-- Week 6 Tab -->
+                <div class="tab-content" id="week6">
+                    <h2>Week 6: Advanced Analytics & Data Warehousing</h2>
+
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Work with date/time data effectively</li>
+                        <li>Implement cohort analysis</li>
+                        <li>Calculate customer metrics (LTV, churn)</li>
+                        <li>Use JSON/array functions</li>
+                        <li>Understand data warehouse concepts</li>
+                    </ul>
+
+                    <h3>Date/Time Analytics</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Date extraction and formatting</li>
+                        <li>Date arithmetic and intervals</li>
+                        <li>Time series analysis</li>
+                        <li>Handling time zones</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Date extraction
+SELECT 
+    order_date,
+    EXTRACT(YEAR FROM order_date) AS year,
+    EXTRACT(MONTH FROM order_date) AS month,
+    EXTRACT(DOW FROM order_date) AS day_of_week,
+    DATE_TRUNC('week', order_date) AS week_start
+FROM orders;
+
+-- Date arithmetic
+SELECT 
+    customer_id,
+    first_order_date,
+    last_order_date,
+    AGE(last_order_date, first_order_date) AS customer_lifetime,
+    DATE_PART('day', last_order_date - first_order_date) AS days_active
+FROM customer_summary;
+
+-- Generate date series
+SELECT 
+    generate_series(
+        '2024-01-01'::date,
+        '2024-12-31'::date,
+        '1 day'::interval
+    )::date AS date;</code></pre>
+
+                    <h3>Cohort Analysis</h3>
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Monthly cohort retention
+WITH cohorts AS (
+    SELECT 
+        customer_id,
+        DATE_TRUNC('month', MIN(order_date)) AS cohort_month
+    FROM orders
+    GROUP BY customer_id
+),
+cohort_activity AS (
+    SELECT 
+        c.cohort_month,
+        DATE_TRUNC('month', o.order_date) AS activity_month,
+        COUNT(DISTINCT o.customer_id) AS active_customers
+    FROM cohorts c
+    JOIN orders o ON c.customer_id = o.customer_id
+    GROUP BY c.cohort_month, DATE_TRUNC('month', o.order_date)
+)
+SELECT 
+    cohort_month,
+    activity_month,
+    active_customers,
+    EXTRACT(MONTH FROM AGE(activity_month, cohort_month)) AS month_number
+FROM cohort_activity
+ORDER BY cohort_month, activity_month;</code></pre>
+
+                    <h3>Customer Analytics</h3>
+                    <h4>Key Metrics:</h4>
+                    <ul>
+                        <li>Customer Lifetime Value (LTV)</li>
+                        <li>Churn rate</li>
+                        <li>Average order value</li>
+                        <li>Purchase frequency</li>
+                        <li>RFM analysis (Recency, Frequency, Monetary)</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Customer Lifetime Value
+SELECT 
+    customer_id,
+    COUNT(*) AS order_count,
+    SUM(order_total) AS total_spent,
+    AVG(order_total) AS avg_order_value,
+    MAX(order_date) AS last_order_date,
+    DATE_PART('day', CURRENT_DATE - MAX(order_date)) AS days_since_last_order
+FROM orders
+GROUP BY customer_id;
+
+-- RFM Analysis
+WITH rfm AS (
+    SELECT 
+        customer_id,
+        DATE_PART('day', CURRENT_DATE - MAX(order_date)) AS recency,
+        COUNT(*) AS frequency,
+        SUM(order_total) AS monetary
+    FROM orders
+    GROUP BY customer_id
+)
+SELECT 
+    customer_id,
+    recency,
+    frequency,
+    monetary,
+    NTILE(5) OVER (ORDER BY recency DESC) AS r_score,
+    NTILE(5) OVER (ORDER BY frequency ASC) AS f_score,
+    NTILE(5) OVER (ORDER BY monetary ASC) AS m_score
+FROM rfm;
+
+-- Churn analysis
+WITH customer_activity AS (
+    SELECT 
+        customer_id,
+        MAX(order_date) AS last_order_date,
+        COUNT(*) AS total_orders
+    FROM orders
+    GROUP BY customer_id
+)
+SELECT 
+    COUNT(*) AS total_customers,
+    COUNT(*) FILTER (WHERE last_order_date < CURRENT_DATE - INTERVAL '90 days') AS churned_customers,
+    ROUND(
+        100.0 * COUNT(*) FILTER (WHERE last_order_date < CURRENT_DATE - INTERVAL '90 days') / COUNT(*),
+        2
+    ) AS churn_rate_pct
+FROM customer_activity
+WHERE total_orders > 1;</code></pre>
+
+                    <h3>Working with JSON</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>JSON operators (->, ->>, #>)</li>
+                        <li>Extracting JSON fields</li>
+                        <li>Filtering on JSON data</li>
+                        <li>Aggregating JSON arrays</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Extract JSON fields
+SELECT 
+    id,
+    metadata->>'customer_name' AS customer_name,
+    metadata->>'email' AS email,
+    (metadata->>'age')::int AS age
+FROM user_profiles
+WHERE metadata->>'country' = 'Finland';
+
+-- Query nested JSON
+SELECT 
+    order_id,
+    jsonb_array_elements(items) AS item,
+    jsonb_array_elements(items)->>'product_id' AS product_id,
+    (jsonb_array_elements(items)->>'quantity')::int AS quantity
+FROM orders_json;
+
+-- JSON aggregation
+SELECT 
+    category,
+    json_agg(
+        json_build_object(
+            'product_name', product_name,
+            'price', price
+        )
+    ) AS products
+FROM products
+GROUP BY category;</code></pre>
+
+                    <h3>Data Warehouse Concepts</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Star schema vs snowflake schema</li>
+                        <li>Fact tables and dimension tables</li>
+                        <li>Slowly Changing Dimensions (SCD)</li>
+                        <li>ETL vs ELT processes</li>
+                    </ul>
+
+                    <h4>Example Fact Table Query:</h4>
+                    <pre><code>-- Sales fact table with dimensional joins
+SELECT 
+    d.date,
+    d.year,
+    d.quarter,
+    d.month,
+    p.product_name,
+    p.category,
+    c.customer_name,
+    c.segment,
+    s.region,
+    f.quantity,
+    f.revenue,
+    f.cost,
+    f.revenue - f.cost AS profit
+FROM fact_sales f
+JOIN dim_date d ON f.date_key = d.date_key
+JOIN dim_product p ON f.product_key = p.product_key
+JOIN dim_customer c ON f.customer_key = c.customer_key
+JOIN dim_store s ON f.store_key = s.store_key
+WHERE d.year = 2024
+  AND p.category = 'Electronics';</code></pre>
+
+                    <h3>Final Project: Comprehensive Analytics Dashboard</h3>
+                    <p><strong>Build a complete analytics query set:</strong></p>
+                    <ol>
+                        <li>Customer segmentation analysis (RFM)</li>
+                        <li>Cohort retention analysis by month</li>
+                        <li>Product performance with trends</li>
+                        <li>Revenue forecasting using historical data</li>
+                        <li>Churn prediction indicators</li>
+                        <li>Create optimized views for common queries</li>
+                        <li>Document query performance and optimizations</li>
+                    </ol>
+
+                    <h3>Resources & Next Steps</h3>
+                    <ul>
+                        <li>Practice on SQL challenge platforms (LeetCode, HackerRank)</li>
+                        <li>Study real data warehouse schemas (Snowflake, Redshift)</li>
+                        <li>Learn database-specific features (PostgreSQL, MySQL)</li>
+                        <li>Move on to Machine Learning study plan</li>
+                    </ul>
+                </div>
+
+                <!-- Assessment Tab -->
+                <div class="tab-content" id="assessment">
+                    <h2>Assessment Checklist</h2>
+                    <p>After completing this 6-week study plan, you should be able to:</p>
+
+                    <h3>Complex Queries</h3>
+                    <ul class="checklist">
+                        <li>Write multi-table joins with correct JOIN types</li>
+                        <li>Use subqueries and CTEs appropriately</li>
+                        <li>Implement recursive CTEs for hierarchical data</li>
+                        <li>Decide when to use subqueries vs joins</li>
+                    </ul>
+
+                    <h3>Window Functions</h3>
+                    <ul class="checklist">
+                        <li>Use ROW_NUMBER, RANK, DENSE_RANK correctly</li>
+                        <li>Calculate running totals and moving averages</li>
+                        <li>Apply LAG/LEAD for period-over-period comparisons</li>
+                        <li>Use PARTITION BY effectively</li>
+                    </ul>
+
+                    <h3>Aggregations</h3>
+                    <ul class="checklist">
+                        <li>Master complex GROUP BY operations</li>
+                        <li>Use HAVING clause appropriately</li>
+                        <li>Implement ROLLUP and CUBE for subtotals</li>
+                        <li>Create pivot tables in SQL</li>
+                        <li>Use conditional aggregations with CASE</li>
+                    </ul>
+
+                    <h3>Performance & Optimization</h3>
+                    <ul class="checklist">
+                        <li>Read and interpret EXPLAIN plans</li>
+                        <li>Identify query bottlenecks</li>
+                        <li>Create appropriate indexes</li>
+                        <li>Optimize queries for large datasets</li>
+                        <li>Apply query tuning best practices</li>
+                    </ul>
+
+                    <h3>Data Manipulation</h3>
+                    <ul class="checklist">
+                        <li>Safely perform INSERT, UPDATE, DELETE operations</li>
+                        <li>Use transactions with proper error handling</li>
+                        <li>Implement UPSERT operations</li>
+                        <li>Handle bulk operations efficiently</li>
+                    </ul>
+
+                    <h3>Analytics</h3>
+                    <ul class="checklist">
+                        <li>Work with date/time data effectively</li>
+                        <li>Implement cohort analysis</li>
+                        <li>Calculate customer metrics (LTV, churn, RFM)</li>
+                        <li>Query and manipulate JSON data</li>
+                        <li>Understand data warehouse concepts</li>
+                    </ul>
+
+                    <h3>Self-Assessment Questions</h3>
+                    <ol>
+                        <li>Can you write a query to find the top 10 customers by revenue in each region?</li>
+                        <li>Can you explain when to use window functions vs GROUP BY?</li>
+                        <li>Can you optimize a slow query by reading its execution plan?</li>
+                        <li>Can you implement a monthly retention cohort analysis from scratch?</li>
+                        <li>Can you safely update millions of records using transactions?</li>
+                        <li>Do you understand the difference between star and snowflake schemas?</li>
+                    </ol>
+
+                    <h3>Practical Test</h3>
+                    <p>Complete these challenges to verify your SQL mastery:</p>
+                    <ol>
+                        <li><strong>LeetCode SQL:</strong> Solve 20+ medium and 5+ hard problems</li>
+                        <li><strong>HackerRank:</strong> Complete SQL advanced certification</li>
+                        <li><strong>Real Project:</strong> Build an analytics dashboard with 10+ complex queries</li>
+                        <li><strong>Performance:</strong> Optimize a query to run 10x faster</li>
+                    </ol>
+
+                    <p style="margin-top: 2rem; padding: 1.5rem; background: var(--bootcamp-light); border-radius: 8px;">
+                        <strong>✅ Completion Criteria:</strong> You've mastered SQL when you can confidently solve 
+                        complex business problems with efficient queries, optimize slow queries independently, and 
+                        understand data warehouse concepts. SQL mastery comes from practice—keep solving real-world 
+                        problems!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3>Completion Status</h3>
+                    <div class="completion-checkbox">
+                        <div class="checkbox-box"></div>
+                        <div class="checkbox-label">Mark as Complete</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Quick Links</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="index.html">← Back to Bootcamp Hub</a></li>
+                        <li><a href="python-study-plan.html">Previous: Python →</a></li>
+                        <li><a href="ml-study-plan.html">Next: Machine Learning →</a></li>
+                        <li><a href="interview-prep.html">Interview Prep</a></li>
+                        <li><a href="practice-problems.html">Practice Problems</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Study Duration</h3>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">
+                        <strong>Estimated:</strong> 6 weeks<br>
+                        <strong>Time commitment:</strong> 8-11 hours/week
+                    </p>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Practice Platforms</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="https://leetcode.com/problemset/database/" target="_blank">LeetCode SQL</a></li>
+                        <li><a href="https://www.hackerrank.com/domains/sql" target="_blank">HackerRank</a></li>
+                        <li><a href="https://datalemur.com/" target="_blank">DataLemur</a></li>
+                        <li><a href="https://www.sql-practice.com/" target="_blank">SQL Practice</a></li>
+                    </ul>
+                </div>
+
+                <a href="index.html" class="back-button">
+                    ← Back to Hub
+                </a>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Learning Journey. Data Science Bootcamp.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Completion checkbox functionality
+        const completionCheckbox = document.querySelector('.completion-checkbox');
+        const checkboxBox = document.querySelector('.checkbox-box');
+        
+        completionCheckbox.addEventListener('click', () => {
+            checkboxBox.classList.toggle('checked');
+        });
+    </script>
+</body>
+</html>>
+                        <li>Write complex multi-table joins</li>
+                        <li>Use subqueries and CTEs effectively</li>
+                        <li>Master window functions for analytics</li>
+                        <li>Understand PARTITION BY and ORDER BY</li>
+                        <li>Implement ranking and running calculations</li>
+                    </ul>
+
+                    <h3>Day 1-3: Advanced Joins & Subqueries</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Multiple table joins (INNER, LEFT, RIGHT, FULL OUTER)</li>
+                        <li>Self joins for hierarchical data</li>
+                        <li>Correlated vs non-correlated subqueries</li>
+                        <li>EXISTS and NOT EXISTS</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Multiple joins
+SELECT 
+    c.customer_name,
+    o.order_date,
+    p.product_name,
+    od.quantity,
+    od.unit_price
+FROM customers c
+INNER JOIN orders o ON c.customer_id = o.customer_id
+INNER JOIN order_details od ON o.order_id = od.order_id
+INNER JOIN products p ON od.product_id = p.product_id
+WHERE o.order_date >= '2024-01-01';
+
+-- Self join (finding employees and their managers)
+SELECT 
+    e.employee_name,
+    m.employee_name AS manager_name
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.employee_id;
+
+-- Subquery
+SELECT customer_name
+FROM customers
+WHERE customer_id IN (
+    SELECT customer_id
+    FROM orders
+    WHERE order_total > 1000
+);</code></pre>
+
+                    <h3>Day 4-7: Common Table Expressions (CTEs)</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Creating and using CTEs</li>
+                        <li>Multiple CTEs in one query</li>
+                        <li>Recursive CTEs for hierarchical data</li>
+                        <li>When to use CTEs vs subqueries</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Basic CTE
+WITH high_value_customers AS (
+    SELECT 
+        customer_id,
+        SUM(order_total) AS total_spent
+    FROM orders
+    GROUP BY customer_id
+    HAVING SUM(order_total) > 10000
+)
+SELECT 
+    c.customer_name,
+    h.total_spent
+FROM customers c
+INNER JOIN high_value_customers h ON c.customer_id = h.customer_id;
+
+-- Multiple CTEs
+WITH 
+monthly_sales AS (
+    SELECT 
+        DATE_TRUNC('month', order_date) AS month,
+        SUM(order_total) AS total_sales
+    FROM orders
+    GROUP BY DATE_TRUNC('month', order_date)
+),
+avg_monthly_sales AS (
+    SELECT AVG(total_sales) AS avg_sales
+    FROM monthly_sales
+)
+SELECT 
+    m.month,
+    m.total_sales,
+    a.avg_sales,
+    m.total_sales - a.avg_sales AS variance
+FROM monthly_sales m
+CROSS JOIN avg_monthly_sales a
+ORDER BY m.month;</code></pre>
+
+                    <h3>Week 2: Window Functions</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>ROW_NUMBER(), RANK(), DENSE_RANK()</li>
+                        <li>LAG() and LEAD() for comparing rows</li>
+                        <li>Running totals with SUM() OVER()</li>
+                        <li>Moving averages</li>
+                        <li>PARTITION BY for grouped calculations</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Ranking
+SELECT 
+    employee_name,
+    department,
+    salary,
+    RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS salary_rank
+FROM employees;
+
+-- Running total
+SELECT 
+    order_date,
+    order_total,
+    SUM(order_total) OVER (ORDER BY order_date) AS running_total
+FROM orders;
+
+-- LAG and LEAD (comparing to previous/next row)
+SELECT 
+    order_date,
+    order_total,
+    LAG(order_total) OVER (ORDER BY order_date) AS previous_order,
+    LEAD(order_total) OVER (ORDER BY order_date) AS next_order,
+    order_total - LAG(order_total) OVER (ORDER BY order_date) AS difference
+FROM orders;
+
+-- Moving average
+SELECT 
+    order_date,
+    order_total,
+    AVG(order_total) OVER (
+        ORDER BY order_date 
+        ROWS BETWEEN 6 PRECEDING AND CURRENT ROW
+    ) AS moving_avg_7days
+FROM orders;</code></pre>
+
+                    <h3>Week 1-2 Practice Problems</h3>
+                    <ol>
+                        <li>Find the top 3 products by revenue in each category</li>
+                        <li>Calculate month-over-month growth rate for sales</li>
+                        <li>Identify customers who haven't ordered in the last 90 days</li>
+                        <li>Find employees earning more than their department average</li>
+                        <li>Calculate cumulative percentage of total sales</li>
+                    </ol>
+                </div>
+
+                <!-- Week 3 Tab -->
+                <div class="tab-content" id="week3">
+                    <h2>Week 3: Aggregations & GROUP BY Mastery</h2>
+
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Master complex GROUP BY operations</li>
+                        <li>Use HAVING clause effectively</li>
+                        <li>Implement ROLLUP and CUBE for subtotals</li>
+                        <li>Create pivot tables in SQL</li>
+                        <li>Handle multiple aggregation levels</li>
+                    </ul>
+
+                    <h3>Advanced GROUP BY</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Multiple column grouping</li>
+                        <li>HAVING vs WHERE clauses</li>
+                        <li>Conditional aggregations with CASE</li>
+                        <li>FILTER clause (PostgreSQL)</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Multiple aggregations with CASE
+SELECT 
+    product_category,
+    COUNT(*) AS total_orders,
+    SUM(order_total) AS total_revenue,
+    AVG(order_total) AS avg_order_value,
+    SUM(CASE WHEN order_total > 100 THEN 1 ELSE 0 END) AS high_value_orders,
+    SUM(CASE WHEN order_total > 100 THEN order_total ELSE 0 END) AS high_value_revenue
+FROM orders o
+JOIN products p ON o.product_id = p.product_id
+GROUP BY product_category
+HAVING SUM(order_total) > 10000;
+
+-- Conditional aggregation
+SELECT 
+    DATE_TRUNC('month', order_date) AS month,
+    COUNT(*) AS total_orders,
+    COUNT(*) FILTER (WHERE order_total > 50) AS orders_over_50,
+    SUM(order_total) AS total_revenue,
+    SUM(order_total) FILTER (WHERE customer_type = 'Premium') AS premium_revenue
+FROM orders
+GROUP BY DATE_TRUNC('month', order_date);</code></pre>
+
+                    <h3>ROLLUP and CUBE</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Creating subtotals with ROLLUP</li>
+                        <li>Multi-dimensional aggregations with CUBE</li>
+                        <li>GROUPING SETS for custom groupings</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- ROLLUP for hierarchical subtotals
+SELECT 
+    region,
+    country,
+    city,
+    SUM(sales) AS total_sales
+FROM sales_data
+GROUP BY ROLLUP (region, country, city)
+ORDER BY region, country, city;
+
+-- CUBE for all possible combinations
+SELECT 
+    product_category,
+    customer_segment,
+    SUM(revenue) AS total_revenue
+FROM sales
+GROUP BY CUBE (product_category, customer_segment);
+
+-- GROUPING SETS for custom groupings
+SELECT 
+    year,
+    quarter,
+    month,
+    SUM(sales) AS total_sales
+FROM sales
+GROUP BY GROUPING SETS (
+    (year),
+    (year, quarter),
+    (year, quarter, month)
+);</code></pre>
+
+                    <h3>Pivot Tables in SQL</h3>
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Creating a pivot table (monthly sales by product)
+SELECT 
+    product_name,
+    SUM(CASE WHEN EXTRACT(MONTH FROM order_date) = 1 THEN sales ELSE 0 END) AS Jan,
+    SUM(CASE WHEN EXTRACT(MONTH FROM order_date) = 2 THEN sales ELSE 0 END) AS Feb,
+    SUM(CASE WHEN EXTRACT(MONTH FROM order_date) = 3 THEN sales ELSE 0 END) AS Mar,
+    SUM(CASE WHEN EXTRACT(MONTH FROM order_date) = 4 THEN sales ELSE 0 END) AS Apr
+FROM sales
+GROUP BY product_name;
+
+-- Using CROSSTAB (PostgreSQL)
+SELECT *
+FROM CROSSTAB(
+    'SELECT product_name, month, sales
+     FROM monthly_sales
+     ORDER BY 1, 2'
+) AS ct(product_name TEXT, Jan NUMERIC, Feb NUMERIC, Mar NUMERIC);</code></pre>
+
+                    <h3>Week 3 Practice Problems</h3>
+                    <ol>
+                        <li>Calculate revenue by region with subtotals and grand total</li>
+                        <li>Create a cohort analysis showing monthly retention rates</li>
+                        <li>Find products that have declining sales for 3 consecutive months</li>
+                        <li>Generate a pivot table showing sales by product and quarter</li>
+                        <li>Calculate customer lifetime value by acquisition channel</li>
+                    </ol>
+                </div>
+
+                <!-- Week 4 Tab -->
+                <div class="tab-content" id="week4">
+                    <h2>Week 4: Query Optimization & Performance</h2>
+
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Understand query execution plans</li>
+                        <li>Optimize queries for performance</li>
+                        <li>Use indexes effectively</li>
+                        <li>Identify and fix slow queries</li>
+                        <li>Apply query tuning best practices</li>
+                    </ul>
+
+                    <h3>Understanding EXPLAIN</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Reading execution plans</li>
+                        <li>Identifying bottlenecks (Seq Scan vs Index Scan)</li>
+                        <li>Understanding cost estimates</li>
+                        <li>Using EXPLAIN ANALYZE</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Basic EXPLAIN
+EXPLAIN
+SELECT * 
+FROM orders
+WHERE order_date > '2024-01-01';
+
+-- EXPLAIN ANALYZE (actually runs the query)
+EXPLAIN ANALYZE
+SELECT 
+    c.customer_name,
+    COUNT(*) AS order_count,
+    SUM(o.order_total) AS total_spent
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.customer_name
+HAVING SUM(o.order_total) > 1000;</code></pre>
+
+                    <h3>Indexing Strategies</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>When to create indexes</li>
+                        <li>Single-column vs multi-column indexes</li>
+                        <li>Index types (B-tree, Hash, GiST)</li>
+                        <li>Index maintenance and monitoring</li>
+                    </ul>
+
+                    <h4>Practice Examples:</h4>
+                    <pre><code>-- Create single-column index
+CREATE INDEX idx_orders_date ON orders(order_date);
+
+-- Multi-column index
+CREATE INDEX idx_orders_customer_date ON orders(customer_id, order_date);
+
+-- Partial index (for specific conditions)
+CREATE INDEX idx_active_customers ON customers(customer_id)
+WHERE status = 'active';
+
+-- Check index usage
+SELECT 
+    schemaname,
+    tablename,
+    indexname,
+    idx_scan,
+    idx_tup_read,
+    idx_tup_fetch
+FROM pg_stat_user_indexes
+ORDER BY idx_scan DESC;</code></pre>
+
+                    <h3>Query Optimization Techniques</h3>
+                    <h4>Best Practices:</h4>
+                    <ul>
+                        <li>Use LIMIT when testing queries</li>
+                        <li>Avoid SELECT * (specify needed columns)</li>
+                        <li>Use EXISTS instead of IN for subqueries</li>
+                        <li>Optimize JOIN order</li>
+                        <li>Use UNION ALL instead of UNION when appropriate</li>
+                        <li>Avoid functions in WHERE clauses on indexed columns</li>
+                    </ul>
+
+                    <h4>Before and After Examples:</h4>
+                    <pre><code>-- SLOW: Function on indexed column
+SELECT * FROM orders
+WHERE DATE(order_timestamp) = '2024-01-15';
+
+-- FAST: Use range query
+SELECT * FROM orders
+WHERE order_timestamp >= '2024-01-15'
+  AND order_timestamp < '2024-01-16';
+
+-- SLOW: Using IN with large subquery
+SELECT * FROM customers
+WHERE customer_id IN (
+    SELECT customer_id FROM orders WHERE order_total > 100
+);
+
+-- FAST: Using EXISTS
+SELECT * FROM customers c
+WHERE EXISTS (
+    SELECT 1 FROM orders o 
+    WHERE o.customer_id = c.customer_id 
+    AND o.order_total > 100
+);
+
+-- SLOW: Multiple OR conditions
+SELECT * FROM products
+WHERE category = 'Electronics'
+   OR category = 'Computers'
+   OR category = 'Phones';
+
+-- FAST: Use IN
+SELECT * FROM products
+WHERE category IN ('Electronics', 'Computers', 'Phones');</code></pre>
+
+                    <h3>Week 4 Practice Problems</h3>
+                    <ol>
+                        <li>Analyze and optimize a slow running report query</li>
+                        <li>Create appropriate indexes for a given workload</li>
+                        <li>Rewrite a query to avoid table scans</li>
+                        <li>Compare performance of different JOIN strategies</li>
+                        <li>Optimize a query with multiple subqueries</li>
+                    </ol>
+                </div>
+
+                <!-- Week 5 Tab -->
+                <div class="tab-content" id="week5">
+                    <h2>Week 5: Data Manipulation (DML)</h2>
+
+                    <h3>Learning Objectives</h

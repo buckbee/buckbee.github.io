@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Prep - Data Science Bootcamp</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #F4B942 0%, #e5a832 100%);
+            color: white;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+        }
+
+        .page-header p {
+            margin: 0;
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #F4B942;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #666;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+            color: #333;
+        }
+
+        .tab.active {
+            background: white;
+            color: #F4B942;
+            border-bottom: 3px solid #F4B942;
+            margin-bottom: -2px;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            line-height: 1.8;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h2 {
+            color: #F4B942;
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .tab-content h3 {
+            color: #333;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-card h3 {
+            margin: 0 0 1rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .quick-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quick-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .quick-links a {
+            color: #F4B942;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .quick-links a:hover {
+            transform: translateX(5px);
+            text-decoration: underline;
+        }
+
+        .question-box {
+            background: #f8f9fa;
+            padding: 1.2rem;
+            border-left: 4px solid #F4B942;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .question-box strong {
+            color: #F4B942;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-box {
+            background: #fff8e1;
+            padding: 1.2rem;
+            border-left: 4px solid #ffc107;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .tip-box strong {
+            color: #f57c00;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .company-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .company-item {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        pre {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            border-left: 4px solid #F4B942;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 968px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .company-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../../index.html" class="logo">My Learning Journey</a>
+                <ul>
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../subjects.html">Subjects</a></li>
+                    <li><a href="../../progress.html">Progress</a></li>
+                    <li><a href="index.html" class="active">Bootcamp</a></li>
+                    <li><a href="../../about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> / 
+            <a href="../../subjects.html">Subjects</a> / 
+            <a href="index.html">Data Science Bootcamp</a> / 
+            Interview Prep
+        </div>
+
+        <div class="page-header">
+            <h1>📋 Interview Preparation Guide</h1>
+            <p>Comprehensive preparation for data science interviews in Finland</p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab(event, 'overview')">Overview</button>
+                    <button class="tab" onclick="switchTab(event, 'behavioral')">Behavioral</button>
+                    <button class="tab" onclick="switchTab(event, 'technical')">Technical</button>
+                    <button class="tab" onclick="switchTab(event, 'coding')">Coding</button>
+                    <button class="tab" onclick="switchTab(event, 'system-design')">System Design</button>
+                    <button class="tab" onclick="switchTab(event, 'takehome')">Take-Home</button>
+                    <button class="tab" onclick="switchTab(event, 'finland')">Finland Tips</button>
+                </div>
+
+                <div id="overview" class="tab-content active">
+                    <h2>Interview Process Overview</h2>
+                    <p>Data science interviews typically consist of multiple rounds, each testing different skills. Understanding the structure helps you prepare effectively.</p>
+
+                    <h3>Typical Interview Structure</h3>
+                    <ol>
+                        <li><strong>Initial Screening (30-45 min)</strong>
+                            <ul>
+                                <li>HR or recruiter call</li>
+                                <li>Basic background verification</li>
+                                <li>Motivation and expectations</li>
+                                <li>Salary range discussion</li>
+                            </ul>
+                        </li>
+                        <li><strong>Technical Phone Screen (45-60 min)</strong>
+                            <ul>
+                                <li>Basic coding problems (Python/SQL)</li>
+                                <li>Statistics and ML fundamentals</li>
+                                <li>Discussion of past projects</li>
+                            </ul>
+                        </li>
+                        <li><strong>Take-Home Assignment (3-8 hours)</strong>
+                            <ul>
+                                <li>Real-world data analysis problem</li>
+                                <li>Model building and evaluation</li>
+                                <li>Report and presentation preparation</li>
+                            </ul>
+                        </li>
+                        <li><strong>Onsite/Virtual Loop (3-5 hours)</strong>
+                            <ul>
+                                <li>Behavioral interview with hiring manager</li>
+                                <li>Technical deep-dive with team members</li>
+                                <li>Coding challenge (whiteboard or laptop)</li>
+                                <li>System design or case study</li>
+                                <li>Team fit assessment</li>
+                            </ul>
+                        </li>
+                        <li><strong>Final Interview (30-60 min)</strong>
+                            <ul>
+                                <li>Meeting with senior leadership</li>
+                                <li>Cultural fit assessment</li>
+                                <li>Questions about the company</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <h3>Preparation Timeline</h3>
+                    <div class="question-box">
+                        <strong>4-6 Weeks Before</strong>
+                        Review fundamental concepts (statistics, ML algorithms, Python/SQL basics). Refresh your knowledge of common data structures and algorithms.
+                    </div>
+
+                    <div class="question-box">
+                        <strong>2-4 Weeks Before</strong>
+                        Practice coding problems daily on LeetCode/HackerRank. Review your past projects and prepare STAR stories. Study the company and its products.
+                    </div>
+
+                    <div class="question-box">
+                        <strong>1 Week Before</strong>
+                        Do mock interviews with friends or platforms. Review common behavioral questions. Prepare questions to ask interviewers. Ensure your setup works for virtual interviews.
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>Pro Tip:</strong>
+                        In Finland, interviews tend to be more relaxed and conversational compared to US-style interviews. However, technical expectations remain high. Focus on demonstrating both competence and humility.
+                    </div>
+                </div>
+
+                <div id="behavioral" class="tab-content">
+                    <h2>Behavioral Interview Questions</h2>
+                    <p>Behavioral questions assess your soft skills, teamwork, problem-solving approach, and cultural fit. Use the STAR method (Situation, Task, Action, Result) to structure your answers.</p>
+
+                    <h3>Common Questions with Framework</h3>
+
+                    <div class="question-box">
+                        <strong>Q: Tell me about yourself</strong>
+                        <p><em>Structure (2-3 minutes):</em></p>
+                        <ul>
+                            <li>Current role and responsibilities (30 sec)</li>
+                            <li>Relevant background and experience (1 min)</li>
+                            <li>Key achievements with metrics (45 sec)</li>
+                            <li>Why you're interested in this role (30 sec)</li>
+                        </ul>
+                        <p><strong>Example:</strong> "I'm currently a data analyst at Company X, where I build predictive models for customer churn. Previously, I studied statistics at University Y and worked on NLP projects. Last year, I reduced churn by 15% using ensemble methods. I'm excited about this role because..."</p>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: Describe a challenging data science project</strong>
+                        <p><em>STAR Framework:</em></p>
+                        <ul>
+                            <li><strong>Situation:</strong> "We had 30% of users churning within 3 months..."</li>
+                            <li><strong>Task:</strong> "I was tasked with building a model to predict churn..."</li>
+                            <li><strong>Action:</strong> "I collected 18 features, tried 5 algorithms, and deployed XGBoost..."</li>
+                            <li><strong>Result:</strong> "Reduced churn by 12%, saving €500K annually..."</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: Tell me about a time you disagreed with a team member</strong>
+                        <p><em>Focus on:</em> Communication, respect, finding compromise, learning from others.</p>
+                        <p><strong>Good approach:</strong> "During a project, my colleague wanted to use deep learning while I suggested a simpler model. I presented my reasoning (faster iteration, interpretability), but also asked about their concerns. We compromised by prototyping both approaches, and ultimately the simpler model performed better for our use case. I learned to always test assumptions rather than argue theoretically."</p>
+                    </div>
+
+                    <h3>Essential Questions to Prepare</h3>
+                    <ol>
+                        <li>Tell me about a time you failed and what you learned</li>
+                        <li>Describe a situation where you had to explain complex technical concepts to non-technical stakeholders</li>
+                        <li>How do you prioritize multiple projects with tight deadlines?</li>
+                        <li>Tell me about a time you went above and beyond</li>
+                        <li>Describe a situation where you had to work with incomplete or messy data</li>
+                        <li>How do you stay updated with new developments in data science?</li>
+                        <li>Tell me about a time you had to make a decision without complete information</li>
+                        <li>Describe your approach to collaborating with software engineers</li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <strong>Finnish Interview Culture:</strong>
+                        Finns value honesty and directness. Don't exaggerate achievements, but also don't be overly modest. Be prepared for silence after your answers - it's normal while they process information.
+                    </div>
+
+                    <h3>Questions to Ask Them</h3>
+                    <ul>
+                        <li>What does success look like in this role after 6 months?</li>
+                        <li>How does the data science team collaborate with product and engineering?</li>
+                        <li>What are the biggest technical challenges the team is facing?</li>
+                        <li>How do you measure the impact of data science projects?</li>
+                        <li>What opportunities are there for professional development?</li>
+                        <li>How is the data infrastructure and tooling? (MLOps, CI/CD, etc.)</li>
+                    </ul>
+                </div>
+
+                <div id="technical" class="tab-content">
+                    <h2>Technical Interview Questions</h2>
+                    <p>Technical rounds test your understanding of statistics, machine learning, and practical problem-solving. Be prepared to explain concepts clearly and discuss trade-offs.</p>
+
+                    <h3>Statistics & Probability</h3>
+
+                    <div class="question-box">
+                        <strong>Q: Explain the difference between Type I and Type II errors</strong>
+                        <p><strong>Answer:</strong> Type I error (false positive) occurs when we reject a true null hypothesis - like declaring a drug effective when it isn't. Type II error (false negative) is failing to reject a false null hypothesis - missing a real effect. The significance level (α) controls Type I error, while power (1-β) relates to Type II error.</p>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: When would you use a t-test vs. chi-square test?</strong>
+                        <p><strong>Answer:</strong> Use t-test when comparing means of continuous variables (e.g., average revenue between two groups). Use chi-square test for categorical variables (e.g., testing if customer churn rate differs across regions).</p>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: What is the Central Limit Theorem and why does it matter?</strong>
+                        <p><strong>Answer:</strong> CLT states that the sampling distribution of the mean approaches a normal distribution as sample size increases, regardless of the population distribution. This is fundamental because it allows us to use normal distribution-based inference methods (confidence intervals, hypothesis tests) even when the underlying data isn't normally distributed.</p>
+                    </div>
+
+                    <h3>Machine Learning Fundamentals</h3>
+
+                    <div class="question-box">
+                        <strong>Q: Explain bias-variance tradeoff</strong>
+                        <p><strong>Answer:</strong> Bias is error from overly simplistic models (underfitting). Variance is error from models too sensitive to training data (overfitting). High bias = poor training and test performance. High variance = great training but poor test performance. Goal is to find the sweet spot minimizing total error = bias² + variance + irreducible error.</p>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: How do you handle imbalanced datasets?</strong>
+                        <p><strong>Answer:</strong> Multiple approaches:
+                        <ul>
+                            <li><strong>Resampling:</strong> Oversample minority (SMOTE) or undersample majority</li>
+                            <li><strong>Algorithm-level:</strong> Use class weights (class_weight='balanced')</li>
+                            <li><strong>Metrics:</strong> Use precision, recall, F1, AUC-ROC instead of accuracy</li>
+                            <li><strong>Ensemble:</strong> Combine multiple models or use BalancedRandomForest</li>
+                        </ul>
+                        Choice depends on dataset size and problem context.</p>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: Random Forest vs. Gradient Boosting - when to use each?</strong>
+                        <p><strong>Answer:</strong></p>
+                        <ul>
+                            <li><strong>Random Forest:</strong> Parallel trees, more robust to outliers/noise, less prone to overfitting, faster training. Use when you want a quick, stable baseline.</li>
+                            <li><strong>Gradient Boosting:</strong> Sequential trees, higher accuracy potential, more tuning required, risk of overfitting. Use when you need maximum performance and have time to tune.</li>
+                        </ul>
+                    </div>
+
+                    <h3>Deep Learning Concepts</h3>
+
+                    <div class="question-box">
+                        <strong>Q: Explain backpropagation intuitively</strong>
+                        <p><strong>Answer:</strong> Backpropagation calculates gradients of the loss function with respect to each weight by applying the chain rule backwards through the network. Starting from the output, we compute how much each weight contributed to the error, then update weights to minimize that error. It's essentially "credit assignment" - figuring out which weights are responsible for mistakes.</p>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: Why do we need activation functions?</strong>
+                        <p><strong>Answer:</strong> Without activation functions, neural networks would just be stacks of linear transformations, equivalent to a single linear model. Activation functions (ReLU, sigmoid, tanh) introduce non-linearity, allowing networks to learn complex patterns. ReLU is most common because it's computationally efficient and mitigates vanishing gradient problems.</p>
+                    </div>
+
+                    <h3>Model Evaluation</h3>
+
+                    <div class="question-box">
+                        <strong>Q: How do you evaluate a recommendation system?</strong>
+                        <p><strong>Answer:</strong> Multiple metrics:
+                        <ul>
+                            <li><strong>Ranking:</strong> Mean Average Precision (MAP), NDCG</li>
+                            <li><strong>Prediction:</strong> RMSE, MAE for ratings</li>
+                            <li><strong>Business:</strong> Click-through rate, conversion rate, revenue lift</li>
+                            <li><strong>Coverage:</strong> Catalog coverage, diversity</li>
+                            <li><strong>Online:</strong> A/B testing with actual user behavior</li>
+                        </ul>
+                        </p>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>Interview Tip:</strong>
+                        Always discuss trade-offs. "It depends" is a good starting point if you explain what it depends on. Interviewers want to see your reasoning process, not just memorized answers.
+                    </div>
+                </div>
+
+                <div id="coding" class="tab-content">
+                    <h2>Coding Challenges</h2>
+                    <p>Coding rounds test your Python programming skills, data manipulation, and algorithmic thinking. Practice is essential.</p>
+
+                    <h3>Common Patterns</h3>
+
+                    <h4>1. Data Manipulation (Pandas)</h4>
+                    <div class="question-box">
+                        <strong>Q: Given a DataFrame with sales data, find the top 3 products by revenue per region</strong>
+<pre><code>import pandas as pd
+
+# Sample approach
+result = (df.groupby(['region', 'product'])
+           ['revenue'].sum()
+           .reset_index()
+           .sort_values('revenue', ascending=False)
+           .groupby('region')
+           .head(3))
+</code></pre>
+                    </div>
+
+                    <h4>2. Array/List Problems</h4>
+                    <div class="question-box">
+                        <strong>Q: Find all pairs in an array that sum to a target value</strong>
+<pre><code>def find_pairs(arr, target):
+    seen = set()
+    pairs = []
+    
+    for num in arr:
+        complement = target - num
+        if complement in seen:
+            pairs.append((complement, num))
+        seen.add(num)
+    
+    return pairs
+
+# Time: O(n), Space: O(n)
+</code></pre>
+                    </div>
+
+                    <h4>3. String Manipulation</h4>
+                    <div class="question-box">
+                        <strong>Q: Check if a string is a valid palindrome (ignoring non-alphanumeric)</strong>
+<pre><code>def is_palindrome(s):
+    # Clean and lowercase
+    cleaned = ''.join(c.lower() for c in s if c.isalnum())
+    return cleaned == cleaned[::-1]
+
+# Or using two pointers for O(1) space
+def is_palindrome_optimized(s):
+    left, right = 0, len(s) - 1
+    
+    while left < right:
+        while left < right and not s[left].isalnum():
+            left += 1
+        while left < right and not s[right].isalnum():
+            right -= 1
+            
+        if s[left].lower() != s[right].lower():
+            return False
+            
+        left += 1
+        right -= 1
+    
+    return True
+</code></pre>
+                    </div>
+
+                    <h4>4. SQL Queries</h4>
+                    <div class="question-box">
+                        <strong>Q: Write a query to find the second highest salary</strong>
+<pre><code>-- Method 1: Using LIMIT and OFFSET
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
+
+-- Method 2: Using subquery
+SELECT MAX(salary)
+FROM employees
+WHERE salary < (SELECT MAX(salary) FROM employees);
+
+-- Method 3: Using DENSE_RANK (handles ties better)
+SELECT salary
+FROM (
+    SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) as rank
+    FROM employees
+) ranked
+WHERE rank = 2;
+</code></pre>
+                    </div>
+
+                    <h3>Algorithm Problems to Practice</h3>
+                    <ol>
+                        <li><strong>Arrays/Strings:</strong> Two Sum, Longest Substring Without Repeating Characters, Merge Intervals</li>
+                        <li><strong>Linked Lists:</strong> Reverse Linked List, Detect Cycle, Merge Two Sorted Lists</li>
+                        <li><strong>Trees:</strong> Binary Tree Traversal, Validate BST, Lowest Common Ancestor</li>
+                        <li><strong>Dynamic Programming:</strong> Fibonacci, Coin Change, Longest Increasing Subsequence</li>
+                        <li><strong>Graphs:</strong> BFS/DFS, Number of Islands, Course Schedule</li>
+                    </ol>
+
+                    <h3>Data Science Specific Coding</h3>
+
+                    <div class="question-box">
+                        <strong>Q: Implement k-means clustering from scratch</strong>
+<pre><code>import numpy as np
+
+def kmeans(X, k, max_iters=100):
+    # Initialize centroids randomly
+    n_samples = X.shape[0]
+    random_idx = np.random.choice(n_samples, k, replace=False)
+    centroids = X[random_idx]
+    
+    for _ in range(max_iters):
+        # Assign points to nearest centroid
+        distances = np.sqrt(((X - centroids[:, np.newaxis])**2).sum(axis=2))
+        labels = np.argmin(distances, axis=0)
+        
+        # Update centroids
+        new_centroids = np.array([X[labels == i].mean(axis=0) 
+                                   for i in range(k)])
+        
+        # Check convergence
+        if np.all(centroids == new_centroids):
+            break
+            
+        centroids = new_centroids
+    
+    return labels, centroids
+</code></pre>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: Calculate correlation matrix efficiently</strong>
+<pre><code>import numpy as np
+
+def correlation_matrix(X):
+    # X: n_samples x n_features
+    # Standardize features
+    X_std = (X - X.mean(axis=0)) / X.std(axis=0)
+    
+    # Compute correlation
+    n = X.shape[0]
+    corr_matrix = (X_std.T @ X_std) / (n - 1)
+    
+    return corr_matrix
+
+# Or simply use pandas
+import pandas as pd
+corr = pd.DataFrame(X).corr()
+</code></pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <strong>Coding Interview Tips:</strong>
+                        <ul>
+                            <li>Talk through your approach before coding</li>
+                            <li>Start with a brute force solution, then optimize</li>
+                            <li>Test with edge cases (empty input, single element, duplicates)</li>
+                            <li>Discuss time and space complexity</li>
+                            <li>Write clean, readable code with meaningful variable names</li>
+                            <li>Ask clarifying questions (input format, constraints, expected output)</li>
+                        </ul>
+                    </div>
+
+                    <h3>Practice Platforms</h3>
+                    <ul>
+                        <li><strong>LeetCode:</strong> Focus on Easy and Medium problems, do 2-3 per day</li>
+                        <li><strong>HackerRank:</strong> Good for SQL and pandas practice</li>
+                        <li><strong>DataLemur:</strong> SQL questions specifically for data roles</li>
+                        <li><strong>StrataScratch:</strong> Real interview questions from tech companies</li>
+                    </ul>
+                </div>
+
+                <div id="system-design" class="tab-content">
+                    <h2>System Design for Data Science</h2>
+                    <p>System design questions test your ability to architect scalable ML systems and data pipelines. Focus on discussing trade-offs and constraints.</p>
+
+                    <h3>Common Design Questions</h3>
+
+                    <div class="question-box">
+                        <strong>Q: Design a recommendation system for an e-commerce platform</strong>
+                        <p><strong>Approach:</strong></p>
+                        <ol>
+                            <li><strong>Clarify Requirements (5 min)</strong>
+                                <ul>
+                                    <li>Scale: How many users? Products? Daily active users?</li>
+                                    <li>Type: Collaborative filtering, content-based, or hybrid?</li>
+                                    <li>Real-time vs. batch recommendations?</li>
+                                    <li>Cold start problem: New users/items?</li>
+                                </ul>
+                            </li>
+                            <li><strong>High-Level Architecture (10 min)</strong>
+                                <ul>
+                                    <li>Data collection: User interactions, product features</li>
+                                    <li>Feature engineering: User embeddings, item embeddings</li>
+                                    <li>Model: Matrix factorization or neural collaborative filtering</li>
+                                    <li>Serving: API for real-time predictions, cached recommendations</li>
+                                    <li>Monitoring: Click-through rate, conversion metrics</li>
+                                </ul>
+                            </li>
+                            <li><strong>Deep Dive (15 min)</strong>
+                                <ul>
+                                    <li>Model choice: Why ALS or neural network?</li>
+                                    <li>Scalability: Distributed training with Spark MLlib</li>
+                                    <li>Feature store: How to manage user/item features?</li>
+                                    <li>A/B testing: How to evaluate new model versions?</li>
+                                    <li>Cold start: Content-based fallback for new items</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Q: Design a fraud detection system for credit card transactions</strong>
+                        <p><strong>Key Components:</strong></p>
+                        <ul>
+                            <li><strong>Data Pipeline:</strong> Real-time transaction stream (Kafka) → Feature extraction → Model inference → Decision</li>
+                            <li><strong>Features:</strong> Transaction amount, location, merchant, time, user history, velocity features</li>
+                            <li><strong>Model:</strong> Ensemble of Random Forest + XGBoost + rule-based system</li>
+                            <li><strong>Latency:</strong> Must respond in <100ms for real-time authorization</li>
+                            <li><strong>Threshold tuning:</strong> Balance false positives (user friction) vs. false negatives (fraud cost)</li>
+                            <li><strong>Feedback loop:</strong> Incorporate manual review labels to retrain model</li>
+                            <li><strong>Model updates:</strong> Daily retraining with new fraud patterns</li>
+                        </ul>
+                    </div>
+
+                    <h3>ML System Design Framework</h3>
+
+                    <div class="question-box">
+                        <strong>Step 1: Problem Formulation (5 minutes)</strong>
+                        <ul>
+                            <li>What's the business objective?</li>
+                            <li>Is this classification, regression, ranking, or generation?</li>
+                            <li>What are the success metrics?</li>
+                            <li>What are the constraints (latency, cost, accuracy)?</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Step 2: Data & Features (10 minutes)</strong>
+                        <ul>
+                            <li>What data sources are available?</li>
+                            <li>What features would be useful?</li>
+                            <li>How to handle missing data?</li>
+                            <li>Feature engineering pipeline</li>
+                            <li>Data quality and monitoring</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Step 3: Model Selection (10 minutes)</strong>
+                        <ul>
+                            <li>Start simple (logistic regression, linear model)</li>
+                            <li>Why move to complex models?</li>
+                            <li>Trade-offs: interpretability vs. accuracy</li>
+                            <li>Ensemble strategies</li>
+                            <li>How to handle class imbalance, cold start, etc.?</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Step 4: Training & Evaluation (5 minutes)</strong>
+                        <ul>
+                            <li>Train/val/test split strategy</li>
+                            <li>Cross-validation approach</li>
+                            <li>Metrics: Why specific metrics matter</li>
+                            <li>Hyperparameter tuning</li>
+                            <li>Distributed training if needed</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Step 5: Deployment & Serving (10 minutes)</strong>
+                        <ul>
+                            <li>Batch predictions vs. real-time API</li>
+                            <li>Model serialization (pickle, ONNX, TensorFlow Serving)</li>
+                            <li>Caching strategies</li>
+                            <li>Load balancing and scaling</li>
+                            <li>Latency requirements and optimization</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Step 6: Monitoring & Maintenance (5 minutes)</strong>
+                        <ul>
+                            <li>Model performance metrics (accuracy, latency)</li>
+                            <li>Data drift detection</li>
+                            <li>A/B testing framework</li>
+                            <li>Retraining frequency and triggers</li>
+                            <li>Alerting on anomalies</li>
+                        </ul>
+                    </div>
+
+                    <h3>Additional Design Questions to Practice</h3>
+                    <ol>
+                        <li>Design a search ranking system for an e-commerce site</li>
+                        <li>Build a spam detection system for emails</li>
+                        <li>Design a newsfeed ranking algorithm (like Facebook/LinkedIn)</li>
+                        <li>Create a dynamic pricing system for ride-sharing</li>
+                        <li>Design a churn prediction system for SaaS</li>
+                        <li>Build an ad click prediction system</li>
+                        <li>Design a sentiment analysis system for social media monitoring</li>
+                    </ol>
+
+                    <div class="tip-box">
+                        <strong>System Design Tips:</strong>
+                        <ul>
+                            <li>Draw diagrams - visual representations help communicate your ideas</li>
+                            <li>Always discuss trade-offs (accuracy vs. latency, complexity vs. interpretability)</li>
+                            <li>Consider the full ML lifecycle, not just model training</li>
+                            <li>Think about scale: What works for 1000 users vs. 10 million?</li>
+                            <li>Ask questions throughout - it's a conversation, not a monologue</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="takehome" class="tab-content">
+                    <h2>Take-Home Assignments</h2>
+                    <p>Take-home projects are common in data science interviews. They typically take 3-8 hours and test your end-to-end skills: data cleaning, EDA, modeling, and communication.</p>
+
+                    <h3>Common Take-Home Formats</h3>
+
+                    <div class="question-box">
+                        <strong>Format 1: Predictive Modeling Challenge</strong>
+                        <p><strong>Typical Task:</strong> Given a dataset, predict a target variable and explain your approach.</p>
+                        <p><strong>Deliverables:</strong></p>
+                        <ul>
+                            <li>Jupyter notebook with clean, documented code</li>
+                            <li>Model performance metrics and comparison</li>
+                            <li>Feature importance analysis</li>
+                            <li>Written report (1-2 pages)</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Format 2: Data Analysis & Insights</strong>
+                        <p><strong>Typical Task:</strong> Analyze a business dataset and provide actionable recommendations.</p>
+                        <p><strong>Deliverables:</strong></p>
+                        <ul>
+                            <li>Exploratory data analysis with visualizations</li>
+                            <li>Statistical tests and findings</li>
+                            <li>Business recommendations</li>
+                            <li>Slide deck (5-10 slides)</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Format 3: A/B Test Analysis</strong>
+                        <p><strong>Typical Task:</strong> Given A/B test data, determine if a feature should be launched.</p>
+                        <p><strong>Deliverables:</strong></p>
+                        <ul>
+                            <li>Hypothesis testing (t-test, chi-square)</li>
+                            <li>Statistical significance and practical significance</li>
+                            <li>Recommendation with confidence intervals</li>
+                            <li>Potential risks and next steps</li>
+                        </ul>
+                    </div>
+
+                    <h3>Best Practices</h3>
+
+                    <h4>1. Structure Your Notebook</h4>
+                    <pre><code># Recommended structure:
+1. Executive Summary (key findings)
+2. Problem Understanding
+3. Data Exploration & Cleaning
+4. Feature Engineering
+5. Model Development & Evaluation
+6. Results & Interpretation
+7. Recommendations
+8. Next Steps / Limitations</code></pre>
+
+                    <h4>2. Code Quality</h4>
+                    <ul>
+                        <li><strong>Comments:</strong> Explain your reasoning, not just what the code does</li>
+                        <li><strong>Functions:</strong> Extract reusable logic into functions</li>
+                        <li><strong>Naming:</strong> Use descriptive variable names</li>
+                        <li><strong>Testing:</strong> Show you validated your approach</li>
+                    </ul>
+
+                    <pre><code># Good example
+def calculate_feature_importance(model, feature_names, top_n=10):
+    """
+    Extract and sort feature importances from trained model.
+    
+    Args:
+        model: Trained sklearn model with feature_importances_
+        feature_names: List of feature names
+        top_n: Number of top features to return
+    
+    Returns:
+        DataFrame with features sorted by importance
+    """
+    importance_df = pd.DataFrame({
+        'feature': feature_names,
+        'importance': model.feature_importances_
+    }).sort_values('importance', ascending=False).head(top_n)
+    
+    return importance_df</code></pre>
+
+                    <h4>3. Visualizations</h4>
+                    <div class="tip-box">
+                        <strong>Visualization Checklist:</strong>
+                        <ul>
+                            <li>Clear titles and axis labels</li>
+                            <li>Appropriate chart types for the data</li>
+                            <li>Consistent color scheme</li>
+                            <li>Readable font sizes</li>
+                            <li>Captions explaining what to notice</li>
+                        </ul>
+                    </div>
+
+                    <pre><code># Good visualization example
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(10, 6))
+sns.barplot(data=top_features, x='importance', y='feature', palette='viridis')
+plt.title('Top 10 Most Important Features for Churn Prediction', 
+          fontsize=14, fontweight='bold')
+plt.xlabel('Feature Importance', fontsize=12)
+plt.ylabel('Feature', fontsize=12)
+plt.tight_layout()
+plt.savefig('feature_importance.png', dpi=300, bbox_inches='tight')
+plt.show()</code></pre>
+
+                    <h4>4. Model Development</h4>
+                    <div class="question-box">
+                        <strong>Show Your Process:</strong>
+                        <ul>
+                            <li>Start with a baseline model (logistic regression, mean prediction)</li>
+                            <li>Try 3-5 different algorithms</li>
+                            <li>Use cross-validation, not just train/test split</li>
+                            <li>Compare models on multiple metrics</li>
+                            <li>Explain why you chose your final model</li>
+                            <li>Discuss what you would try with more time</li>
+                        </ul>
+                    </div>
+
+                    <pre><code># Model comparison example
+models = {
+    'Logistic Regression': LogisticRegression(random_state=42),
+    'Random Forest': RandomForestClassifier(n_estimators=100, random_state=42),
+    'XGBoost': XGBClassifier(random_state=42),
+    'LightGBM': LGBMClassifier(random_state=42)
+}
+
+results = []
+for name, model in models.items():
+    scores = cross_val_score(model, X_train, y_train, 
+                             cv=5, scoring='roc_auc')
+    results.append({
+        'Model': name,
+        'Mean AUC': scores.mean(),
+        'Std': scores.std()
+    })
+
+results_df = pd.DataFrame(results).sort_values('Mean AUC', ascending=False)
+print(results_df)</code></pre>
+
+                    <h4>5. Written Report</h4>
+                    <div class="question-box">
+                        <strong>Report Structure (1-2 pages):</strong>
+                        <ol>
+                            <li><strong>Executive Summary (3-4 sentences):</strong> What did you find? What's your recommendation?</li>
+                            <li><strong>Approach (1 paragraph):</strong> What methods did you use and why?</li>
+                            <li><strong>Key Findings (3-5 bullet points):</strong> Most important insights</li>
+                            <li><strong>Model Performance:</strong> Metrics with interpretation</li>
+                            <li><strong>Recommendations:</strong> Actionable next steps</li>
+                            <li><strong>Limitations:</strong> What would you do differently with more time/data?</li>
+                        </ol>
+                    </div>
+
+                    <h3>Common Mistakes to Avoid</h3>
+                    <ul>
+                        <li>❌ Not reading the instructions carefully</li>
+                        <li>❌ Spending too much time on one approach instead of trying multiple models</li>
+                        <li>❌ Forgetting to document your assumptions</li>
+                        <li>❌ Not addressing the business problem, just building models</li>
+                        <li>❌ Overly complex solutions when simple works better</li>
+                        <li>❌ No error handling or data validation</li>
+                        <li>❌ Poor visualization quality (no labels, hard to read)</li>
+                        <li>❌ Not discussing limitations or next steps</li>
+                        <li>❌ Submitting with code that doesn't run</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <strong>Time Management (for 6-hour assignment):</strong>
+                        <ul>
+                            <li>Hour 1: Understand problem, explore data</li>
+                            <li>Hour 2-3: Feature engineering, baseline models</li>
+                            <li>Hour 3-4: Advanced models, hyperparameter tuning</li>
+                            <li>Hour 4-5: Analysis, visualizations, documentation</li>
+                            <li>Hour 5-6: Write report, clean up notebook, final review</li>
+                        </ul>
+                    </div>
+
+                    <h3>Follow-Up Presentation Tips</h3>
+                    <p>Many companies ask you to present your take-home project. Prepare a 10-15 minute presentation covering:</p>
+                    <ol>
+                        <li>Problem statement and your understanding</li>
+                        <li>Data exploration highlights (1-2 key insights)</li>
+                        <li>Modeling approach and why you chose it</li>
+                        <li>Results and model performance</li>
+                        <li>Business recommendations</li>
+                        <li>What you'd do with more time</li>
+                    </ol>
+
+                    <p><strong>Be ready to answer:</strong></p>
+                    <ul>
+                        <li>"Why didn't you try X algorithm?"</li>
+                        <li>"How would this scale to production?"</li>
+                        <li>"What if the data distribution changes?"</li>
+                        <li>"How confident are you in these results?"</li>
+                    </ul>
+                </div>
+
+                <div id="finland" class="tab-content">
+                    <h2>Finland-Specific Interview Tips</h2>
+                    <p>The Finnish job market has unique cultural aspects and expectations. Understanding these will help you navigate interviews successfully.</p>
+
+                    <h3>Cultural Considerations</h3>
+
+                    <div class="question-box">
+                        <strong>Communication Style</strong>
+                        <ul>
+                            <li><strong>Directness:</strong> Finns value honest, straightforward communication. It's not rude to be direct</li>
+                            <li><strong>Silence:</strong> Pauses in conversation are normal - they're thinking, not uncomfortable</li>
+                            <li><strong>Modesty:</strong> Don't over-hype achievements, but don't be overly modest either. State facts clearly</li>
+                            <li><strong>Small talk:</strong> Less emphasis on small talk than in many cultures. Getting straight to business is acceptable</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <strong>Work Culture Expectations</strong>
+                        <ul>
+                            <li><strong>Work-life balance:</strong> Highly valued. Mentioning family or hobbies is normal and positive</li>
+                            <li><strong>Equality:</strong> Flat hierarchies. You'll likely interview with future colleagues, not just managers</li>
+                            <li><strong>Punctuality:</strong> Be on time. Early is better than late</li>
+                            <li><strong>Trust:</strong> Once hired, you're trusted to do your work independently</li>
+                        </ul>
+                    </div>
+
+                    <h3>Language Considerations</h3>
+
+                    <div class="tip-box">
+                        <strong>Language Requirements:</strong>
+                        <ul>
+                            <li>Most data science roles in Finland are conducted in English</li>
+                            <li>Finnish not always required, especially in Helsinki and Tampere tech scenes</li>
+                            <li>Swedish useful but rarely required for tech roles</li>
+                            <li>Show willingness to learn Finnish if planning to stay long-term</li>
+                        </ul>
+                    </div>
+
+                    <h3>Salary Expectations</h3>
+
+                    <div class="question-box">
+                        <strong>Typical Salary Ranges (2025, gross annual)</strong>
+                        <ul>
+                            <li><strong>Junior Data Analyst:</strong> €35,000 - €45,000</li>
+                            <li><strong>Data Analyst:</strong> €45,000 - €60,000</li>
+                            <li><strong>Data Scientist (mid-level):</strong> €55,000 - €75,000</li>
+                            <li><strong>Senior Data Scientist:</strong> €70,000 - €95,000</li>
+                            <li><strong>Lead/Principal Data Scientist:</strong> €85,000 - €120,000</li>
+                            <li><strong>ML Engineer:</strong> €60,000 - €90,000</li>
+                        </ul>
+                        <p><em>Note: Salaries in Helsinki typically 10-20% higher than other cities. Tech companies (gaming, SaaS) often pay more than traditional industries.</em></p>
+                    </div>
+
+                    <h3>Major Employers</h3>
+
+                    <div class="company-list">
+                        <div class="company-item"><strong>Supercell</strong> - Mobile gaming</div>
+                        <div class="company-item"><strong>Rovio</strong> - Gaming (Angry Birds)</div>
+                        <div class="company-item"><strong>Nokia</strong> - Telecom, networking</div>
+                        <div class="company-item"><strong>Wolt</strong> - Food delivery (DoorDash)</div>
+                        <div class="company-item"><strong>Kesko</strong> - Retail, supply chain</div>
+                        <div class="company-item"><strong>Nordea</strong> - Banking, fintech</div>
+                        <div class="company-item"><strong>OP Financial Group</strong> - Banking</div>
+                        <div class="company-item"><strong>Fortum</strong> - Energy analytics</div>
+                        <div class="company-item"><strong>Kone</strong> - Elevator IoT data</div>
+                        <div class="company-item"><strong>Elisa</strong> - Telecom analytics</div>
+                    </div>
+
+                    <h3>Interview Process Differences</h3>
+
+                    <div class="question-box">
+                        <strong>What's Different in Finland:</strong>
+                        <ul>
+                            <li><strong>Fewer rounds:</strong> Typically 2-4 rounds vs. 5-7 in US</li>
+                            <li><strong>Less pressure:</strong> More conversational, less "performative"</li>
+                            <li><strong>Team involvement:</strong> You'll likely meet multiple team members</li>
+                            <li><strong>Practical focus:</strong> Less emphasis on algorithms, more on real-world problem-solving</li>
+                            <li><strong>Work permits:</strong> Companies familiar with EU blue card process if you're non-EU</li>
+                        </ul>
+                    </div>
+
+                    <h3>Questions to Ask About Finnish Companies</h3>
+
+                    <ul>
+                        <li>What's the team structure? (Finns value flat hierarchies)</li>
+                        <li>How is work-life balance maintained?</li>
+                        <li>What's the policy on remote work?</li>
+                        <li>Are there opportunities to learn Finnish? (shows commitment)</li>
+                        <li>How does the company support international employees?</li>
+                        <li>What's the typical vacation policy? (Finland has 25-30 days)</li>
+                    </ul>
+
+                    <h3>After the Interview</h3>
+
+                    <div class="tip-box">
+                        <strong>Follow-Up Etiquette:</strong>
+                        <ul>
+                            <li>Send a brief thank-you email within 24 hours</li>
+                            <li>Keep it professional and concise - no need for lengthy notes</li>
+                            <li>Decision timelines can be 1-3 weeks (slower than US)</li>
+                            <li>It's acceptable to follow up after 1-2 weeks if you haven't heard back</li>
+                        </ul>
+                    </div>
+
+                    <h3>Visa & Work Permit (Non-EU Citizens)</h3>
+
+                    <div class="question-box">
+                        <strong>EU Blue Card Requirements:</strong>
+                        <ul>
+                            <li>Higher education degree (Bachelor's or above)</li>
+                            <li>Job offer with minimum salary threshold (~€3,500/month gross)</li>
+                            <li>Processing time: 1-3 months</li>
+                            <li>Employer often assists with application</li>
+                            <li>Brings benefits: Path to permanent residence, family reunification</li>
+                        </ul>
+                    </div>
+
+                    <h3>Job Search Resources</h3>
+
+                    <ul>
+                        <li><strong>LinkedIn:</strong> Primary platform for tech jobs in Finland</li>
+                        <li><strong>The Hub:</strong> Tech job board (thehub.io)</li>
+                        <li><strong>Duunitori:</strong> General Finnish job board</li>
+                        <li><strong>oikotie.fi:</strong> Major job portal</li>
+                        <li><strong>Meetups:</strong> Helsinki Data Science, PyData meetups for networking</li>
+                        <li><strong>Slush:</strong> Annual startup event (November) - good for networking</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <strong>Networking Tip:</strong>
+                        Finns are reserved but friendly once you get to know them. Don't be discouraged by initial quietness. Focus on genuine interest in their work rather than aggressive networking. Quality over quantity in relationships.
+                    </div>
+
+                    <h3>Red Flags to Watch For</h3>
+
+                    <ul>
+                        <li>Unclear salary range after multiple rounds</li>
+                        <li>Expectation of unpaid "trial work" beyond normal take-home</li>
+                        <li>No mention of work-life balance (unusual in Finland)</li>
+                        <li>Pressure to accept offer immediately</li>
+                        <li>Unwillingness to discuss visa sponsorship upfront</li>
+                    </ul>
+
+                    <h3>Advantages of Finnish Market</h3>
+
+                    <div class="question-box">
+                        <strong>Why Work in Finland?</strong>
+                        <ul>
+                            <li>Excellent work-life balance (37.5 hour weeks)</li>
+                            <li>Strong social safety net and healthcare</li>
+                            <li>High quality of education (great for families)</li>
+                            <li>Clean, safe, and high quality of life</li>
+                            <li>Growing tech scene, especially in Helsinki</li>
+                            <li>Less competitive than US/UK tech hubs</li>
+                            <li>Good English proficiency in workplace</li>
+                        </ul>
+                    </div>
+
+                    <h3>Sample Thank-You Email</h3>
+
+                    <pre><code>Subject: Thank you - Data Scientist Interview
+
+Hi [Interviewer Name],
+
+Thank you for taking the time to speak with me about the Data Scientist 
+position at [Company]. I enjoyed learning about [specific project or 
+challenge discussed] and how the team approaches [specific topic].
+
+Our conversation reinforced my interest in the role, particularly 
+[mention something specific from the interview].
+
+I look forward to hearing about next steps.
+
+Best regards,
+[Your Name]</code></pre>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3>📋 Quick Links</h3>
+                    <ul class="quick-links">
+                        <li><a href="index.html">← Back to Bootcamp Hub</a></li>
+                        <li><a href="practice-problems.html">Practice Problems →</a></li>
+                        <li><a href="resources.html">Resources Hub →</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>🎯 Preparation Focus</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+                        <li style="margin-bottom: 0.8rem;">✓ Behavioral (STAR method)</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Technical concepts</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Coding practice (daily)</li>
+                        <li style="margin-bottom: 0.8rem;">✓ System design</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Take-home quality</li>
+                        <li>✓ Finland cultural norms</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>🔗 External Resources</h3>
+                    <ul class="quick-links" style="font-size: 0.9rem;">
+                        <li><a href="https://leetcode.com" target="_blank">LeetCode</a></li>
+                        <li><a href="https://datalemur.com" target="_blank">DataLemur</a></li>
+                        <li><a href="https://pramp.com" target="_blank">Pramp (Mock Interviews)</a></li>
+                        <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>💡 Quick Tips</h3>
+                    <p style="font-size: 0.9rem; line-height: 1.6; margin: 0;">
+                        <strong>Finnish interviews:</strong> Direct, honest, conversational. Silence is normal. Focus on substance over showmanship.
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 My Learning Journey. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(event, tabId) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+
+            // Add active class to clicked tab
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>

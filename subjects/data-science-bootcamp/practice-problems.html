@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Problems - Data Science Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            min-height: 90vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #F4B942 0%, #e8a825 100%);
+            padding: 30px 20px;
+            border-right: 3px solid #d99b1c;
+        }
+
+        .sidebar h2 {
+            color: #fff;
+            margin-bottom: 25px;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .problem-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .problem-nav-item {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+
+        .problem-nav-item:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(5px);
+        }
+
+        .problem-nav-item.active {
+            background: #fff;
+            color: #F4B942;
+            border-color: #d99b1c;
+            font-weight: 600;
+        }
+
+        .category-header {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            padding-left: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #F4B942;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .breadcrumb {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: #F4B942;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .problem-container {
+            display: none;
+        }
+
+        .problem-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .problem-header {
+            background: linear-gradient(135deg, #F4B942 0%, #e8a825 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .problem-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .problem-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .meta-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #F4B942;
+        }
+
+        .section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 15px 0;
+        }
+
+        .code-block .comment {
+            color: #95a5a6;
+        }
+
+        .code-block .keyword {
+            color: #e74c3c;
+        }
+
+        .code-block .string {
+            color: #2ecc71;
+        }
+
+        .code-block .function {
+            color: #3498db;
+        }
+
+        .solution-toggle {
+            background: #F4B942;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .solution-toggle:hover {
+            background: #e8a825;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(244, 185, 66, 0.3);
+        }
+
+        .solution-content {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .solution-content.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 2000px;
+            }
+        }
+
+        .hint-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .hint-box strong {
+            color: #856404;
+        }
+
+        .complexity {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        @media (max-width: 968px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 3px solid #d99b1c;
+            }
+
+            .problem-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .problem-nav-item {
+                flex: 1 1 calc(50% - 4px);
+                min-width: 150px;
+            }
+
+            .category-header {
+                width: 100%;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>📚 Problems</h2>
+            <div class="problem-nav">
+                <div class="category-header">Python (4)</div>
+                <div class="problem-nav-item active" data-problem="py1">Two Sum</div>
+                <div class="problem-nav-item" data-problem="py2">Word Frequency</div>
+                <div class="problem-nav-item" data-problem="py3">Data Cleaning</div>
+                <div class="problem-nav-item" data-problem="py4">API Parser</div>
+
+                <div class="category-header">SQL (4)</div>
+                <div class="problem-nav-item" data-problem="sql1">Top Customers</div>
+                <div class="problem-nav-item" data-problem="sql2">Running Totals</div>
+                <div class="problem-nav-item" data-problem="sql3">Churn Analysis</div>
+                <div class="problem-nav-item" data-problem="sql4">Self Join</div>
+
+                <div class="category-header">ML (3)</div>
+                <div class="problem-nav-item" data-problem="ml1">Feature Engineering</div>
+                <div class="problem-nav-item" data-problem="ml2">Model Selection</div>
+                <div class="problem-nav-item" data-problem="ml3">Imbalanced Data</div>
+
+                <div class="category-header">System Design (3)</div>
+                <div class="problem-nav-item" data-problem="sd1">ETL Pipeline</div>
+                <div class="problem-nav-item" data-problem="sd2">ML Model API</div>
+                <div class="problem-nav-item" data-problem="sd3">Real-Time Analytics</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Practice Problems</h1>
+                <div class="breadcrumb">
+                    <a href="index.html">Bootcamp Hub</a> / Practice Problems
+                </div>
+            </div>
+
+            <!-- Python Problem 1: Two Sum -->
+            <div class="problem-container active" id="py1">
+                <div class="problem-header">
+                    <h2>1. Two Sum</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">Python</span>
+                        <span class="meta-tag">Arrays</span>
+                        <span class="meta-tag">Hash Tables</span>
+                        <span class="meta-tag">Easy</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers that add up to <code>target</code>. You may assume that each input has exactly one solution, and you may not use the same element twice.</p>
+                    
+                    <p><strong>Example:</strong></p>
+                    <div class="code-block">Input: nums = [2, 7, 11, 15], target = 9
+Output: [0, 1]
+Explanation: nums[0] + nums[1] = 2 + 7 = 9</div>
+                </div>
+
+                <div class="hint-box">
+                    <strong>💡 Hint:</strong> Use a hash map to store values you've seen and their indices. For each number, check if (target - current_number) exists in the hash map.
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('py1-solution')">Show Solution</button>
+
+                <div class="solution-content" id="py1-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">def</span> <span class="function">two_sum</span>(nums, target):
+    <span class="comment"># Hash map to store value -> index</span>
+    seen = {}
+    
+    <span class="keyword">for</span> i, num <span class="keyword">in</span> <span class="function">enumerate</span>(nums):
+        complement = target - num
+        
+        <span class="keyword">if</span> complement <span class="keyword">in</span> seen:
+            <span class="keyword">return</span> [seen[complement], i]
+        
+        seen[num] = i
+    
+    <span class="keyword">return</span> []
+
+<span class="comment"># Test</span>
+nums = [2, 7, 11, 15]
+target = 9
+<span class="function">print</span>(two_sum(nums, target))  <span class="comment"># Output: [0, 1]</span></div>
+
+                        <div class="complexity">
+                            <strong>Time Complexity:</strong> O(n) - single pass through array<br>
+                            <strong>Space Complexity:</strong> O(n) - hash map storage
+                        </div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>Hash table for O(1) lookup time</li>
+                            <li>Single pass algorithm</li>
+                            <li>Trade space for time efficiency</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Python Problem 2: Word Frequency -->
+            <div class="problem-container" id="py2">
+                <div class="problem-header">
+                    <h2>2. Word Frequency Counter</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">Python</span>
+                        <span class="meta-tag">String Processing</span>
+                        <span class="meta-tag">Collections</span>
+                        <span class="meta-tag">Easy</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Write a function that takes a text string and returns the top N most frequent words (case-insensitive). Exclude common stop words like "the", "a", "an", "is", etc.</p>
+                    
+                    <p><strong>Example:</strong></p>
+                    <div class="code-block">Input: text = "The quick brown fox jumps over the lazy dog. The dog was not amused."
+       n = 3
+Output: [('dog', 2), ('quick', 1), ('brown', 1)]</div>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('py2-solution')">Show Solution</button>
+
+                <div class="solution-content" id="py2-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter
+<span class="keyword">import</span> re
+
+<span class="keyword">def</span> <span class="function">top_words</span>(text, n):
+    <span class="comment"># Define stop words</span>
+    stop_words = {<span class="string">'the'</span>, <span class="string">'a'</span>, <span class="string">'an'</span>, <span class="string">'is'</span>, <span class="string">'was'</span>, <span class="string">'not'</span>, <span class="string">'over'</span>}
+    
+    <span class="comment"># Convert to lowercase and extract words</span>
+    words = re.findall(<span class="string">r'\b[a-z]+\b'</span>, text.lower())
+    
+    <span class="comment"># Filter out stop words</span>
+    filtered_words = [w <span class="keyword">for</span> w <span class="keyword">in</span> words <span class="keyword">if</span> w <span class="keyword">not in</span> stop_words]
+    
+    <span class="comment"># Count frequencies and return top N</span>
+    counter = Counter(filtered_words)
+    <span class="keyword">return</span> counter.most_common(n)
+
+<span class="comment"># Test</span>
+text = <span class="string">"The quick brown fox jumps over the lazy dog. The dog was not amused."</span>
+<span class="function">print</span>(top_words(text, 3))</div>
+
+                        <div class="complexity">
+                            <strong>Time Complexity:</strong> O(n log k) where n is number of words, k is number of unique words<br>
+                            <strong>Space Complexity:</strong> O(k) for the Counter
+                        </div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>Regular expressions for text parsing</li>
+                            <li>Collections.Counter for frequency counting</li>
+                            <li>List comprehensions for filtering</li>
+                            <li>Text normalization (lowercase conversion)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Python Problem 3: Data Cleaning -->
+            <div class="problem-container" id="py3">
+                <div class="problem-header">
+                    <h2>3. Data Cleaning Pipeline</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">Python</span>
+                        <span class="meta-tag">Pandas</span>
+                        <span class="meta-tag">Data Processing</span>
+                        <span class="meta-tag">Medium</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Given a DataFrame with customer data that has missing values, duplicates, and inconsistent formats, create a cleaning pipeline that:</p>
+                    <ol>
+                        <li>Removes duplicate rows</li>
+                        <li>Handles missing values appropriately</li>
+                        <li>Standardizes email formats (lowercase)</li>
+                        <li>Converts date strings to datetime objects</li>
+                        <li>Removes outliers in the 'age' column (using IQR method)</li>
+                    </ol>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('py3-solution')">Show Solution</button>
+
+                <div class="solution-content" id="py3-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="keyword">def</span> <span class="function">clean_customer_data</span>(df):
+    <span class="comment"># 1. Remove duplicates</span>
+    df = df.drop_duplicates()
+    
+    <span class="comment"># 2. Handle missing values</span>
+    <span class="comment"># Fill missing emails with placeholder</span>
+    df[<span class="string">'email'</span>] = df[<span class="string">'email'</span>].fillna(<span class="string">'unknown@example.com'</span>)
+    
+    <span class="comment"># Fill missing ages with median</span>
+    df[<span class="string">'age'</span>] = df[<span class="string">'age'</span>].fillna(df[<span class="string">'age'</span>].median())
+    
+    <span class="comment"># Drop rows with missing critical data</span>
+    df = df.dropna(subset=[<span class="string">'customer_id'</span>, <span class="string">'name'</span>])
+    
+    <span class="comment"># 3. Standardize email format</span>
+    df[<span class="string">'email'</span>] = df[<span class="string">'email'</span>].str.lower().str.strip()
+    
+    <span class="comment"># 4. Convert date strings to datetime</span>
+    df[<span class="string">'signup_date'</span>] = pd.to_datetime(df[<span class="string">'signup_date'</span>], errors=<span class="string">'coerce'</span>)
+    
+    <span class="comment"># 5. Remove age outliers using IQR method</span>
+    Q1 = df[<span class="string">'age'</span>].quantile(0.25)
+    Q3 = df[<span class="string">'age'</span>].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+    
+    df = df[(df[<span class="string">'age'</span>] >= lower_bound) & (df[<span class="string">'age'</span>] <= upper_bound)]
+    
+    <span class="keyword">return</span> df.reset_index(drop=<span class="keyword">True</span>)
+
+<span class="comment"># Example usage</span>
+data = {
+    <span class="string">'customer_id'</span>: [1, 2, 2, 3, 4],
+    <span class="string">'name'</span>: [<span class="string">'Alice'</span>, <span class="string">'Bob'</span>, <span class="string">'Bob'</span>, <span class="keyword">None</span>, <span class="string">'Charlie'</span>],
+    <span class="string">'email'</span>: [<span class="string">'ALICE@TEST.COM'</span>, <span class="string">'bob@test.com'</span>, <span class="string">'bob@test.com'</span>, <span class="keyword">None</span>, <span class="string">'charlie@test.com'</span>],
+    <span class="string">'age'</span>: [25, 30, 30, <span class="keyword">None</span>, 150],
+    <span class="string">'signup_date'</span>: [<span class="string">'2024-01-15'</span>, <span class="string">'2024-02-20'</span>, <span class="string">'2024-02-20'</span>, <span class="string">'2024-03-10'</span>, <span class="string">'invalid'</span>]
+}
+
+df = pd.DataFrame(data)
+cleaned_df = clean_customer_data(df)
+<span class="function">print</span>(cleaned_df)</div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>Pandas data manipulation methods</li>
+                            <li>Missing value strategies (imputation vs deletion)</li>
+                            <li>IQR method for outlier detection</li>
+                            <li>String normalization techniques</li>
+                            <li>Type conversion and error handling</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Python Problem 4: API Parser -->
+            <div class="problem-container" id="py4">
+                <div class="problem-header">
+                    <h2>4. Nested JSON API Parser</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">Python</span>
+                        <span class="meta-tag">JSON</span>
+                        <span class="meta-tag">Recursion</span>
+                        <span class="meta-tag">Medium</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Write a function that flattens a nested JSON structure into a single-level dictionary with dot-notation keys. Handle arrays by indexing them.</p>
+                    
+                    <p><strong>Example:</strong></p>
+                    <div class="code-block">Input: {
+  "user": {
+    "name": "John",
+    "address": {
+      "city": "Helsinki",
+      "zip": "00100"
+    },
+    "tags": ["python", "data"]
+  }
+}
+
+Output: {
+  "user.name": "John",
+  "user.address.city": "Helsinki",
+  "user.address.zip": "00100",
+  "user.tags.0": "python",
+  "user.tags.1": "data"
+}</div>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('py4-solution')">Show Solution</button>
+
+                <div class="solution-content" id="py4-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">def</span> <span class="function">flatten_json</span>(nested_json, parent_key=<span class="string">''</span>, separator=<span class="string">'.'</span>):
+    <span class="comment">"""
+    Recursively flatten a nested JSON structure.
+    """</span>
+    items = []
+    
+    <span class="keyword">for</span> key, value <span class="keyword">in</span> nested_json.items():
+        new_key = <span class="string">f"<span class="keyword">{parent_key}{separator}{key}</span>"</span> <span class="keyword">if</span> parent_key <span class="keyword">else</span> key
+        
+        <span class="keyword">if</span> <span class="function">isinstance</span>(value, dict):
+            <span class="comment"># Recursively flatten nested dict</span>
+            items.extend(flatten_json(value, new_key, separator).items())
+        <span class="keyword">elif</span> <span class="function">isinstance</span>(value, list):
+            <span class="comment"># Handle arrays with index notation</span>
+            <span class="keyword">for</span> i, item <span class="keyword">in</span> <span class="function">enumerate</span>(value):
+                <span class="keyword">if</span> <span class="function">isinstance</span>(item, dict):
+                    items.extend(flatten_json(item, <span class="string">f"<span class="keyword">{new_key}{separator}{i}</span>"</span>, separator).items())
+                <span class="keyword">else</span>:
+                    items.append((<span class="string">f"<span class="keyword">{new_key}{separator}{i}</span>"</span>, item))
+        <span class="keyword">else</span>:
+            items.append((new_key, value))
+    
+    <span class="keyword">return</span> <span class="function">dict</span>(items)
+
+<span class="comment"># Test</span>
+data = {
+    <span class="string">"user"</span>: {
+        <span class="string">"name"</span>: <span class="string">"John"</span>,
+        <span class="string">"address"</span>: {
+            <span class="string">"city"</span>: <span class="string">"Helsinki"</span>,
+            <span class="string">"zip"</span>: <span class="string">"00100"</span>
+        },
+        <span class="string">"tags"</span>: [<span class="string">"python"</span>, <span class="string">"data"</span>]
+    }
+}
+
+flattened = flatten_json(data)
+<span class="keyword">for</span> key, value <span class="keyword">in</span> flattened.items():
+    <span class="function">print</span>(<span class="string">f"<span class="keyword">{key}</span>: <span class="keyword">{value}</span>"</span>)</div>
+
+                        <div class="complexity">
+                            <strong>Time Complexity:</strong> O(n) where n is total number of keys/values<br>
+                            <strong>Space Complexity:</strong> O(d) where d is maximum nesting depth (recursion stack)
+                        </div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>Recursive function design</li>
+                            <li>Type checking with isinstance()</li>
+                            <li>String formatting and concatenation</li>
+                            <li>Handling mixed data structures (dicts and lists)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQL Problem 1: Top Customers -->
+            <div class="problem-container" id="sql1">
+                <div class="problem-header">
+                    <h2>5. Top Customers by Revenue</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">SQL</span>
+                        <span class="meta-tag">Aggregation</span>
+                        <span class="meta-tag">JOIN</span>
+                        <span class="meta-tag">Easy</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Given tables <code>customers</code> and <code>orders</code>, find the top 5 customers by total revenue in 2024. Include customer name, total orders, and total revenue.</p>
+                    
+                    <p><strong>Schema:</strong></p>
+                    <div class="code-block">customers (customer_id, name, email, signup_date)
+orders (order_id, customer_id, order_date, amount)</div>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('sql1-solution')">Show Solution</button>
+
+                <div class="solution-content" id="sql1-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">SELECT</span> 
+    c.name,
+    <span class="function">COUNT</span>(o.order_id) <span class="keyword">AS</span> total_orders,
+    <span class="function">SUM</span>(o.amount) <span class="keyword">AS</span> total_revenue
+<span class="keyword">FROM</span> customers c
+<span class="keyword">INNER JOIN</span> orders o <span class="keyword">ON</span> c.customer_id = o.customer_id
+<span class="keyword">WHERE</span> <span class="function">YEAR</span>(o.order_date) = 2024
+<span class="keyword">GROUP BY</span> c.customer_id, c.name
+<span class="keyword">ORDER BY</span> total_revenue <span class="keyword">DESC</span>
+<span class="keyword">LIMIT</span> 5;</div>
+
+                        <h3>Alternative: Using CTE for Clarity</h3>
+                        <div class="code-block"><span class="keyword">WITH</span> customer_revenue <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span> 
+        c.customer_id,
+        c.name,
+        <span class="function">COUNT</span>(o.order_id) <span class="keyword">AS</span> total_orders,
+        <span class="function">SUM</span>(o.amount) <span class="keyword">AS</span> total_revenue
+    <span class="keyword">FROM</span> customers c
+    <span class="keyword">INNER JOIN</span> orders o <span class="keyword">ON</span> c.customer_id = o.customer_id
+    <span class="keyword">WHERE</span> <span class="function">YEAR</span>(o.order_date) = 2024
+    <span class="keyword">GROUP BY</span> c.customer_id, c.name
+)
+<span class="keyword">SELECT</span> * 
+<span class="keyword">FROM</span> customer_revenue
+<span class="keyword">ORDER BY</span> total_revenue <span class="keyword">DESC</span>
+<span class="keyword">LIMIT</span> 5;</div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>INNER JOIN to combine tables</li>
+                            <li>Aggregate functions (COUNT, SUM)</li>
+                            <li>GROUP BY for aggregation</li>
+                            <li>Date filtering with YEAR() function</li>
+                            <li>LIMIT for top N results</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQL Problem 2: Running Totals -->
+            <div class="problem-container" id="sql2">
+                <div class="problem-header">
+                    <h2>6. Running Total Sales</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">SQL</span>
+                        <span class="meta-tag">Window Functions</span>
+                        <span class="meta-tag">Analytics</span>
+                        <span class="meta-tag">Medium</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Calculate the running total of daily sales for each product category. Show date, category, daily sales, and cumulative sales.</p>
+                    
+                    <p><strong>Schema:</strong></p>
+                    <div class="code-block">sales (sale_id, product_id, sale_date, amount)
+products (product_id, product_name, category)</div>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('sql2-solution')">Show Solution</button>
+
+                <div class="solution-content" id="sql2-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">SELECT</span> 
+    s.sale_date,
+    p.category,
+    <span class="function">SUM</span>(s.amount) <span class="keyword">AS</span> daily_sales,
+    <span class="function">SUM</span>(<span class="function">SUM</span>(s.amount)) <span class="keyword">OVER</span> (
+        <span class="keyword">PARTITION BY</span> p.category 
+        <span class="keyword">ORDER BY</span> s.sale_date
+        <span class="keyword">ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW</span>
+    ) <span class="keyword">AS</span> cumulative_sales
+<span class="keyword">FROM</span> sales s
+<span class="keyword">INNER JOIN</span> products p <span class="keyword">ON</span> s.product_id = p.product_id
+<span class="keyword">GROUP BY</span> s.sale_date, p.category
+<span class="keyword">ORDER BY</span> p.category, s.sale_date;</div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>Window functions (OVER clause)</li>
+                            <li>PARTITION BY for category-wise calculations</li>
+                            <li>Running totals with ROWS BETWEEN</li>
+                            <li>Nested aggregations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQL Problem 3: Churn Analysis -->
+            <div class="problem-container" id="sql3">
+                <div class="problem-header">
+                    <h2>7. Monthly Customer Churn Rate</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">SQL</span>
+                        <span class="meta-tag">CTE</span>
+                        <span class="meta-tag">Date Logic</span>
+                        <span class="meta-tag">Hard</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Calculate the monthly churn rate. A customer is considered churned if they haven't made a purchase in the last 60 days. Show month, total active customers, churned customers, and churn rate percentage.</p>
+                    
+                    <p><strong>Schema:</strong></p>
+                    <div class="code-block">customers (customer_id, signup_date)
+orders (order_id, customer_id, order_date)</div>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('sql3-solution')">Show Solution</button>
+
+                <div class="solution-content" id="sql3-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">WITH</span> monthly_activity <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span> 
+        <span class="function">DATE_TRUNC</span>(<span class="string">'month'</span>, o.order_date) <span class="keyword">AS</span> month,
+        o.customer_id,
+        <span class="function">MAX</span>(o.order_date) <span class="keyword">AS</span> last_order_date
+    <span class="keyword">FROM</span> orders o
+    <span class="keyword">GROUP BY</span> 1, 2
+),
+customer_status <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span> 
+        ma.month,
+        ma.customer_id,
+        ma.last_order_date,
+        <span class="keyword">CASE</span> 
+            <span class="keyword">WHEN</span> <span class="function">DATEDIFF</span>(<span class="string">'day'</span>, ma.last_order_date, ma.month + <span class="function">INTERVAL</span> <span class="string">'1 month'</span>) > 60 
+            <span class="keyword">THEN</span> 1 
+            <span class="keyword">ELSE</span> 0 
+        <span class="keyword">END</span> <span class="keyword">AS</span> is_churned
+    <span class="keyword">FROM</span> monthly_activity ma
+)
+<span class="keyword">SELECT</span> 
+    month,
+    <span class="function">COUNT</span>(<span class="keyword">DISTINCT</span> customer_id) <span class="keyword">AS</span> total_customers,
+    <span class="function">SUM</span>(is_churned) <span class="keyword">AS</span> churned_customers,
+    <span class="function">ROUND</span>(<span class="function">SUM</span>(is_churned) * 100.0 / <span class="function">COUNT</span>(<span class="keyword">DISTINCT</span> customer_id), 2) <span class="keyword">AS</span> churn_rate_pct
+<span class="keyword">FROM</span> customer_status
+<span class="keyword">GROUP BY</span> month
+<span class="keyword">ORDER BY</span> month;</div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>Multiple CTEs for complex logic</li>
+                            <li>Date functions (DATE_TRUNC, DATEDIFF)</li>
+                            <li>CASE statements for conditional logic</li>
+                            <li>Percentage calculations</li>
+                            <li>Churn definition and business logic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SQL Problem 4: Self Join -->
+            <div class="problem-container" id="sql4">
+                <div class="problem-header">
+                    <h2>8. Employee Hierarchy</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">SQL</span>
+                        <span class="meta-tag">Self Join</span>
+                        <span class="meta-tag">Hierarchy</span>
+                        <span class="meta-tag">Medium</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Find all employees who earn more than their direct manager. Show employee name, employee salary, manager name, and manager salary.</p>
+                    
+                    <p><strong>Schema:</strong></p>
+                    <div class="code-block">employees (employee_id, name, salary, manager_id)</div>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('sql4-solution')">Show Solution</button>
+
+                <div class="solution-content" id="sql4-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">SELECT</span> 
+    e.name <span class="keyword">AS</span> employee_name,
+    e.salary <span class="keyword">AS</span> employee_salary,
+    m.name <span class="keyword">AS</span> manager_name,
+    m.salary <span class="keyword">AS</span> manager_salary
+<span class="keyword">FROM</span> employees e
+<span class="keyword">INNER JOIN</span> employees m <span class="keyword">ON</span> e.manager_id = m.employee_id
+<span class="keyword">WHERE</span> e.salary > m.salary
+<span class="keyword">ORDER BY</span> e.salary <span class="keyword">DESC</span>;</div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>Self join (joining table to itself)</li>
+                            <li>Aliasing for clarity (e for employee, m for manager)</li>
+                            <li>Hierarchical data representation</li>
+                            <li>Comparison across related rows</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Problem 1: Feature Engineering -->
+            <div class="problem-container" id="ml1">
+                <div class="problem-header">
+                    <h2>9. Feature Engineering for Time Series</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">Machine Learning</span>
+                        <span class="meta-tag">Feature Engineering</span>
+                        <span class="meta-tag">Time Series</span>
+                        <span class="meta-tag">Medium</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>You have daily sales data and need to create features for a forecasting model. Create:</p>
+                    <ol>
+                        <li>Rolling averages (7, 14, 30 days)</li>
+                        <li>Lag features (1, 7 days)</li>
+                        <li>Day of week and month features</li>
+                        <li>Trend feature (days since start)</li>
+                        <li>Holiday indicator</li>
+                    </ol>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('ml1-solution')">Show Solution</button>
+
+                <div class="solution-content" id="ml1-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="keyword">def</span> <span class="function">create_time_series_features</span>(df, date_col=<span class="string">'date'</span>, target_col=<span class="string">'sales'</span>):
+    <span class="comment"># Ensure date column is datetime</span>
+    df[date_col] = pd.to_datetime(df[date_col])
+    df = df.sort_values(date_col).reset_index(drop=<span class="keyword">True</span>)
+    
+    <span class="comment"># 1. Rolling averages</span>
+    df[<span class="string">'rolling_mean_7d'</span>] = df[target_col].rolling(window=7, min_periods=1).mean()
+    df[<span class="string">'rolling_mean_14d'</span>] = df[target_col].rolling(window=14, min_periods=1).mean()
+    df[<span class="string">'rolling_mean_30d'</span>] = df[target_col].rolling(window=30, min_periods=1).mean()
+    
+    <span class="comment"># 2. Lag features</span>
+    df[<span class="string">'lag_1d'</span>] = df[target_col].shift(1)
+    df[<span class="string">'lag_7d'</span>] = df[target_col].shift(7)
+    
+    <span class="comment"># 3. Date features</span>
+    df[<span class="string">'day_of_week'</span>] = df[date_col].dt.dayofweek
+    df[<span class="string">'day_of_month'</span>] = df[date_col].dt.day
+    df[<span class="string">'month'</span>] = df[date_col].dt.month
+    df[<span class="string">'quarter'</span>] = df[date_col].dt.quarter
+    df[<span class="string">'is_weekend'</span>] = (df[<span class="string">'day_of_week'</span>] >= 5).astype(int)
+    
+    <span class="comment"># 4. Trend feature</span>
+    df[<span class="string">'days_since_start'</span>] = (df[date_col] - df[date_col].min()).dt.days
+    
+    <span class="comment"># 5. Holiday indicator (example: Finnish holidays)</span>
+    finnish_holidays = [
+        <span class="string">'2024-01-01'</span>, <span class="string">'2024-05-01'</span>, <span class="string">'2024-12-06'</span>, <span class="string">'2024-12-24'</span>, <span class="string">'2024-12-25'</span>
+    ]
+    df[<span class="string">'is_holiday'</span>] = df[date_col].dt.strftime(<span class="string">'%Y-%m-%d'</span>).isin(finnish_holidays).astype(int)
+    
+    <span class="keyword">return</span> df
+
+<span class="comment"># Example usage</span>
+dates = pd.date_range(<span class="string">'2024-01-01'</span>, periods=100)
+sales = np.random.randint(100, 500, size=100)
+df = pd.DataFrame({<span class="string">'date'</span>: dates, <span class="string">'sales'</span>: sales})
+
+df_features = create_time_series_features(df)
+<span class="function">print</span>(df_features.head(10))
+<span class="function">print</span>(<span class="string">f"\nTotal features: <span class="keyword">{len(df_features.columns)}</span>"</span>)</div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>Rolling windows for smoothing and trends</li>
+                            <li>Lag features for temporal dependencies</li>
+                            <li>Cyclical time features (day, month, quarter)</li>
+                            <li>Domain-specific features (holidays, weekends)</li>
+                            <li>Avoiding data leakage (shift before rolling)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Problem 2: Model Selection -->
+            <div class="problem-container" id="ml2">
+                <div class="problem-header">
+                    <h2>10. Model Selection & Cross-Validation</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">Machine Learning</span>
+                        <span class="meta-tag">Model Evaluation</span>
+                        <span class="meta-tag">Scikit-learn</span>
+                        <span class="meta-tag">Medium</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Compare multiple regression models (Linear Regression, Random Forest, Gradient Boosting) using 5-fold cross-validation. Report mean and standard deviation of RMSE and R² for each model. Include a visualization comparing performance.</p>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('ml2-solution')">Show Solution</button>
+
+                <div class="solution-content" id="ml2-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_validate
+<span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression
+<span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor, GradientBoostingRegressor
+<span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_regression
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="keyword">def</span> <span class="function">compare_models</span>(X, y, cv=5):
+    <span class="comment"># Define models to compare</span>
+    models = {
+        <span class="string">'Linear Regression'</span>: LinearRegression(),
+        <span class="string">'Random Forest'</span>: RandomForestRegressor(n_estimators=100, random_state=42),
+        <span class="string">'Gradient Boosting'</span>: GradientBoostingRegressor(n_estimators=100, random_state=42)
+    }
+    
+    results = []
+    
+    <span class="keyword">for</span> name, model <span class="keyword">in</span> models.items():
+        <span class="comment"># Perform cross-validation</span>
+        scores = cross_validate(
+            model, X, y, 
+            cv=cv,
+            scoring=[<span class="string">'neg_root_mean_squared_error'</span>, <span class="string">'r2'</span>],
+            return_train_score=<span class="keyword">False</span>
+        )
+        
+        <span class="comment"># Calculate metrics</span>
+        rmse_scores = -scores[<span class="string">'test_neg_root_mean_squared_error'</span>]
+        r2_scores = scores[<span class="string">'test_r2'</span>]
+        
+        results.append({
+            <span class="string">'Model'</span>: name,
+            <span class="string">'RMSE_mean'</span>: rmse_scores.mean(),
+            <span class="string">'RMSE_std'</span>: rmse_scores.std(),
+            <span class="string">'R2_mean'</span>: r2_scores.mean(),
+            <span class="string">'R2_std'</span>: r2_scores.std()
+        })
+    
+    results_df = pd.DataFrame(results)
+    <span class="keyword">return</span> results_df.sort_values(<span class="string">'R2_mean'</span>, ascending=<span class="keyword">False</span>)
+
+<span class="comment"># Example: Create synthetic dataset</span>
+X, y = make_regression(n_samples=1000, n_features=20, noise=10, random_state=42)
+
+<span class="comment"># Compare models</span>
+results = compare_models(X, y)
+<span class="function">print</span>(results.to_string(index=<span class="keyword">False</span>))</div>
+
+                        <h3>Interpretation Guidelines</h3>
+                        <ul>
+                            <li><strong>RMSE:</strong> Lower is better - measures average prediction error</li>
+                            <li><strong>R²:</strong> Higher is better (0-1 scale) - proportion of variance explained</li>
+                            <li><strong>Standard deviation:</strong> Lower indicates more stable performance</li>
+                            <li><strong>Trade-offs:</strong> Consider model complexity vs performance</li>
+                        </ul>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li>K-fold cross-validation for robust evaluation</li>
+                            <li>Multiple metrics for comprehensive assessment</li>
+                            <li>Model comparison framework</li>
+                            <li>Handling negative RMSE scores from sklearn</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Problem 3: Imbalanced Data -->
+            <div class="problem-container" id="ml3">
+                <div class="problem-header">
+                    <h2>11. Handling Imbalanced Classification</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">Machine Learning</span>
+                        <span class="meta-tag">Imbalanced Data</span>
+                        <span class="meta-tag">Classification</span>
+                        <span class="meta-tag">Hard</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>You have a fraud detection dataset with 98% legitimate transactions and 2% fraudulent. Demonstrate three techniques to handle this imbalance:</p>
+                    <ol>
+                        <li>Random undersampling and oversampling</li>
+                        <li>SMOTE (Synthetic Minority Oversampling)</li>
+                        <li>Class weights in the model</li>
+                    </ol>
+                    <p>Compare performance using precision, recall, and F1-score.</p>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('ml3-solution')">Show Solution</button>
+
+                <div class="solution-content" id="ml3-solution">
+                    <div class="section">
+                        <h3>Solution</h3>
+                        <div class="code-block"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> make_classification
+<span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split
+<span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier
+<span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report
+<span class="keyword">from</span> imblearn.over_sampling <span class="keyword">import</span> SMOTE, RandomOverSampler
+<span class="keyword">from</span> imblearn.under_sampling <span class="keyword">import</span> RandomUnderSampler
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Create imbalanced dataset</span>
+X, y = make_classification(
+    n_samples=10000, 
+    n_features=20, 
+    n_informative=15,
+    n_redundant=5,
+    weights=[0.98, 0.02],  <span class="comment"># 98% class 0, 2% class 1</span>
+    random_state=42
+)
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+<span class="function">print</span>(<span class="string">f"Original class distribution: <span class="keyword">{np.bincount(y_train)}</span>"</span>)
+
+<span class="comment"># Technique 1: Random Undersampling</span>
+rus = RandomUnderSampler(random_state=42)
+X_rus, y_rus = rus.fit_resample(X_train, y_train)
+
+model_rus = RandomForestClassifier(random_state=42)
+model_rus.fit(X_rus, y_rus)
+y_pred_rus = model_rus.predict(X_test)
+
+<span class="function">print</span>(<span class="string">"\n=== Random Undersampling ==="</span>)
+<span class="function">print</span>(classification_report(y_test, y_pred_rus, target_names=[<span class="string">'Legitimate'</span>, <span class="string">'Fraud'</span>]))
+
+<span class="comment"># Technique 2: SMOTE</span>
+smote = SMOTE(random_state=42)
+X_smote, y_smote = smote.fit_resample(X_train, y_train)
+
+model_smote = RandomForestClassifier(random_state=42)
+model_smote.fit(X_smote, y_smote)
+y_pred_smote = model_smote.predict(X_test)
+
+<span class="function">print</span>(<span class="string">"\n=== SMOTE ==="</span>)
+<span class="function">print</span>(classification_report(y_test, y_pred_smote, target_names=[<span class="string">'Legitimate'</span>, <span class="string">'Fraud'</span>]))
+
+<span class="comment"># Technique 3: Class Weights</span>
+model_weighted = RandomForestClassifier(
+    class_weight=<span class="string">'balanced'</span>,  <span class="comment"># Automatically adjusts weights</span>
+    random_state=42
+)
+model_weighted.fit(X_train, y_train)
+y_pred_weighted = model_weighted.predict(X_test)
+
+<span class="function">print</span>(<span class="string">"\n=== Class Weights ==="</span>)
+<span class="function">print</span>(classification_report(y_test, y_pred_weighted, target_names=[<span class="string">'Legitimate'</span>, <span class="string">'Fraud'</span>]))</div>
+
+                        <h3>Key Concepts</h3>
+                        <ul>
+                            <li><strong>Undersampling:</strong> Reduces majority class - faster training, risk of information loss</li>
+                            <li><strong>Oversampling:</strong> Duplicates minority class - retains all data, risk of overfitting</li>
+                            <li><strong>SMOTE:</strong> Creates synthetic minority samples - better generalization</li>
+                            <li><strong>Class weights:</strong> Penalizes misclassification of minority class during training</li>
+                            <li><strong>Metrics:</strong> Focus on precision/recall for minority class, not accuracy</li>
+                        </ul>
+
+                        <h3>Which Technique to Use?</h3>
+                        <ul>
+                            <li><strong>Small dataset:</strong> SMOTE or class weights (preserve data)</li>
+                            <li><strong>Large dataset:</strong> Undersampling (faster training)</li>
+                            <li><strong>Extreme imbalance (&gt;1:100):</strong> Combination of techniques</li>
+                            <li><strong>Always:</strong> Use stratified splits and appropriate metrics</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Design Problem 1: ETL Pipeline -->
+            <div class="problem-container" id="sd1">
+                <div class="problem-header">
+                    <h2>12. Design an ETL Pipeline</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">System Design</span>
+                        <span class="meta-tag">ETL</span>
+                        <span class="meta-tag">Data Engineering</span>
+                        <span class="meta-tag">Medium</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Design an ETL pipeline that:</p>
+                    <ul>
+                        <li>Ingests daily sales data from multiple CSV files (100GB total)</li>
+                        <li>Cleans and transforms the data</li>
+                        <li>Loads into a data warehouse</li>
+                        <li>Handles failures and supports reprocessing</li>
+                        <li>Scales to handle 10x growth</li>
+                    </ul>
+                    <p>Discuss architecture, technologies, and trade-offs.</p>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('sd1-solution')">Show Solution</button>
+
+                <div class="solution-content" id="sd1-solution">
+                    <div class="section">
+                        <h3>Architecture Design</h3>
+                        
+                        <h4>1. Overall Architecture</h4>
+                        <div class="code-block">┌─────────────┐      ┌──────────────┐      ┌─────────────┐      ┌──────────────┐
+│   Source    │─────▶│   Ingestion  │─────▶│ Processing  │─────▶│     Data     │
+│   (CSV)     │      │   Layer      │      │    Layer    │      │  Warehouse   │
+│   S3/Blob   │      │  (Airflow)   │      │   (Spark)   │      │  (Snowflake) │
+└─────────────┘      └──────────────┘      └─────────────┘      └──────────────┘
+                            │                      │
+                            ▼                      ▼
+                     ┌──────────────┐      ┌─────────────┐
+                     │   Metadata   │      │   Staging   │
+                     │   Store      │      │   Storage   │
+                     │  (Postgres)  │      │    (S3)     │
+                     └──────────────┘      └─────────────┘</div>
+
+                        <h4>2. Technology Stack</h4>
+                        <ul>
+                            <li><strong>Orchestration:</strong> Apache Airflow - DAG management, scheduling, monitoring</li>
+                            <li><strong>Processing:</strong> Apache Spark - distributed processing for 100GB+ data</li>
+                            <li><strong>Storage:</strong> AWS S3 or Azure Blob - raw and staging data</li>
+                            <li><strong>Warehouse:</strong> Snowflake or BigQuery - analytical queries</li>
+                            <li><strong>Metadata:</strong> PostgreSQL - job status, lineage, audit logs</li>
+                        </ul>
+
+                        <h4>3. ETL Process Flow</h4>
+                        <div class="code-block"><span class="comment"># Simplified Airflow DAG structure</span>
+
+<span class="keyword">from</span> airflow <span class="keyword">import</span> DAG
+<span class="keyword">from</span> airflow.operators.python <span class="keyword">import</span> PythonOperator
+<span class="keyword">from</span> datetime <span class="keyword">import</span> datetime, timedelta
+
+<span class="keyword">def</span> <span class="function">extract_data</span>(**context):
+    <span class="comment"># 1. List files in S3 for processing date</span>
+    <span class="comment"># 2. Download to staging area</span>
+    <span class="comment"># 3. Log metadata (file size, count, timestamp)</span>
+    <span class="keyword">pass</span>
+
+<span class="keyword">def</span> <span class="function">transform_data</span>(**context):
+    <span class="comment"># 1. Spark job: read CSVs in parallel</span>
+    <span class="comment"># 2. Data quality checks (null values, schema validation)</span>
+    <span class="comment"># 3. Business transformations (aggregations, joins)</span>
+    <span class="comment"># 4. Write to staging (Parquet format for efficiency)</span>
+    <span class="keyword">pass</span>
+
+<span class="keyword">def</span> <span class="function">load_data</span>(**context):
+    <span class="comment"># 1. Snowflake COPY INTO from S3 staging</span>
+    <span class="comment"># 2. Update metadata tables</span>
+    <span class="comment"># 3. Run data validation queries</span>
+    <span class="keyword">pass</span>
+
+default_args = {
+    <span class="string">'owner'</span>: <span class="string">'data-team'</span>,
+    <span class="string">'retries'</span>: 3,
+    <span class="string">'retry_delay'</span>: timedelta(minutes=5)
+}
+
+<span class="keyword">with</span> DAG(
+    <span class="string">'sales_etl_pipeline'</span>,
+    default_args=default_args,
+    schedule_interval=<span class="string">'0 2 * * *'</span>,  <span class="comment"># Daily at 2 AM</span>
+    catchup=<span class="keyword">False</span>
+) <span class="keyword">as</span> dag:
+    
+    extract = PythonOperator(task_id=<span class="string">'extract'</span>, python_callable=extract_data)
+    transform = PythonOperator(task_id=<span class="string">'transform'</span>, python_callable=transform_data)
+    load = PythonOperator(task_id=<span class="string">'load'</span>, python_callable=load_data)
+    
+    extract >> transform >> load</div>
+
+                        <h4>4. Handling Failures</h4>
+                        <ul>
+                            <li><strong>Idempotency:</strong> Design transformations to be rerunnable safely</li>
+                            <li><strong>Checkpointing:</strong> Save intermediate results in staging</li>
+                            <li><strong>Retries:</strong> Automatic retry with exponential backoff</li>
+                            <li><strong>Dead Letter Queue:</strong> Log failed records for manual review</li>
+                            <li><strong>Alerting:</strong> Slack/email notifications on failure</li>
+                        </ul>
+
+                        <h4>5. Scalability Considerations</h4>
+                        <ul>
+                            <li><strong>Partitioning:</strong> Partition data by date for parallel processing</li>
+                            <li><strong>Spark cluster:</strong> Auto-scaling worker nodes (10-100 nodes)</li>
+                            <li><strong>Incremental loading:</strong> Process only new/changed data</li>
+                            <li><strong>Columnar storage:</strong> Parquet format reduces I/O by 80%</li>
+                            <li><strong>Data compression:</strong> Gzip or Snappy compression</li>
+                        </ul>
+
+                        <h4>6. Monitoring & Observability</h4>
+                        <ul>
+                            <li>Track metrics: processing time, data volume, error rates</li>
+                            <li>Data quality dashboards (Grafana/Tableau)</li>
+                            <li>Lineage tracking (Apache Atlas or custom)</li>
+                            <li>Cost monitoring (AWS Cost Explorer)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Design Problem 2: ML Model API -->
+            <div class="problem-container" id="sd2">
+                <div class="problem-header">
+                    <h2>13. ML Model Serving API</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">System Design</span>
+                        <span class="meta-tag">API</span>
+                        <span class="meta-tag">MLOps</span>
+                        <span class="meta-tag">Hard</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Design a production ML model serving system that:</p>
+                    <ul>
+                        <li>Serves predictions via REST API (1000 req/sec)</li>
+                        <li>Supports A/B testing of model versions</li>
+                        <li>Handles both real-time and batch predictions</li>
+                        <li>Monitors model performance and drift</li>
+                        <li>Enables zero-downtime model updates</li>
+                    </ul>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('sd2-solution')">Show Solution</button>
+
+                <div class="solution-content" id="sd2-solution">
+                    <div class="section">
+                        <h3>Architecture Design</h3>
+
+                        <h4>1. High-Level Architecture</h4>
+                        <div class="code-block">┌──────────────┐
+│   Clients    │
+│ (Web/Mobile) │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐      ┌─────────────┐      ┌──────────────┐
+│  API Gateway │─────▶│   Model     │─────▶│   Model      │
+│  (Kong/ALB)  │      │   Router    │      │  Containers  │
+│   + Cache    │      │ (A/B Logic) │      │  (v1, v2)    │
+└──────────────┘      └─────────────┘      └──────────────┘
+       │                     │                      │
+       │                     ▼                      ▼
+       │              ┌─────────────┐      ┌──────────────┐
+       │              │  Feature    │      │   Monitoring │
+       └─────────────▶│   Store     │      │  (Prometheus)│
+                      │  (Redis)    │      └──────────────┘
+                      └─────────────┘</div>
+
+                        <h4>2. Implementation Example</h4>
+                        <div class="code-block"><span class="comment"># FastAPI service for model serving</span>
+
+<span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI, HTTPException
+<span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+<span class="keyword">import</span> joblib
+<span class="keyword">import</span> redis
+<span class="keyword">from</span> typing <span class="keyword">import</span> List
+<span class="keyword">import</span> random
+
+app = FastAPI()
+redis_client = redis.Redis(host=<span class="string">'localhost'</span>, port=6379)
+
+<span class="comment"># Load multiple model versions</span>
+models = {
+    <span class="string">'v1'</span>: joblib.load(<span class="string">'model_v1.pkl'</span>),
+    <span class="string">'v2'</span>: joblib.load(<span class="string">'model_v2.pkl'</span>)
+}
+
+<span class="keyword">class</span> <span class="function">PredictionRequest</span>(BaseModel):
+    features: List[float]
+    user_id: str
+
+<span class="keyword">class</span> <span class="function">PredictionResponse</span>(BaseModel):
+    prediction: float
+    model_version: str
+    confidence: float
+
+<span class="keyword">def</span> <span class="function">get_model_version</span>(user_id: str) -> str:
+    <span class="comment">"""A/B testing: 80% v1, 20% v2"""</span>
+    <span class="comment"># Use user_id for consistent assignment</span>
+    user_hash = <span class="function">hash</span>(user_id) % 100
+    <span class="keyword">return</span> <span class="string">'v2'</span> <span class="keyword">if</span> user_hash < 20 <span class="keyword">else</span> <span class="string">'v1'</span>
+
+@app.post(<span class="string">"/predict"</span>, response_model=PredictionResponse)
+<span class="keyword">async def</span> <span class="function">predict</span>(request: PredictionRequest):
+    <span class="keyword">try</span>:
+        <span class="comment"># 1. Select model version</span>
+        version = get_model_version(request.user_id)
+        model = models[version]
+        
+        <span class="comment"># 2. Get cached features if available</span>
+        cache_key = <span class="string">f"features:<span class="keyword">{request.user_id}</span>"</span>
+        cached = redis_client.get(cache_key)
+        
+        <span class="comment"># 3. Make prediction</span>
+        features = np.array(request.features).reshape(1, -1)
+        prediction = model.predict(features)[0]
+        confidence = model.predict_proba(features)[0].max()
+        
+        <span class="comment"># 4. Log prediction for monitoring</span>
+        redis_client.lpush(
+            <span class="string">f"predictions:<span class="keyword">{version}</span>"</span>,
+            <span class="string">f"<span class="keyword">{prediction}</span>,<span class="keyword">{confidence}</span>"</span>
+        )
+        
+        <span class="keyword">return</span> PredictionResponse(
+            prediction=<span class="function">float</span>(prediction),
+            model_version=version,
+            confidence=<span class="function">float</span>(confidence)
+        )
+    
+    <span class="keyword">except</span> <span class="function">Exception</span> <span class="keyword">as</span> e:
+        <span class="keyword">raise</span> HTTPException(status_code=500, detail=<span class="function">str</span>(e))
+
+@app.get(<span class="string">"/health"</span>)
+<span class="keyword">async def</span> <span class="function">health_check</span>():
+    <span class="keyword">return</span> {<span class="string">"status"</span>: <span class="string">"healthy"</span>, <span class="string">"models"</span>: <span class="function">list</span>(models.keys())}</div>
+
+                        <h4>3. Key Design Decisions</h4>
+                        
+                        <p><strong>Real-time vs Batch Predictions</strong></p>
+                        <ul>
+                            <li><strong>Real-time:</strong> FastAPI + Redis cache for low latency (&lt;100ms)</li>
+                            <li><strong>Batch:</strong> Separate Spark job running hourly/daily</li>
+                            <li>Store batch results in database with TTL</li>
+                        </ul>
+
+                        <p><strong>A/B Testing Strategy</strong></p>
+                        <ul>
+                            <li>Hash-based assignment ensures consistency per user</li>
+                            <li>Traffic split configurable via config file (no code deploy)</li>
+                            <li>Track metrics separately per version</li>
+                            <li>Gradual rollout: 5% → 20% → 50% → 100%</li>
+                        </ul>
+
+                        <p><strong>Zero-Downtime Updates</strong></p>
+                        <ul>
+                            <li>Blue-green deployment: run both versions simultaneously</li>
+                            <li>Kubernetes rolling updates with health checks</li>
+                            <li>Load model on startup, serve from memory</li>
+                            <li>Rollback capability within 1 minute</li>
+                        </ul>
+
+                        <h4>4. Monitoring & Alerting</h4>
+                        <div class="code-block"><span class="comment"># Key metrics to track</span>
+
+Latency metrics:
+- p50, p95, p99 response times
+- Model inference time
+
+Model performance:
+- Prediction distribution (detect drift)
+- Confidence score distribution
+- A/B test metrics (conversion, accuracy)
+
+System health:
+- Request rate and errors
+- Cache hit ratio
+- Resource utilization (CPU, memory)
+
+Alerts:
+- Latency > 500ms for 5 minutes
+- Error rate > 1% for 2 minutes
+- Prediction drift > 20% from baseline</div>
+
+                        <h4>5. Scaling Strategy</h4>
+                        <ul>
+                            <li><strong>Horizontal scaling:</strong> Auto-scale pods based on CPU/request rate</li>
+                            <li><strong>Caching:</strong> Redis for frequently requested predictions</li>
+                            <li><strong>Load balancing:</strong> Nginx or AWS ALB with health checks</li>
+                            <li><strong>Rate limiting:</strong> Protect against abuse (1000 req/min per user)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Design Problem 3: Real-Time Analytics -->
+            <div class="problem-container" id="sd3">
+                <div class="problem-header">
+                    <h2>14. Real-Time Analytics Dashboard</h2>
+                    <div class="problem-meta">
+                        <span class="meta-tag">System Design</span>
+                        <span class="meta-tag">Streaming</span>
+                        <span class="meta-tag">Real-time</span>
+                        <span class="meta-tag">Hard</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Problem Statement</h3>
+                    <p>Design a real-time analytics system for an e-commerce platform that:</p>
+                    <ul>
+                        <li>Processes 10,000 events/second (page views, clicks, purchases)</li>
+                        <li>Provides dashboards with 1-second latency</li>
+                        <li>Calculates metrics: active users, revenue, conversion rate</li>
+                        <li>Supports both real-time and historical queries</li>
+                        <li>Handles missing or late-arriving events</li>
+                    </ul>
+                </div>
+
+                <button class="solution-toggle" onclick="toggleSolution('sd3-solution')">Show Solution</button>
+
+                <div class="solution-content" id="sd3-solution">
+                    <div class="section">
+                        <h3>Architecture Design</h3>
+
+                        <h4>1. Lambda Architecture</h4>
+                        <div class="code-block">┌──────────────┐
+│   Events     │
+│  (Clients)   │
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐      ╔═══════════════════╗      ┌──────────────┐
+│    Kafka     │─────▶║  Speed Layer      ║─────▶│  Real-time   │
+│  (Ingestion) │      ║  (Flink/Storm)    ║      │   Database   │
+└──────┬───────┘      ║  1-second latency ║      │  (ClickHouse)│
+       │              ╚═══════════════════╝      └──────────────┘
+       │                                                  │
+       ▼                                                  │
+┌──────────────┐      ┌───────────────┐                 │
+│    Batch     │─────▶│  Batch Layer  │                 │
+│   Storage    │      │  (Spark)      │                 │
+│    (S3)      │      │  Historical   │                 │
+└──────────────┘      └───────┬───────┘                 │
+                              │                         │
+                              ▼                         ▼
+                      ┌───────────────┐      ┌──────────────┐
+                      │   Serving     │─────▶│   Dashboard  │
+                      │    Layer      │      │  (Grafana)   │
+                      │  (Druid/      │      └──────────────┘
+                      │   Pinot)      │
+                      └───────────────┘</div>
+
+                        <h4>2. Technology Stack</h4>
+                        <ul>
+                            <li><strong>Ingestion:</strong> Apache Kafka - distributed event streaming</li>
+                            <li><strong>Stream Processing:</strong> Apache Flink - stateful computations, exactly-once semantics</li>
+                            <li><strong>Real-time Store:</strong> ClickHouse or Apache Druid - columnar OLAP database</li>
+                            <li><strong>Batch Processing:</strong> Apache Spark - historical aggregations</li>
+                            <li><strong>Visualization:</strong> Grafana or custom React dashboard</li>
+                        </ul>
+
+                        <h4>3. Stream Processing Example (Flink)</h4>
+                        <div class="code-block"><span class="comment">// Simplified Flink job in Java/Scala style pseudocode</span>
+
+<span class="comment">// Define event schema</span>
+<span class="keyword">case class</span> Event(
+  userId: String,
+  eventType: String,  <span class="comment">// "view", "click", "purchase"</span>
+  timestamp: Long,
+  value: Double
+)
+
+<span class="comment">// Kafka source</span>
+<span class="keyword">val</span> events = env
+  .addSource(<span class="keyword">new</span> FlinkKafkaConsumer(<span class="string">"events-topic"</span>, schema, props))
+  .assignTimestampsAndWatermarks(
+    WatermarkStrategy
+      .forBoundedOutOfOrderness(Duration.ofSeconds(5))  <span class="comment">// Handle late events</span>
+      .withTimestampAssigner((event, ts) => event.timestamp)
+  )
+
+<span class="comment">// Real-time metrics: Active users in 1-minute windows</span>
+<span class="keyword">val</span> activeUsers = events
+  .keyBy(_.userId)
+  .window(TumblingEventTimeWindows.of(Time.minutes(1)))
+  .apply(<span class="keyword">new</span> CountUniqueUsers())
+  .addSink(<span class="keyword">new</span> ClickHouseSink(<span class="string">"active_users_1m"</span>))
+
+<span class="comment">// Revenue calculation</span>
+<span class="keyword">val</span> revenue = events
+  .filter(_.eventType == <span class="string">"purchase"</span>)
+  .keyBy(_ => <span class="string">"global"</span>)
+  .window(TumblingEventTimeWindows.of(Time.minutes(1)))
+  .sum(<span class="string">"value"</span>)
+  .addSink(<span class="keyword">new</span> ClickHouseSink(<span class="string">"revenue_1m"</span>))
+
+<span class="comment">// Conversion rate: purchases / views</span>
+<span class="keyword">val</span> conversionRate = events
+  .map(e => (e.eventType, 1))
+  .keyBy(_._1)
+  .window(TumblingEventTimeWindows.of(Time.minutes(5)))
+  .reduce((a, b) => (a._1, a._2 + b._2))
+  .process(<span class="keyword">new</span> ConversionRateCalculator())
+  .addSink(<span class="keyword">new</span> ClickHouseSink(<span class="string">"conversion_rate_5m"</span>))</div>
+
+                        <h4>4. Handling Challenges</h4>
+
+                        <p><strong>Late-Arriving Events</strong></p>
+                        <ul>
+                            <li>Watermarks: allow 5-second out-of-order tolerance</li>
+                            <li>Side outputs: capture very late events separately</li>
+                            <li>Recompute windows when late data arrives</li>
+                        </ul>
+
+                        <p><strong>Exactly-Once Semantics</strong></p>
+                        <ul>
+                            <li>Flink checkpointing every 10 seconds</li>
+                            <li>Kafka transactions for atomic writes</li>
+                            <li>Idempotent writes to ClickHouse</li>
+                        </ul>
+
+                        <p><strong>Scalability</strong></p>
+                        <ul>
+                            <li>Kafka: partition by user_id (100 partitions)</li>
+                            <li>Flink: 20 task managers with auto-scaling</li>
+                            <li>ClickHouse: distributed cluster with replication</li>
+                        </ul>
+
+                        <h4>5. Query Serving Layer</h4>
+                        <div class="code-block"><span class="comment">-- ClickHouse table schema for real-time metrics</span>
+
+<span class="keyword">CREATE TABLE</span> metrics_1m (
+    timestamp DateTime,
+    metric_name String,
+    metric_value Float64,
+    dimensions Map(String, String)
+) ENGINE = MergeTree()
+PARTITION BY toYYYYMM(timestamp)
+ORDER BY (metric_name, timestamp);
+
+<span class="comment">-- Example query: Active users in last hour</span>
+<span class="keyword">SELECT</span> 
+    <span class="function">toStartOfMinute</span>(timestamp) <span class="keyword">AS</span> minute,
+    <span class="function">sum</span>(metric_value) <span class="keyword">AS</span> active_users
+<span class="keyword">FROM</span> metrics_1m
+<span class="keyword">WHERE</span> metric_name = <span class="string">'active_users'</span>
+    <span class="keyword">AND</span> timestamp >= <span class="function">now</span>() - <span class="function">INTERVAL</span> 1 <span class="function">HOUR</span>
+<span class="keyword">GROUP BY</span> minute
+<span class="keyword">ORDER BY</span> minute;</div>
+
+                        <h4>6. Cost Optimization</h4>
+                        <ul>
+                            <li>Aggregate at multiple granularities: 1m, 5m, 1h, 1d</li>
+                            <li>TTL policies: keep raw events for 7 days, aggregates for 1 year</li>
+                            <li>Sampling: process 10% of events for exploratory analytics</li>
+                            <li>Compression: use Zstd in ClickHouse (80% reduction)</li>
+                        </ul>
+
+                        <h4>7. Monitoring</h4>
+                        <ul>
+                            <li>Kafka lag: ensure consumers keep up with producers</li>
+                            <li>Flink checkpoint duration and backpressure</li>
+                            <li>End-to-end latency: event timestamp to dashboard visibility</li>
+                            <li>Data quality: null rates, schema violations, duplicate events</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Navigation between problems
+        document.querySelectorAll('.problem-nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const problemId = this.dataset.problem;
+                
+                // Update active states
+                document.querySelectorAll('.problem-nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show selected problem
+                document.querySelectorAll('.problem-container').forEach(c => c.classList.remove('active'));
+                document.getElementById(problemId).classList.add('active');
+                
+                // Scroll to top
+                document.querySelector('.main-content').scrollTop = 0;
+            });
+        });
+
+        // Toggle solution visibility
+        function toggleSolution(solutionId) {
+            const solution = document.getElementById(solutionId);
+            const button = solution.previousElementSibling;
+            
+            if (solution.classList.contains('show')) {
+                solution.classList.remove('show');
+                button.textContent = 'Show Solution';
+            } else {
+                solution.classList.add('show');
+                button.textContent = 'Hide Solution';
+            }
+        }
+    </script>
+</body>
+</html>

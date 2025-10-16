@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Study Plan - Data Science Bootcamp</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #F4B942 0%, #D4A942 100%);
+            color: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+        }
+
+        .page-header .duration {
+            opacity: 0.95;
+            font-size: 1.1rem;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #F4B942;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .content-area {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-section h3 {
+            margin-top: 0;
+            color: #F4B942;
+            font-size: 1.1rem;
+            border-bottom: 2px solid #F4B942;
+            padding-bottom: 0.5rem;
+        }
+
+        .completion-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #fffbf0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .completion-checkbox:hover {
+            background: #fff5d6;
+        }
+
+        .completion-checkbox input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #F4B942;
+        }
+
+        .completion-checkbox label {
+            cursor: pointer;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .quick-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quick-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .quick-links a {
+            color: #F4B942;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .quick-links a:hover {
+            color: #D4A942;
+            transform: translateX(5px);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid #eee;
+            border-bottom: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 8px 8px 0 0;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .tab:hover {
+            background: #fffbf0;
+            color: #F4B942;
+        }
+
+        .tab.active {
+            background: #F4B942;
+            color: white;
+            border-color: #F4B942;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .week-section h3 {
+            color: #F4B942;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .week-section h4 {
+            color: #333;
+            margin-top: 1.25rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .week-section ul {
+            margin: 0.75rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .week-section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #F4B942;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .highlight-box {
+            background: #fffbf0;
+            border-left: 4px solid #F4B942;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checklist li::before {
+            content: "□";
+            color: #F4B942;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 968px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        .nav-item.active {
+            border-bottom: 3px solid #F4B942;
+            color: #F4B942;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>44-Week Learning Journey</h1>
+            <ul class="nav-links">
+                <li><a href="../../index.html" class="nav-item">Home</a></li>
+                <li><a href="../../subjects.html" class="nav-item">Subjects</a></li>
+                <li><a href="../../progress.html" class="nav-item">Progress</a></li>
+                <li><a href="index.html" class="nav-item active">Bootcamp</a></li>
+                <li><a href="../../about.html" class="nav-item">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> / 
+            <a href="../../subjects.html">Subjects</a> / 
+            <a href="index.html">Data Science Bootcamp</a> / 
+            Machine Learning
+        </div>
+
+        <div class="page-header">
+            <h1>🤖 Machine Learning Fundamentals</h1>
+            <p class="duration">8-Week Comprehensive Study Plan</p>
+        </div>
+
+        <div class="main-container">
+            <div class="content-area">
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('overview')">Overview</div>
+                    <div class="tab" onclick="switchTab('week1-2')">Week 1-2</div>
+                    <div class="tab" onclick="switchTab('week3-4')">Week 3-4</div>
+                    <div class="tab" onclick="switchTab('week5')">Week 5</div>
+                    <div class="tab" onclick="switchTab('week6')">Week 6</div>
+                    <div class="tab" onclick="switchTab('week7-8')">Week 7-8</div>
+                    <div class="tab" onclick="switchTab('assessment')">Assessment</div>
+                </div>
+
+                <div id="overview" class="tab-content active">
+                    <div class="week-section">
+                        <h2>Course Overview</h2>
+                        <p>Master the fundamentals of machine learning with a focus on practical implementation and real-world problem-solving. This 8-week intensive program covers supervised learning, unsupervised learning, model evaluation, and deployment-ready pipelines.</p>
+
+                        <h3>🎯 Learning Objectives</h3>
+                        <ul>
+                            <li>Understand core ML algorithms and when to use them</li>
+                            <li>Implement models using scikit-learn and modern tools</li>
+                            <li>Master feature engineering and data preprocessing</li>
+                            <li>Evaluate models using appropriate metrics</li>
+                            <li>Build production-ready ML pipelines</li>
+                            <li>Diagnose and fix overfitting/underfitting</li>
+                        </ul>
+
+                        <h3>📚 Course Structure</h3>
+                        <ul>
+                            <li><strong>Week 1-2:</strong> Linear Models & Regression</li>
+                            <li><strong>Week 3-4:</strong> Tree-Based Models & Classification</li>
+                            <li><strong>Week 5:</strong> Feature Engineering & Selection</li>
+                            <li><strong>Week 6:</strong> Unsupervised Learning</li>
+                            <li><strong>Week 7-8:</strong> Advanced Topics & Pipelines</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <h4>💡 Prerequisites</h4>
+                            <p>Before starting this course, you should be comfortable with:</p>
+                            <ul>
+                                <li>Python programming fundamentals</li>
+                                <li>NumPy and pandas basics</li>
+                                <li>Basic statistics (mean, variance, distributions)</li>
+                                <li>Basic linear algebra (vectors, matrices)</li>
+                            </ul>
+                        </div>
+
+                        <h3>🛠️ Tools & Libraries</h3>
+                        <ul>
+                            <li><strong>Core:</strong> scikit-learn, NumPy, pandas</li>
+                            <li><strong>Visualization:</strong> matplotlib, seaborn</li>
+                            <li><strong>Additional:</strong> XGBoost, LightGBM, imbalanced-learn</li>
+                        </ul>
+
+                        <h3>📖 Recommended Resources</h3>
+                        <ul>
+                            <li>"Hands-On Machine Learning" by Aurélien Géron</li>
+                            <li>"The Elements of Statistical Learning" by Hastie et al.</li>
+                            <li>Andrew Ng's Machine Learning Course (Coursera)</li>
+                            <li>Fast.ai Practical Deep Learning</li>
+                            <li>Kaggle Learn: Machine Learning courses</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="week1-2" class="tab-content">
+                    <div class="week-section">
+                        <h2>Week 1-2: Linear Models & Regression</h2>
+
+                        <h3>Core Concepts</h3>
+                        <h4>Linear Regression</h4>
+                        <ul>
+                            <li>Simple and multiple linear regression</li>
+                            <li>Assumptions: linearity, independence, homoscedasticity, normality</li>
+                            <li>Cost function: Mean Squared Error (MSE)</li>
+                            <li>Closed-form solution vs gradient descent</li>
+                            <li>Interpretation of coefficients</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load and split data
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Evaluate
+y_pred = model.predict(X_test)
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"MSE: {mse:.2f}, R²: {r2:.2f}")
+print(f"Coefficients: {model.coef_}")
+print(f"Intercept: {model.intercept_}")
+                        </div>
+
+                        <h4>Regularization Techniques</h4>
+                        <ul>
+                            <li><strong>Ridge (L2):</strong> Shrinks coefficients, handles multicollinearity</li>
+                            <li><strong>Lasso (L1):</strong> Feature selection, sets some coefficients to zero</li>
+                            <li><strong>Elastic Net:</strong> Combines L1 and L2 penalties</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.linear_model import Ridge, Lasso, ElasticNet
+
+# Ridge Regression
+ridge = Ridge(alpha=1.0)
+ridge.fit(X_train, y_train)
+
+# Lasso Regression
+lasso = Lasso(alpha=0.1)
+lasso.fit(X_train, y_train)
+
+# Elastic Net
+elastic = ElasticNet(alpha=0.1, l1_ratio=0.5)
+elastic.fit(X_train, y_train)
+                        </div>
+
+                        <h4>Logistic Regression for Classification</h4>
+                        <ul>
+                            <li>Sigmoid function and probability interpretation</li>
+                            <li>Binary and multiclass classification</li>
+                            <li>Decision boundary and probability thresholds</li>
+                            <li>Log-loss (binary cross-entropy)</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
+
+# Train classifier
+clf = LogisticRegression(max_iter=1000)
+clf.fit(X_train, y_train)
+
+# Predictions
+y_pred = clf.predict(X_test)
+y_proba = clf.predict_proba(X_test)
+
+# Evaluate
+print(confusion_matrix(y_test, y_pred))
+print(classification_report(y_test, y_pred))
+                        </div>
+
+                        <h3>Practical Exercises</h3>
+                        <ol>
+                            <li>Build a house price prediction model using linear regression</li>
+                            <li>Compare Ridge, Lasso, and Elastic Net on high-dimensional data</li>
+                            <li>Create a binary classifier for customer churn prediction</li>
+                            <li>Implement gradient descent from scratch for linear regression</li>
+                            <li>Visualize decision boundaries for logistic regression</li>
+                        </ol>
+
+                        <div class="highlight-box">
+                            <h4>💡 Key Takeaways</h4>
+                            <ul>
+                                <li>Linear models are interpretable and fast to train</li>
+                                <li>Use regularization to prevent overfitting</li>
+                                <li>Lasso is great for feature selection</li>
+                                <li>Ridge handles multicollinearity better</li>
+                                <li>Always check model assumptions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="week3-4" class="tab-content">
+                    <div class="week-section">
+                        <h2>Week 3-4: Tree-Based Models & Classification</h2>
+
+                        <h3>Decision Trees</h3>
+                        <h4>Core Concepts</h4>
+                        <ul>
+                            <li>Splitting criteria: Gini impurity, entropy, information gain</li>
+                            <li>Recursive binary splitting</li>
+                            <li>Pruning to prevent overfitting</li>
+                            <li>Feature importance</li>
+                            <li>Interpretability vs complexity trade-off</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+import matplotlib.pyplot as plt
+
+# Train decision tree
+tree = DecisionTreeClassifier(
+    max_depth=5,
+    min_samples_split=20,
+    min_samples_leaf=10,
+    random_state=42
+)
+tree.fit(X_train, y_train)
+
+# Feature importance
+importances = tree.feature_importances_
+for feature, importance in zip(feature_names, importances):
+    print(f"{feature}: {importance:.4f}")
+
+# Visualize tree
+plt.figure(figsize=(20,10))
+plot_tree(tree, feature_names=feature_names, 
+          class_names=class_names, filled=True)
+plt.show()
+                        </div>
+
+                        <h3>Ensemble Methods</h3>
+                        
+                        <h4>Random Forest</h4>
+                        <ul>
+                            <li>Bootstrap aggregating (bagging)</li>
+                            <li>Feature randomness at each split</li>
+                            <li>Out-of-bag (OOB) error estimation</li>
+                            <li>Robust to outliers and overfitting</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.ensemble import RandomForestClassifier
+
+# Random Forest with hyperparameters
+rf = RandomForestClassifier(
+    n_estimators=100,
+    max_depth=10,
+    min_samples_split=5,
+    min_samples_leaf=2,
+    max_features='sqrt',
+    random_state=42,
+    n_jobs=-1
+)
+rf.fit(X_train, y_train)
+
+# OOB Score
+rf_oob = RandomForestClassifier(
+    n_estimators=100, 
+    oob_score=True, 
+    random_state=42
+)
+rf_oob.fit(X_train, y_train)
+print(f"OOB Score: {rf_oob.oob_score_:.4f}")
+                        </div>
+
+                        <h4>Gradient Boosting</h4>
+                        <ul>
+                            <li>Sequential tree building</li>
+                            <li>Learning from previous errors</li>
+                            <li>XGBoost, LightGBM, CatBoost implementations</li>
+                            <li>Learning rate and number of estimators</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.ensemble import GradientBoostingClassifier
+from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
+
+# Gradient Boosting
+gb = GradientBoostingClassifier(
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=3,
+    random_state=42
+)
+gb.fit(X_train, y_train)
+
+# XGBoost
+xgb = XGBClassifier(
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=3,
+    random_state=42
+)
+xgb.fit(X_train, y_train)
+
+# LightGBM
+lgb = LGBMClassifier(
+    n_estimators=100,
+    learning_rate=0.1,
+    max_depth=3,
+    random_state=42
+)
+lgb.fit(X_train, y_train)
+                        </div>
+
+                        <h3>Model Evaluation Metrics</h3>
+                        <h4>Classification Metrics</h4>
+                        <ul>
+                            <li><strong>Accuracy:</strong> Overall correctness</li>
+                            <li><strong>Precision:</strong> True positives / (TP + FP)</li>
+                            <li><strong>Recall:</strong> True positives / (TP + FN)</li>
+                            <li><strong>F1-Score:</strong> Harmonic mean of precision and recall</li>
+                            <li><strong>ROC-AUC:</strong> Area under ROC curve</li>
+                            <li><strong>PR-AUC:</strong> Precision-Recall curve (imbalanced data)</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.metrics import (
+    accuracy_score, precision_score, recall_score, 
+    f1_score, roc_auc_score, roc_curve, 
+    precision_recall_curve, average_precision_score
+)
+import matplotlib.pyplot as plt
+
+# Get predictions
+y_pred = model.predict(X_test)
+y_proba = model.predict_proba(X_test)[:, 1]
+
+# Calculate metrics
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
+roc_auc = roc_auc_score(y_test, y_proba)
+
+print(f"Accuracy: {accuracy:.3f}")
+print(f"Precision: {precision:.3f}")
+print(f"Recall: {recall:.3f}")
+print(f"F1-Score: {f1:.3f}")
+print(f"ROC-AUC: {roc_auc:.3f}")
+
+# ROC Curve
+fpr, tpr, _ = roc_curve(y_test, y_proba)
+plt.plot(fpr, tpr, label=f'ROC-AUC: {roc_auc:.3f}')
+plt.plot([0, 1], [0, 1], 'k--')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
+plt.legend()
+plt.show()
+                        </div>
+
+                        <h3>Practical Exercises</h3>
+                        <ol>
+                            <li>Build a decision tree for credit risk assessment</li>
+                            <li>Compare Random Forest vs Gradient Boosting on Kaggle dataset</li>
+                            <li>Tune XGBoost hyperparameters using GridSearchCV</li>
+                            <li>Handle imbalanced data with class weights and SMOTE</li>
+                            <li>Create a comprehensive classification report with all metrics</li>
+                        </ol>
+
+                        <div class="highlight-box">
+                            <h4>💡 Key Takeaways</h4>
+                            <ul>
+                                <li>Trees are prone to overfitting; use max_depth and min_samples</li>
+                                <li>Random Forests reduce variance through averaging</li>
+                                <li>Gradient Boosting reduces bias through sequential learning</li>
+                                <li>XGBoost and LightGBM are faster and often more accurate</li>
+                                <li>Choose metrics appropriate for your problem (precision vs recall trade-off)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="week5" class="tab-content">
+                    <div class="week-section">
+                        <h2>Week 5: Feature Engineering & Selection</h2>
+
+                        <h3>Feature Engineering Techniques</h3>
+                        
+                        <h4>Handling Missing Values</h4>
+                        <ul>
+                            <li>Mean/median/mode imputation</li>
+                            <li>Forward/backward fill (time series)</li>
+                            <li>KNN imputation</li>
+                            <li>Predictive imputation (iterative imputer)</li>
+                            <li>Missing indicator features</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.impute import SimpleImputer, KNNImputer
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+
+# Simple imputation
+imputer_mean = SimpleImputer(strategy='mean')
+imputer_median = SimpleImputer(strategy='median')
+imputer_mode = SimpleImputer(strategy='most_frequent')
+
+X_imputed = imputer_mean.fit_transform(X)
+
+# KNN imputation
+knn_imputer = KNNImputer(n_neighbors=5)
+X_knn = knn_imputer.fit_transform(X)
+
+# Iterative imputation
+iter_imputer = IterativeImputer(random_state=42)
+X_iter = iter_imputer.fit_transform(X)
+                        </div>
+
+                        <h4>Encoding Categorical Variables</h4>
+                        <ul>
+                            <li><strong>Label Encoding:</strong> Ordinal variables</li>
+                            <li><strong>One-Hot Encoding:</strong> Nominal variables</li>
+                            <li><strong>Target Encoding:</strong> High cardinality</li>
+                            <li><strong>Binary Encoding:</strong> Memory efficient</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from category_encoders import TargetEncoder, BinaryEncoder
+
+# Label Encoding
+le = LabelEncoder()
+df['encoded'] = le.fit_transform(df['category'])
+
+# One-Hot Encoding
+ohe = OneHotEncoder(sparse=False, handle_unknown='ignore')
+encoded = ohe.fit_transform(df[['category']])
+
+# Target Encoding (for high cardinality)
+te = TargetEncoder()
+df['target_encoded'] = te.fit_transform(df['category'], df['target'])
+
+# Binary Encoding
+be = BinaryEncoder()
+binary_encoded = be.fit_transform(df['category'])
+                        </div>
+
+                        <h4>Feature Scaling</h4>
+                        <ul>
+                            <li><strong>Standardization:</strong> Mean=0, Std=1 (most ML algorithms)</li>
+                            <li><strong>Min-Max:</strong> Scale to [0,1] (neural networks)</li>
+                            <li><strong>Robust Scaler:</strong> Uses median/IQR (outliers)</li>
+                            <li><strong>MaxAbs Scaler:</strong> [-1, 1] (sparse data)</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.preprocessing import (
+    StandardScaler, MinMaxScaler, 
+    RobustScaler, MaxAbsScaler
+)
+
+# Standardization (z-score normalization)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Min-Max Scaling
+minmax = MinMaxScaler()
+X_minmax = minmax.fit_transform(X)
+
+# Robust Scaling (outlier-resistant)
+robust = RobustScaler()
+X_robust = robust.fit_transform(X)
+                        </div>
+
+                        <h4>Creating New Features</h4>
+                        <ul>
+                            <li><strong>Polynomial features:</strong> x², x³, x₁*x₂</li>
+                            <li><strong>Binning:</strong> Age groups, income brackets</li>
+                            <li><strong>Date/time features:</strong> Day, month, hour, is_weekend</li>
+                            <li><strong>Domain-specific:</strong> BMI from height/weight</li>
+                            <li><strong>Aggregations:</strong> sum, mean, count per group</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.preprocessing import PolynomialFeatures
+import pandas as pd
+
+# Polynomial features
+poly = PolynomialFeatures(degree=2, include_bias=False)
+X_poly = poly.fit_transform(X)
+
+# Binning
+df['age_group'] = pd.cut(df['age'], 
+                         bins=[0, 18, 35, 50, 100],
+                         labels=['child', 'young', 'middle', 'senior'])
+
+# Date features
+df['date'] = pd.to_datetime(df['date'])
+df['year'] = df['date'].dt.year
+df['month'] = df['date'].dt.month
+df['day_of_week'] = df['date'].dt.dayofweek
+df['is_weekend'] = df['day_of_week'].isin([5, 6]).astype(int)
+
+# Domain-specific
+df['bmi'] = df['weight'] / (df['height'] / 100) ** 2
+                        </div>
+
+                        <h3>Feature Selection</h3>
+                        
+                        <h4>Filter Methods</h4>
+                        <ul>
+                            <li>Correlation with target</li>
+                            <li>Chi-square test (categorical)</li>
+                            <li>ANOVA F-test (continuous)</li>
+                            <li>Mutual information</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.feature_selection import (
+    SelectKBest, chi2, f_classif, mutual_info_classif
+)
+
+# Select K best features using F-test
+selector = SelectKBest(f_classif, k=10)
+X_selected = selector.fit_transform(X, y)
+
+# Get selected feature names
+selected_features = X.columns[selector.get_support()].tolist()
+
+# Feature scores
+scores = pd.DataFrame({
+    'feature': X.columns,
+    'score': selector.scores_
+}).sort_values('score', ascending=False)
+                        </div>
+
+                        <h4>Wrapper Methods</h4>
+                        <ul>
+                            <li>Recursive Feature Elimination (RFE)</li>
+                            <li>Forward/backward selection</li>
+                            <li>Sequential feature selection</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.feature_selection import RFE, SequentialFeatureSelector
+from sklearn.ensemble import RandomForestClassifier
+
+# Recursive Feature Elimination
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+rfe = RFE(estimator=model, n_features_to_select=10)
+X_rfe = rfe.fit_transform(X, y)
+
+# Sequential Feature Selection
+sfs = SequentialFeatureSelector(
+    model, 
+    n_features_to_select=10,
+    direction='forward'
+)
+X_sfs = sfs.fit_transform(X, y)
+                        </div>
+
+                        <h4>Embedded Methods</h4>
+                        <ul>
+                            <li>Lasso regression (L1 regularization)</li>
+                            <li>Tree-based feature importance</li>
+                            <li>Regularization paths</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.linear_model import LassoCV
+from sklearn.ensemble import RandomForestClassifier
+
+# Lasso for feature selection
+lasso = LassoCV(cv=5, random_state=42)
+lasso.fit(X, y)
+
+# Features with non-zero coefficients
+selected_features = X.columns[lasso.coef_ != 0].tolist()
+
+# Tree-based importance
+rf = RandomForestClassifier(n_estimators=100, random_state=42)
+rf.fit(X, y)
+
+importance_df = pd.DataFrame({
+    'feature': X.columns,
+    'importance': rf.feature_importances_
+}).sort_values('importance', ascending=False)
+
+# Select top N features
+top_features = importance_df.head(10)['feature'].tolist()
+                        </div>
+
+                        <h3>Practical Exercises</h3>
+                        <ol>
+                            <li>Handle missing data in a real-world dataset using multiple strategies</li>
+                            <li>Create polynomial features and evaluate model improvement</li>
+                            <li>Engineer date/time features from transaction data</li>
+                            <li>Compare filter, wrapper, and embedded feature selection methods</li>
+                            <li>Build a complete preprocessing pipeline with all transformations</li>
+                        </ol>
+
+                        <div class="highlight-box">
+                            <h4>💡 Key Takeaways</h4>
+                            <ul>
+                                <li>Feature engineering often improves models more than algorithm tuning</li>
+                                <li>Always scale features before using distance-based algorithms</li>
+                                <li>Domain knowledge is crucial for creating meaningful features</li>
+                                <li>Remove highly correlated features to reduce multicollinearity</li>
+                                <li>Use cross-validation when selecting features to avoid overfitting</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="week6" class="tab-content">
+                    <div class="week-section">
+                        <h2>Week 6: Unsupervised Learning</h2>
+
+                        <h3>Clustering Algorithms</h3>
+                        
+                        <h4>K-Means Clustering</h4>
+                        <ul>
+                            <li>Centroid-based partitioning</li>
+                            <li>Elbow method for optimal K</li>
+                            <li>Silhouette score for cluster quality</li>
+                            <li>Limitations: spherical clusters, sensitive to outliers</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+import matplotlib.pyplot as plt
+
+# Elbow method
+inertias = []
+silhouettes = []
+K_range = range(2, 11)
+
+for k in K_range:
+    kmeans = KMeans(n_clusters=k, random_state=42)
+    kmeans.fit(X)
+    inertias.append(kmeans.inertia_)
+    silhouettes.append(silhouette_score(X, kmeans.labels_))
+
+# Plot elbow curve
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 2, 1)
+plt.plot(K_range, inertias, 'bo-')
+plt.xlabel('Number of Clusters')
+plt.ylabel('Inertia')
+plt.title('Elbow Method')
+
+plt.subplot(1, 2, 2)
+plt.plot(K_range, silhouettes, 'ro-')
+plt.xlabel('Number of Clusters')
+plt.ylabel('Silhouette Score')
+plt.title('Silhouette Analysis')
+plt.tight_layout()
+plt.show()
+
+# Final clustering
+kmeans = KMeans(n_clusters=4, random_state=42)
+clusters = kmeans.fit_predict(X)
+                        </div>
+
+                        <h4>Hierarchical Clustering</h4>
+                        <ul>
+                            <li>Agglomerative (bottom-up) approach</li>
+                            <li>Dendrograms for visualization</li>
+                            <li>Linkage methods: single, complete, average, ward</li>
+                            <li>No need to specify K upfront</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.cluster import AgglomerativeClustering
+from scipy.cluster.hierarchy import dendrogram, linkage
+import matplotlib.pyplot as plt
+
+# Hierarchical clustering
+hierarchical = AgglomerativeClustering(
+    n_clusters=4, 
+    linkage='ward'
+)
+clusters = hierarchical.fit_predict(X)
+
+# Create dendrogram
+linkage_matrix = linkage(X, method='ward')
+plt.figure(figsize=(12, 6))
+dendrogram(linkage_matrix)
+plt.title('Hierarchical Clustering Dendrogram')
+plt.xlabel('Sample Index')
+plt.ylabel('Distance')
+plt.show()
+                        </div>
+
+                        <h4>DBSCAN (Density-Based)</h4>
+                        <ul>
+                            <li>Finds clusters of arbitrary shape</li>
+                            <li>Robust to outliers (labels them as noise)</li>
+                            <li>Parameters: eps (neighborhood radius), min_samples</li>
+                            <li>No need to specify number of clusters</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.cluster import DBSCAN
+from sklearn.preprocessing import StandardScaler
+
+# Scale data (important for DBSCAN)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# DBSCAN clustering
+dbscan = DBSCAN(eps=0.5, min_samples=5)
+clusters = dbscan.fit_predict(X_scaled)
+
+# Analyze results
+n_clusters = len(set(clusters)) - (1 if -1 in clusters else 0)
+n_noise = list(clusters).count(-1)
+
+print(f"Number of clusters: {n_clusters}")
+print(f"Number of noise points: {n_noise}")
+                        </div>
+
+                        <h3>Dimensionality Reduction</h3>
+                        
+                        <h4>Principal Component Analysis (PCA)</h4>
+                        <ul>
+                            <li>Linear dimensionality reduction</li>
+                            <li>Finds directions of maximum variance</li>
+                            <li>Orthogonal principal components</li>
+                            <li>Explained variance ratio</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+# PCA
+pca = PCA()
+X_pca = pca.fit_transform(X)
+
+# Explained variance
+explained_var = pca.explained_variance_ratio_
+cumulative_var = explained_var.cumsum()
+
+# Plot explained variance
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 2, 1)
+plt.bar(range(1, len(explained_var) + 1), explained_var)
+plt.xlabel('Principal Component')
+plt.ylabel('Explained Variance Ratio')
+plt.title('Scree Plot')
+
+plt.subplot(1, 2, 2)
+plt.plot(range(1, len(cumulative_var) + 1), cumulative_var, 'bo-')
+plt.axhline(y=0.95, color='r', linestyle='--', label='95% threshold')
+plt.xlabel('Number of Components')
+plt.ylabel('Cumulative Explained Variance')
+plt.title('Cumulative Variance Explained')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# Keep components explaining 95% variance
+pca_final = PCA(n_components=0.95)
+X_reduced = pca_final.fit_transform(X)
+                        </div>
+
+                        <h4>t-SNE (t-Distributed Stochastic Neighbor Embedding)</h4>
+                        <ul>
+                            <li>Non-linear dimensionality reduction</li>
+                            <li>Excellent for visualization (2D/3D)</li>
+                            <li>Preserves local structure</li>
+                            <li>Not suitable for new data transformation</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+
+# t-SNE
+tsne = TSNE(
+    n_components=2, 
+    perplexity=30, 
+    random_state=42
+)
+X_tsne = tsne.fit_transform(X)
+
+# Visualize
+plt.figure(figsize=(10, 8))
+plt.scatter(X_tsne[:, 0], X_tsne[:, 1], c=y, cmap='viridis')
+plt.colorbar()
+plt.title('t-SNE Visualization')
+plt.xlabel('t-SNE Component 1')
+plt.ylabel('t-SNE Component 2')
+plt.show()
+                        </div>
+
+                        <h4>UMAP (Uniform Manifold Approximation)</h4>
+                        <ul>
+                            <li>Modern alternative to t-SNE</li>
+                            <li>Faster and preserves global structure better</li>
+                            <li>Can transform new data</li>
+                            <li>Suitable for both visualization and preprocessing</li>
+                        </ul>
+
+                        <div class="code-block">
+from umap import UMAP
+
+# UMAP
+reducer = UMAP(n_components=2, random_state=42)
+X_umap = reducer.fit_transform(X)
+
+# Visualize
+plt.figure(figsize=(10, 8))
+plt.scatter(X_umap[:, 0], X_umap[:, 1], c=y, cmap='viridis')
+plt.colorbar()
+plt.title('UMAP Visualization')
+plt.xlabel('UMAP Component 1')
+plt.ylabel('UMAP Component 2')
+plt.show()
+                        </div>
+
+                        <h3>Practical Exercises</h3>
+                        <ol>
+                            <li>Perform customer segmentation using K-Means on transaction data</li>
+                            <li>Compare hierarchical clustering with different linkage methods</li>
+                            <li>Use DBSCAN to detect anomalies in network traffic data</li>
+                            <li>Reduce high-dimensional data with PCA and evaluate information loss</li>
+                            <li>Create 2D visualizations with t-SNE and UMAP, compare results</li>
+                        </ol>
+
+                        <div class="highlight-box">
+                            <h4>💡 Key Takeaways</h4>
+                            <ul>
+                                <li>Always scale data before clustering (except tree-based methods)</li>
+                                <li>K-Means works well for spherical, evenly-sized clusters</li>
+                                <li>DBSCAN is great for arbitrary shapes and outlier detection</li>
+                                <li>PCA for preprocessing, t-SNE/UMAP for visualization</li>
+                                <li>Validate clustering with silhouette score and domain knowledge</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="week7-8" class="tab-content">
+                    <div class="week-section">
+                        <h2>Week 7-8: Advanced Topics & ML Pipelines</h2>
+
+                        <h3>Cross-Validation Strategies</h3>
+                        
+                        <h4>K-Fold Cross-Validation</h4>
+                        <ul>
+                            <li>Split data into K folds</li>
+                            <li>Train on K-1 folds, validate on 1</li>
+                            <li>Repeat K times, average results</li>
+                            <li>Reduces variance in performance estimates</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.model_selection import (
+    cross_val_score, cross_validate, 
+    KFold, StratifiedKFold
+)
+
+# Simple K-Fold
+kfold = KFold(n_splits=5, shuffle=True, random_state=42)
+scores = cross_val_score(model, X, y, cv=kfold, scoring='accuracy')
+print(f"CV Accuracy: {scores.mean():.3f} (+/- {scores.std():.3f})")
+
+# Stratified K-Fold (maintains class distribution)
+skfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+scores = cross_val_score(model, X, y, cv=skfold, scoring='f1')
+
+# Multiple metrics
+scoring = ['accuracy', 'precision', 'recall', 'f1']
+cv_results = cross_validate(model, X, y, cv=skfold, scoring=scoring)
+
+for metric in scoring:
+    scores = cv_results[f'test_{metric}']
+    print(f"{metric}: {scores.mean():.3f} (+/- {scores.std():.3f})")
+                        </div>
+
+                        <h4>Time Series Cross-Validation</h4>
+                        <ul>
+                            <li>Respects temporal ordering</li>
+                            <li>Train on past, test on future</li>
+                            <li>Expanding or rolling window</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.model_selection import TimeSeriesSplit
+
+# Time series split
+tscv = TimeSeriesSplit(n_splits=5)
+
+for train_idx, test_idx in tscv.split(X):
+    X_train, X_test = X[train_idx], X[test_idx]
+    y_train, y_test = y[train_idx], y[test_idx]
+    
+    model.fit(X_train, y_train)
+    score = model.score(X_test, y_test)
+    print(f"Split score: {score:.3f}")
+                        </div>
+
+                        <h3>Hyperparameter Tuning</h3>
+                        
+                        <h4>Grid Search</h4>
+                        <ul>
+                            <li>Exhaustive search over parameter grid</li>
+                            <li>Tests all combinations</li>
+                            <li>Computationally expensive but thorough</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.model_selection import GridSearchCV
+
+# Define parameter grid
+param_grid = {
+    'n_estimators': [50, 100, 200],
+    'max_depth': [5, 10, 15, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4]
+}
+
+# Grid search with cross-validation
+grid_search = GridSearchCV(
+    RandomForestClassifier(random_state=42),
+    param_grid,
+    cv=5,
+    scoring='f1',
+    n_jobs=-1,
+    verbose=1
+)
+
+grid_search.fit(X_train, y_train)
+
+# Best parameters and score
+print(f"Best parameters: {grid_search.best_params_}")
+print(f"Best CV score: {grid_search.best_score_:.3f}")
+
+# Use best model
+best_model = grid_search.best_estimator_
+                        </div>
+
+                        <h4>Random Search</h4>
+                        <ul>
+                            <li>Randomly sample parameter combinations</li>
+                            <li>More efficient than grid search</li>
+                            <li>Good for large parameter spaces</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import randint, uniform
+
+# Define parameter distributions
+param_dist = {
+    'n_estimators': randint(50, 500),
+    'max_depth': randint(3, 20),
+    'min_samples_split': randint(2, 20),
+    'min_samples_leaf': randint(1, 10),
+    'max_features': ['sqrt', 'log2', None]
+}
+
+# Random search
+random_search = RandomizedSearchCV(
+    RandomForestClassifier(random_state=42),
+    param_distributions=param_dist,
+    n_iter=100,
+    cv=5,
+    scoring='f1',
+    n_jobs=-1,
+    random_state=42
+)
+
+random_search.fit(X_train, y_train)
+print(f"Best parameters: {random_search.best_params_}")
+                        </div>
+
+                        <h3>Building ML Pipelines</h3>
+                        
+                        <h4>Scikit-learn Pipelines</h4>
+                        <ul>
+                            <li>Chain preprocessing and modeling steps</li>
+                            <li>Prevents data leakage</li>
+                            <li>Simplifies deployment</li>
+                            <li>Works with cross-validation</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.impute import SimpleImputer
+from sklearn.feature_selection import SelectKBest, f_classif
+
+# Create pipeline
+pipeline = Pipeline([
+    ('imputer', SimpleImputer(strategy='mean')),
+    ('scaler', StandardScaler()),
+    ('feature_selection', SelectKBest(f_classif, k=10)),
+    ('classifier', RandomForestClassifier(random_state=42))
+])
+
+# Train pipeline
+pipeline.fit(X_train, y_train)
+
+# Predict
+y_pred = pipeline.predict(X_test)
+
+# Access pipeline steps
+imputer = pipeline.named_steps['imputer']
+scaler = pipeline.named_steps['scaler']
+model = pipeline.named_steps['classifier']
+                        </div>
+
+                        <h4>Column Transformer for Mixed Data Types</h4>
+                        <ul>
+                            <li>Apply different transformations to different columns</li>
+                            <li>Handle numerical and categorical features</li>
+                            <li>Composable with pipelines</li>
+                        </ul>
+
+                        <div class="code-block">
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
+# Define feature types
+numeric_features = ['age', 'income', 'credit_score']
+categorical_features = ['gender', 'city', 'occupation']
+
+# Create transformers
+numeric_transformer = Pipeline([
+    ('imputer', SimpleImputer(strategy='median')),
+    ('scaler', StandardScaler())
+])
+
+categorical_transformer = Pipeline([
+    ('imputer', SimpleImputer(strategy='constant', fill_value='missing')),
+    ('onehot', OneHotEncoder(handle_unknown='ignore'))
+])
+
+# Combine transformers
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numeric_transformer, numeric_features),
+        ('cat', categorical_transformer, categorical_features)
+    ]
+)
+
+# Full pipeline
+full_pipeline = Pipeline([
+    ('preprocessor', preprocessor),
+    ('classifier', RandomForestClassifier(random_state=42))
+])
+
+# Train
+full_pipeline.fit(X_train, y_train)
+y_pred = full_pipeline.predict(X_test)
+                        </div>
+
+                        <h3>Model Persistence</h3>
+                        
+                        <h4>Saving and Loading Models</h4>
+                        <ul>
+                            <li>joblib for scikit-learn models (efficient)</li>
+                            <li>pickle for general Python objects</li>
+                            <li>Save entire pipelines, not just models</li>
+                        </ul>
+
+                        <div class="code-block">
+import joblib
+import pickle
+
+# Save model with joblib (recommended for sklearn)
+joblib.dump(pipeline, 'model_pipeline.pkl')
+
+# Load model
+loaded_pipeline = joblib.load('model_pipeline.pkl')
+
+# Make predictions with loaded model
+predictions = loaded_pipeline.predict(new_data)
+
+# Alternative: pickle
+with open('model.pkl', 'wb') as f:
+    pickle.dump(model, f)
+
+with open('model.pkl', 'rb') as f:
+    loaded_model = pickle.load(f)
+                        </div>
+
+                        <h3>Practical Exercises</h3>
+                        <ol>
+                            <li>Build a complete pipeline with preprocessing, feature selection, and model</li>
+                            <li>Tune hyperparameters using GridSearchCV on a pipeline</li>
+                            <li>Create a ColumnTransformer for mixed data types</li>
+                            <li>Implement time series cross-validation for stock price prediction</li>
+                            <li>Save and load a complete pipeline, make predictions on new data</li>
+                            <li>Compare multiple models using consistent cross-validation</li>
+                        </ol>
+
+                        <div class="highlight-box">
+                            <h4>💡 Key Takeaways</h4>
+                            <ul>
+                                <li>Always use pipelines to prevent data leakage</li>
+                                <li>Cross-validation provides reliable performance estimates</li>
+                                <li>Random search is often better than grid search for large spaces</li>
+                                <li>ColumnTransformer handles mixed data types elegantly</li>
+                                <li>Save entire pipelines, not just trained models</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="assessment" class="tab-content">
+                    <div class="week-section">
+                        <h2>Final Assessment & Project</h2>
+
+                        <h3>Comprehensive ML Project Workflow</h3>
+                        <p>Complete an end-to-end machine learning project following these steps:</p>
+
+                        <h4>1. Problem Definition</h4>
+                        <ul>
+                            <li>Clearly define the business problem</li>
+                            <li>Determine if it's classification, regression, or clustering</li>
+                            <li>Define success metrics</li>
+                            <li>Identify constraints (time, compute, interpretability)</li>
+                        </ul>
+
+                        <h4>2. Data Collection & EDA</h4>
+                        <ul>
+                            <li>Load and explore data</li>
+                            <li>Visualize distributions</li>
+                            <li>Identify patterns and relationships</li>
+                            <li>Check for data quality issues</li>
+                        </ul>
+
+                        <h4>3. Feature Engineering</h4>
+                        <ul>
+                            <li>Handle missing values</li>
+                            <li>Encode categorical variables</li>
+                            <li>Create new features</li>
+                            <li>Scale/transform features</li>
+                        </ul>
+
+                        <h4>4. Model Development</h4>
+                        <ul>
+                            <li>Try multiple algorithms</li>
+                            <li>Use cross-validation</li>
+                            <li>Tune hyperparameters</li>
+                            <li>Build complete pipelines</li>
+                        </ul>
+
+                        <h4>5. Evaluation</h4>
+                        <ul>
+                            <li>Use appropriate metrics</li>
+                            <li>Analyze confusion matrix</li>
+                            <li>Plot ROC/PR curves</li>
+                            <li>Check for overfitting</li>
+                        </ul>
+
+                        <h4>6. Deployment-Ready</h4>
+                        <ul>
+                            <li>Create pipeline</li>
+                            <li>Save model</li>
+                            <li>Document assumptions and limitations</li>
+                            <li>Prepare for production</li>
+                        </ul>
+
+                        <h3>Assessment Checklist</h3>
+                        <p>After 8 weeks, you should be able to:</p>
+
+                        <ul class="checklist">
+                            <li>Implement and explain all major ML algorithms</li>
+                            <li>Choose appropriate algorithms for different problems</li>
+                            <li>Perform proper train/validation/test splits</li>
+                            <li>Use cross-validation correctly</li>
+                            <li>Engineer meaningful features</li>
+                            <li>Tune hyperparameters systematically</li>
+                            <li>Diagnose and fix overfitting/underfitting</li>
+                            <li>Evaluate models with appropriate metrics</li>
+                            <li>Build complete ML pipelines</li>
+                            <li>Explain model decisions to stakeholders</li>
+                        </ul>
+
+                        <h3>Practice Resources</h3>
+                        
+                        <h4>Daily Exercises (30-60 minutes)</h4>
+                        <ul>
+                            <li><strong>Kaggle Competitions:</strong> Titanic, House Prices, Digit Recognizer</li>
+                            <li><strong>UCI ML Repository:</strong> Classic datasets for practice</li>
+                            <li><strong>Scikit-learn Datasets:</strong> Built-in datasets for quick practice</li>
+                        </ul>
+
+                        <h4>Weekly Challenges</h4>
+                        <ul>
+                            <li>Week 1: Build 3 regression models</li>
+                            <li>Week 2: Build 3 classification models</li>
+                            <li>Week 3: Complete Kaggle "Titanic" competition</li>
+                            <li>Week 4: Implement custom cross-validation</li>
+                            <li>Week 5: Create 10 new features for a dataset</li>
+                            <li>Week 6: Clustering analysis on customer data</li>
+                            <li>Week 7: Dimensionality reduction comparison</li>
+                            <li>Week 8: End-to-end ML pipeline</li>
+                        </ul>
+
+                        <h3>Recommended Books</h3>
+                        <ul>
+                            <li>"Hands-On Machine Learning" by Aurélien Géron</li>
+                            <li>"The Elements of Statistical Learning" by Hastie, Tibshirani, Friedman</li>
+                            <li>"Pattern Recognition and Machine Learning" by Christopher Bishop</li>
+                            <li>"Introduction to Statistical Learning" by James, Witten, Hastie, Tibshirani</li>
+                        </ul>
+
+                        <h3>Online Courses</h3>
+                        <ul>
+                            <li>Andrew Ng's Machine Learning (Coursera)</li>
+                            <li>Fast.ai Practical Deep Learning</li>
+                            <li>Google's Machine Learning Crash Course</li>
+                            <li>Kaggle Learn: Machine Learning courses</li>
+                        </ul>
+
+                        <div class="highlight-box">
+                            <h4>🎯 Final Project Suggestions</h4>
+                            <ol>
+                                <li><strong>Customer Churn Prediction:</strong> Build a classification model with full pipeline</li>
+                                <li><strong>House Price Prediction:</strong> Regression with advanced feature engineering</li>
+                                <li><strong>Customer Segmentation:</strong> Clustering analysis with visualization</li>
+                                <li><strong>Credit Risk Assessment:</strong> Imbalanced classification with proper evaluation</li>
+                                <li><strong>Time Series Forecasting:</strong> Sales prediction with temporal features</li>
+                            </ol>
+                        </div>
+
+                        <h3>Next Steps After Completion</h3>
+                        <ol>
+                            <li>Move on to MLOps & Production study plan</li>
+                            <li>Participate in Kaggle competitions regularly</li>
+                            <li>Build portfolio projects on GitHub</li>
+                            <li>Learn deep learning frameworks (PyTorch, TensorFlow)</li>
+                            <li>Explore specialized areas (NLP, Computer Vision, Time Series)</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Track Progress</h3>
+                    <div class="completion-checkbox" onclick="toggleCompletion('ml-plan')">
+                        <input type="checkbox" id="ml-plan-checkbox">
+                        <label for="ml-plan-checkbox">Mark as Complete</label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Quick Links</h3>
+                    <ul class="quick-links">
+                        <li><a href="index.html">← Back to Bootcamp Hub</a></li>
+                        <li><a href="python-study-plan.html">Python Study Plan</a></li>
+                        <li><a href="sql-study-plan.html">SQL Study Plan</a></li>
+                        <li><a href="interview-prep.html">Interview Prep</a></li>
+                        <li><a href="practice-problems.html">Practice Problems</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Course Info</h3>
+                    <p><strong>Duration:</strong> 8 weeks</p>
+                    <p><strong>Study Time:</strong> 15-20 hrs/week</p>
+                    <p><strong>Difficulty:</strong> Intermediate</p>
+                    <p><strong>Prerequisites:</strong> Python, pandas, NumPy, statistics</p>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Key Resources</h3>
+                    <ul class="quick-links">
+                        <li><a href="https://scikit-learn.org/stable/" target="_blank">↗ Scikit-learn Docs</a></li>
+                        <li><a href="https://www.kaggle.com/learn" target="_blank">↗ Kaggle Learn</a></li>
+                        <li><a href="https://www.coursera.org/learn/machine-learning" target="_blank">↗ Andrew Ng Course</a></li>
+                        <li><a href="https://github.com/ageron/handson-ml2" target="_blank">↗ Hands-On ML Book</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Analog Design Learning Journey. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Tab switching
+        function switchTab(tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Completion checkbox toggle
+        function toggleCompletion(planId) {
+            const checkbox = document.getElementById(planId + '-checkbox');
+            checkbox.checked = !checkbox.checked;
+            
+            // Save to localStorage
+            localStorage.setItem(planId + '-completed', checkbox.checked);
+        }
+
+        // Load completion state on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const checkbox = document.getElementById('ml-plan-checkbox');
+            const saved = localStorage.getItem('ml-plan-completed');
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+        });
+    </script>
+</body>
+</html>

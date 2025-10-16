@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Science Bootcamp | Learning Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bootcamp: #F4B942;
+            --bootcamp-dark: #d89f2a;
+            --bootcamp-light: #fef3c7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.bootcamp-link {
+            color: var(--bootcamp-dark);
+            font-weight: 600;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--bootcamp) 0%, var(--bootcamp-dark) 100%);
+            color: var(--text);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--bootcamp-dark);
+        }
+
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .intro-section {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            border-left: 4px solid var(--bootcamp);
+        }
+
+        .intro-section h2 {
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .intro-section p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+            text-align: center;
+        }
+
+        /* Study Plans Grid */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .plan-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-top: 4px solid var(--bootcamp);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .plan-title {
+            flex: 1;
+        }
+
+        .plan-title h3 {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-duration {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .checkbox-status {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--bootcamp);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-status.completed {
+            background: var(--bootcamp);
+        }
+
+        .checkbox-status.completed::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .checkbox-status:hover {
+            background: var(--bootcamp-light);
+        }
+
+        .plan-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .plan-topics {
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-topics h4 {
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .topics-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .topics-list li {
+            padding: 0.25rem 0;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+
+        .topics-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--bootcamp);
+            font-weight: bold;
+        }
+
+        .plan-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bootcamp);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .plan-link:hover {
+            background: var(--bootcamp-dark);
+        }
+
+        /* Quick Links Section */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .quick-link-card {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quick-link-card:hover {
+            border-color: var(--bootcamp);
+            transform: translateY(-3px);
+        }
+
+        .quick-link-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-link-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .quick-link-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quick-link-btn {
+            display: inline-block;
+            padding: 0.5rem 1.25rem;
+            background: var(--bootcamp);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .quick-link-btn:hover {
+            background: var(--bootcamp-dark);
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .plans-grid,
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">🎓 Learning Journey</div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../subjects.html">Subjects</a></li>
+                    <li><a href="../../progress.html">Progress</a></li>
+                    <li><a href="index.html" class="bootcamp-link">Bootcamp</a></li>
+                    <li><a href="../../about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="container">
+            <h1>🚀 Data Science Bootcamp</h1>
+            <p>Comprehensive study plans, interview prep, and practice problems for Data Science careers in Finland</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> / <a href="../../subjects.html">Subjects</a> / <span>Data Science Bootcamp</span>
+        </div>
+
+        <div class="main-content">
+            <div class="intro-section">
+                <h2>About This Bootcamp</h2>
+                <p>
+                    This bootcamp is designed to prepare you for Data Scientist roles in the Finnish job market. 
+                    It covers six comprehensive study plans based on analysis of real job postings from major Finnish companies 
+                    including Nokia, Wolt, Reaktor, Supercell, and others.
+                </p>
+                <p>
+                    Unlike the structured 44-week learning journey, this bootcamp is <strong>self-paced and flexible</strong>. 
+                    Complete each study plan at your own speed, marking them as complete when you're ready. 
+                    Each plan includes detailed week-by-week guidance, practical exercises, and assessment checklists.
+                </p>
+            </div>
+
+            <h2 class="section-title">Study Plans</h2>
+            <div class="plans-grid">
+                <!-- Python Study Plan -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-title">
+                            <h3>Python for Data Science</h3>
+                            <div class="plan-duration">⏱️ 8 weeks</div>
+                        </div>
+                        <div class="checkbox-status" title="Mark as complete"></div>
+                    </div>
+                    <p class="plan-description">
+                        Master Python fundamentals for data science including pandas, NumPy, code quality, 
+                        performance optimization, and professional development practices.
+                    </p>
+                    <div class="plan-topics">
+                        <h4>Topics Covered:</h4>
+                        <ul class="topics-list">
+                            <li>Pandas mastery & data manipulation</li>
+                            <li>NumPy fundamentals & array operations</li>
+                            <li>Code quality & project structure</li>
+                            <li>Performance optimization techniques</li>
+                        </ul>
+                    </div>
+                    <a href="python-study-plan.html" class="plan-link">
+                        View Study Plan →
+                    </a>
+                </div>
+
+                <!-- SQL Study Plan -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-title">
+                            <h3>SQL Mastery</h3>
+                            <div class="plan-duration">⏱️ 6 weeks</div>
+                        </div>
+                        <div class="checkbox-status" title="Mark as complete"></div>
+                    </div>
+                    <p class="plan-description">
+                        From complex queries to query optimization. Master window functions, aggregations, 
+                        and advanced SQL techniques for data analysis.
+                    </p>
+                    <div class="plan-topics">
+                        <h4>Topics Covered:</h4>
+                        <ul class="topics-list">
+                            <li>Complex queries & window functions</li>
+                            <li>Advanced aggregations & GROUP BY</li>
+                            <li>Query optimization & performance</li>
+                            <li>Data manipulation & analytics</li>
+                        </ul>
+                    </div>
+                    <a href="sql-study-plan.html" class="plan-link">
+                        View Study Plan →
+                    </a>
+                </div>
+
+                <!-- Machine Learning Study Plan -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-title">
+                            <h3>Machine Learning</h3>
+                            <div class="plan-duration">⏱️ 8 weeks</div>
+                        </div>
+                        <div class="checkbox-status" title="Mark as complete"></div>
+                    </div>
+                    <p class="plan-description">
+                        Comprehensive coverage of supervised and unsupervised learning, model evaluation, 
+                        feature engineering, and building complete ML pipelines.
+                    </p>
+                    <div class="plan-topics">
+                        <h4>Topics Covered:</h4>
+                        <ul class="topics-list">
+                            <li>Supervised learning (regression & classification)</li>
+                            <li>Model evaluation & cross-validation</li>
+                            <li>Feature engineering techniques</li>
+                            <li>Unsupervised learning & clustering</li>
+                        </ul>
+                    </div>
+                    <a href="ml-study-plan.html" class="plan-link">
+                        View Study Plan →
+                    </a>
+                </div>
+
+                <!-- MLOps Study Plan -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-title">
+                            <h3>MLOps & Production</h3>
+                            <div class="plan-duration">⏱️ 8 weeks</div>
+                        </div>
+                        <div class="checkbox-status" title="Mark as complete"></div>
+                    </div>
+                    <p class="plan-description">
+                        Learn to deploy ML models to production. Cover Docker, API development, 
+                        model versioning, monitoring, and CI/CD pipelines.
+                    </p>
+                    <div class="plan-topics">
+                        <h4>Topics Covered:</h4>
+                        <ul class="topics-list">
+                            <li>Docker & containerization</li>
+                            <li>FastAPI development & deployment</li>
+                            <li>Model versioning & tracking (MLflow)</li>
+                            <li>Monitoring, alerts & CI/CD</li>
+                        </ul>
+                    </div>
+                    <a href="mlops-study-plan.html" class="plan-link">
+                        View Study Plan →
+                    </a>
+                </div>
+
+                <!-- Cloud Platforms Study Plan -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-title">
+                            <h3>Cloud Platforms</h3>
+                            <div class="plan-duration">⏱️ 8 weeks</div>
+                        </div>
+                        <div class="checkbox-status" title="Mark as complete"></div>
+                    </div>
+                    <p class="plan-description">
+                        Master AWS, Azure, and GCP for data science. Learn cloud storage, data warehouses, 
+                        ML services, and infrastructure as code.
+                    </p>
+                    <div class="plan-topics">
+                        <h4>Topics Covered:</h4>
+                        <ul class="topics-list">
+                            <li>Cloud storage & fundamentals</li>
+                            <li>Data warehouses (Snowflake, BigQuery)</li>
+                            <li>ML services (SageMaker, Vertex AI)</li>
+                            <li>Infrastructure as Code & cost optimization</li>
+                        </ul>
+                    </div>
+                    <a href="cloud-study-plan.html" class="plan-link">
+                        View Study Plan →
+                    </a>
+                </div>
+
+                <!-- Modern AI Study Plan -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-title">
+                            <h3>Modern AI & NLP</h3>
+                            <div class="plan-duration">⏱️ 12 weeks</div>
+                        </div>
+                        <div class="checkbox-status" title="Mark as complete"></div>
+                    </div>
+                    <p class="plan-description">
+                        Deep dive into LLMs, transformers, prompt engineering, RAG systems, 
+                        and production NLP applications with vector databases.
+                    </p>
+                    <div class="plan-topics">
+                        <h4>Topics Covered:</h4>
+                        <ul class="topics-list">
+                            <li>NLP fundamentals & word embeddings</li>
+                            <li>Transformers & BERT architecture</li>
+                            <li>LLMs & prompt engineering</li>
+                            <li>RAG & vector databases</li>
+                        </ul>
+                    </div>
+                    <a href="ai-nlp-study-plan.html" class="plan-link">
+                        View Study Plan →
+                    </a>
+                </div>
+            </div>
+
+            <h2 class="section-title">Additional Resources</h2>
+            <div class="quick-links">
+                <div class="quick-link-card">
+                    <div class="quick-link-icon">💼</div>
+                    <h3>Interview Prep</h3>
+                    <p>Comprehensive interview guide with behavioral questions, technical rounds, and Finland-specific insights</p>
+                    <a href="interview-prep.html" class="quick-link-btn">View Guide</a>
+                </div>
+
+                <div class="quick-link-card">
+                    <div class="quick-link-icon">🎯</div>
+                    <h3>Practice Problems</h3>
+                    <p>14 hands-on problems covering Python, SQL, ML, system design, and case studies with solutions</p>
+                    <a href="practice-problems.html" class="quick-link-btn">Try Problems</a>
+                </div>
+
+                <div class="quick-link-card">
+                    <div class="quick-link-icon">📚</div>
+                    <h3>Resources</h3>
+                    <p>Cheat sheets, flashcards, and curated learning materials for quick reference</p>
+                    <a href="resources.html" class="quick-link-btn">Browse Resources</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Learning Journey. Data Science Bootcamp for Finnish Job Market.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple checkbox toggle functionality
+        document.querySelectorAll('.checkbox-status').forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('completed');
+                // In a real implementation, this would save to localStorage or a backend
+            });
+        });
+    </script>
+</body>
+</html>

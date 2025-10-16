@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python for Data Science | Data Science Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bootcamp: #F4B942;
+            --bootcamp-dark: #d89f2a;
+            --bootcamp-light: #fef3c7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.bootcamp-link {
+            color: var(--bootcamp-dark);
+            font-weight: 600;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--bootcamp) 0%, var(--bootcamp-dark) 100%);
+            color: var(--text);
+            padding: 3rem 0;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .meta {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .breadcrumb {
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--bootcamp-dark);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .content-area {
+            min-width: 0;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        .tab-list {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            border-color: var(--bootcamp);
+            background: var(--bootcamp-light);
+        }
+
+        .tab-button.active {
+            background: var(--bootcamp);
+            border-color: var(--bootcamp);
+            color: var(--text);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background: var(--surface);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .tab-content h3 {
+            font-size: 1.25rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .tab-content h4 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .tab-content p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .tab-content ul, .tab-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .tab-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+
+        .tab-content code {
+            background: var(--bootcamp-light);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .tab-content pre {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .tab-content pre code {
+            background: transparent;
+            padding: 0;
+            color: #f1f5f9;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .completion-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bootcamp-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .completion-checkbox:hover {
+            background: var(--bootcamp);
+        }
+
+        .checkbox-box {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--bootcamp-dark);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .checkbox-box.checked {
+            background: var(--bootcamp);
+        }
+
+        .checkbox-box.checked::after {
+            content: '✓';
+            color: var(--text);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .checkbox-label {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .sidebar-links {
+            list-style: none;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .sidebar-links a:hover {
+            color: var(--bootcamp-dark);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bootcamp);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .back-button:hover {
+            background: var(--bootcamp-dark);
+        }
+
+        /* Checklist Styles */
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            color: var(--bootcamp);
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 968px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .tab-list {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">🎓 Learning Journey</div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../subjects.html">Subjects</a></li>
+                    <li><a href="../../progress.html">Progress</a></li>
+                    <li><a href="index.html" class="bootcamp-link">Bootcamp</a></li>
+                    <li><a href="../../about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>🐍 Python for Data Science</h1>
+            <div class="meta">8-Week Comprehensive Study Plan</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> / <a href="../../subjects.html">Subjects</a> / <a href="index.html">Data Science Bootcamp</a> / <span>Python Study Plan</span>
+        </div>
+
+        <div class="main-layout">
+            <div class="content-area">
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <div class="tab-list">
+                        <button class="tab-button active" data-tab="overview">Overview</button>
+                        <button class="tab-button" data-tab="week1-2">Week 1-2</button>
+                        <button class="tab-button" data-tab="week3-4">Week 3-4</button>
+                        <button class="tab-button" data-tab="week5">Week 5</button>
+                        <button class="tab-button" data-tab="week6">Week 6</button>
+                        <button class="tab-button" data-tab="week7-8">Week 7-8</button>
+                        <button class="tab-button" data-tab="assessment">Assessment</button>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Overview -->
+                <div class="tab-content active" id="overview">
+                    <h2>Study Plan Overview</h2>
+                    <p>
+                        Master Python fundamentals essential for data science roles. This 8-week plan covers pandas, NumPy, 
+                        code quality, performance optimization, and professional development practices used in production environments.
+                    </p>
+
+                    <h3>What You'll Learn</h3>
+                    <ul>
+                        <li>Advanced pandas operations for data manipulation and analysis</li>
+                        <li>NumPy fundamentals including array operations and broadcasting</li>
+                        <li>Professional code quality practices and project structure</li>
+                        <li>Performance optimization techniques for large datasets</li>
+                        <li>Environment management and development tools</li>
+                    </ul>
+
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li>Basic Python syntax and programming concepts</li>
+                        <li>Understanding of data structures (lists, dictionaries)</li>
+                        <li>Familiarity with command line operations</li>
+                    </ul>
+
+                    <h3>Learning Resources</h3>
+                    <ul>
+                        <li><strong>Book:</strong> "Python for Data Analysis" by Wes McKinney</li>
+                        <li><strong>Course:</strong> DataCamp's "Pandas for Data Science"</li>
+                        <li><strong>Documentation:</strong> Official pandas and NumPy documentation</li>
+                        <li><strong>Practice:</strong> Kaggle datasets and notebooks</li>
+                    </ul>
+
+                    <h3>Weekly Structure</h3>
+                    <p>Each week includes:</p>
+                    <ul>
+                        <li>Conceptual learning (2-3 hours)</li>
+                        <li>Hands-on coding exercises (3-4 hours)</li>
+                        <li>Practice projects (2-3 hours)</li>
+                        <li>Review and consolidation (1-2 hours)</li>
+                    </ul>
+                </div>
+
+                <!-- Tab Content: Week 1-2 -->
+                <div class="tab-content" id="week1-2">
+                    <h2>Week 1-2: Pandas Mastery</h2>
+                    
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Load and explore datasets from multiple sources</li>
+                        <li>Perform advanced data manipulation operations</li>
+                        <li>Handle missing data effectively</li>
+                        <li>Apply groupby operations and aggregations</li>
+                        <li>Merge and join datasets</li>
+                    </ul>
+
+                    <h3>Day 1-3: Data Loading & Basic Operations</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Reading data from CSV, Excel, SQL, and JSON</li>
+                        <li>DataFrame structure and properties</li>
+                        <li>Basic exploration methods (<code>head()</code>, <code>info()</code>, <code>describe()</code>)</li>
+                        <li>Column selection and filtering</li>
+                    </ul>
+
+                    <h4>Practice Exercise:</h4>
+                    <pre><code>import pandas as pd
+
+# Load and explore data
+df = pd.read_csv('data.csv')
+print(df.head())
+print(df.info())
+print(df.describe())
+
+# Basic operations
+subset = df[['column1', 'column2']]
+filtered = df[df['value'] > 100]</code></pre>
+
+                    <h3>Day 4-7: Data Manipulation</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Handling missing values (<code>dropna()</code>, <code>fillna()</code>)</li>
+                        <li>Data transformation and mapping</li>
+                        <li>String operations and datetime handling</li>
+                        <li>Creating new columns</li>
+                    </ul>
+
+                    <h4>Practice Exercise:</h4>
+                    <pre><code># Handle missing values
+df_clean = df.dropna(subset=['important_column'])
+df_filled = df.fillna(df.mean())
+
+# Transform data
+df['new_column'] = df['old_column'].apply(lambda x: x * 2)
+df['date'] = pd.to_datetime(df['date_string'])</code></pre>
+
+                    <h3>Week 2: Advanced Operations</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>GroupBy operations and aggregations</li>
+                        <li>Pivot tables and cross-tabulation</li>
+                        <li>Merging and joining DataFrames</li>
+                        <li>Advanced indexing and slicing</li>
+                    </ul>
+
+                    <h4>Practice Exercise:</h4>
+                    <pre><code># GroupBy operations
+grouped = df.groupby('category').agg({
+    'sales': ['sum', 'mean', 'count'],
+    'profit': 'sum'
+})
+
+# Merging datasets
+merged = pd.merge(df1, df2, on='key', how='left')
+
+# Pivot table
+pivot = df.pivot_table(
+    values='sales',
+    index='region',
+    columns='category',
+    aggfunc='sum'
+)</code></pre>
+
+                    <h3>Week 1-2 Project</h3>
+                    <p><strong>Build a Data Analysis Pipeline:</strong></p>
+                    <ol>
+                        <li>Load a dataset from Kaggle (e.g., Titanic or a sales dataset)</li>
+                        <li>Clean the data (handle missing values, fix data types)</li>
+                        <li>Perform exploratory analysis using groupby and aggregations</li>
+                        <li>Create summary statistics and insights</li>
+                        <li>Export cleaned data to CSV</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Week 3-4 -->
+                <div class="tab-content" id="week3-4">
+                    <h2>Week 3-4: NumPy Fundamentals</h2>
+                    
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Understand NumPy arrays and their advantages</li>
+                        <li>Perform vectorized operations</li>
+                        <li>Master array manipulation and reshaping</li>
+                        <li>Apply broadcasting rules</li>
+                        <li>Use NumPy for mathematical operations</li>
+                    </ul>
+
+                    <h3>Week 3: Array Basics</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Creating arrays (zeros, ones, arange, linspace)</li>
+                        <li>Array indexing and slicing</li>
+                        <li>Array operations and universal functions</li>
+                        <li>Statistical operations</li>
+                    </ul>
+
+                    <h4>Practice Exercise:</h4>
+                    <pre><code>import numpy as np
+
+# Create arrays
+arr = np.array([1, 2, 3, 4, 5])
+zeros = np.zeros((3, 4))
+ones = np.ones((2, 3))
+range_arr = np.arange(0, 10, 2)
+
+# Array operations
+result = arr * 2 + 10
+sqrt_arr = np.sqrt(arr)
+mean_val = np.mean(arr)
+std_val = np.std(arr)</code></pre>
+
+                    <h3>Week 4: Advanced NumPy</h3>
+                    <h4>Topics to Cover:</h4>
+                    <ul>
+                        <li>Broadcasting and vectorization</li>
+                        <li>Array reshaping and manipulation</li>
+                        <li>Linear algebra operations</li>
+                        <li>Random number generation</li>
+                    </ul>
+
+                    <h4>Practice Exercise:</h4>
+                    <pre><code># Broadcasting
+matrix = np.array([[1, 2, 3], [4, 5, 6]])
+vector = np.array([10, 20, 30])
+result = matrix + vector  # Broadcasting
+
+# Reshaping
+reshaped = arr.reshape(5, 1)
+flattened = matrix.flatten()
+
+# Linear algebra
+A = np.array([[1, 2], [3, 4]])
+B = np.array([[5, 6], [7, 8]])
+product = np.dot(A, B)
+inverse = np.linalg.inv(A)</code></pre>
+
+                    <h3>Week 3-4 Project</h3>
+                    <p><strong>Implement a Data Processing Pipeline:</strong></p>
+                    <ol>
+                        <li>Use NumPy to create synthetic data (1M+ rows)</li>
+                        <li>Perform vectorized operations for calculations</li>
+                        <li>Compare performance with pure Python loops</li>
+                        <li>Implement matrix operations for data transformation</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Week 5 -->
+                <div class="tab-content" id="week5">
+                    <h2>Week 5: Code Quality & Project Structure</h2>
+                    
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Write clean, maintainable Python code</li>
+                        <li>Follow PEP 8 style guidelines</li>
+                        <li>Structure data science projects professionally</li>
+                        <li>Write effective documentation</li>
+                        <li>Implement proper error handling</li>
+                    </ul>
+
+                    <h3>Topics to Cover</h3>
+                    
+                    <h4>1. Code Style & Standards</h4>
+                    <ul>
+                        <li>PEP 8 guidelines</li>
+                        <li>Naming conventions</li>
+                        <li>Code formatting tools (Black, autopep8)</li>
+                        <li>Linting with pylint or flake8</li>
+                    </ul>
+
+                    <h4>2. Project Structure</h4>
+                    <pre><code>project/
+├── data/
+│   ├── raw/
+│   └── processed/
+├── notebooks/
+├── src/
+│   ├── __init__.py
+│   ├── data_processing.py
+│   └── analysis.py
+├── tests/
+├── requirements.txt
+└── README.md</code></pre>
+
+                    <h4>3. Documentation</h4>
+                    <ul>
+                        <li>Docstrings (Google, NumPy, or reStructuredText style)</li>
+                        <li>README files</li>
+                        <li>Inline comments</li>
+                        <li>Type hints</li>
+                    </ul>
+
+                    <h4>Practice Exercise:</h4>
+                    <pre><code>from typing import List, Dict
+import pandas as pd
+
+def process_data(df: pd.DataFrame, 
+                 columns: List[str]) -> pd.DataFrame:
+    """
+    Process DataFrame by selecting and cleaning columns.
+    
+    Args:
+        df: Input DataFrame
+        columns: List of column names to keep
+        
+    Returns:
+        Processed DataFrame with selected columns
+        
+    Raises:
+        ValueError: If columns don't exist in DataFrame
+    """
+    if not all(col in df.columns for col in columns):
+        raise ValueError("Invalid columns specified")
+    
+    return df[columns].dropna()</code></pre>
+
+                    <h3>Week 5 Project</h3>
+                    <p><strong>Refactor a Previous Project:</strong></p>
+                    <ol>
+                        <li>Take your Week 1-2 or Week 3-4 project</li>
+                        <li>Restructure it following best practices</li>
+                        <li>Add proper documentation and type hints</li>
+                        <li>Implement error handling</li>
+                        <li>Create a comprehensive README</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Week 6 -->
+                <div class="tab-content" id="week6">
+                    <h2>Week 6: Performance Optimization</h2>
+                    
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Profile and identify performance bottlenecks</li>
+                        <li>Optimize pandas operations</li>
+                        <li>Use vectorization effectively</li>
+                        <li>Implement parallel processing</li>
+                        <li>Work with large datasets efficiently</li>
+                    </ul>
+
+                    <h3>Topics to Cover</h3>
+                    
+                    <h4>1. Profiling Code</h4>
+                    <pre><code>import time
+from line_profiler import LineProfiler
+
+# Simple timing
+start = time.time()
+# your code here
+print(f"Execution time: {time.time() - start:.2f}s")
+
+# Detailed profiling with line_profiler
+profiler = LineProfiler()
+profiler.add_function(your_function)
+profiler.run('your_function()')</code></pre>
+
+                    <h4>2. Pandas Optimization</h4>
+                    <ul>
+                        <li>Use vectorized operations instead of loops</li>
+                        <li>Choose appropriate data types</li>
+                        <li>Use <code>apply()</code> wisely vs vectorization</li>
+                        <li>Chunk large files for processing</li>
+                    </ul>
+
+                    <h4>Practice Exercise:</h4>
+                    <pre><code># BAD: Using iterrows (slow)
+for idx, row in df.iterrows():
+    df.at[idx, 'new_col'] = row['col1'] * row['col2']
+
+# GOOD: Vectorized operation (fast)
+df['new_col'] = df['col1'] * df['col2']
+
+# Optimize data types
+df['category'] = df['category'].astype('category')
+df['amount'] = df['amount'].astype('float32')</code></pre>
+
+                    <h4>3. Working with Large Datasets</h4>
+                    <pre><code># Read in chunks
+chunk_size = 10000
+chunks = []
+for chunk in pd.read_csv('large_file.csv', chunksize=chunk_size):
+    processed = process_chunk(chunk)
+    chunks.append(processed)
+result = pd.concat(chunks)
+
+# Use Dask for larger-than-memory datasets
+import dask.dataframe as dd
+ddf = dd.read_csv('huge_file.csv')
+result = ddf.groupby('category')['value'].mean().compute()</code></pre>
+
+                    <h3>Week 6 Project</h3>
+                    <p><strong>Optimize a Data Processing Pipeline:</strong></p>
+                    <ol>
+                        <li>Create a slow, unoptimized version of a data processing task</li>
+                        <li>Profile the code to identify bottlenecks</li>
+                        <li>Apply optimization techniques</li>
+                        <li>Measure and document performance improvements</li>
+                        <li>Compare execution times (aim for 10x+ improvement)</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Week 7-8 -->
+                <div class="tab-content" id="week7-8">
+                    <h2>Week 7-8: Environment & Tools</h2>
+                    
+                    <h3>Learning Objectives</h3>
+                    <ul>
+                        <li>Set up and manage Python environments</li>
+                        <li>Use version control effectively</li>
+                        <li>Configure development tools</li>
+                        <li>Implement testing practices</li>
+                        <li>Build a complete data science workflow</li>
+                    </ul>
+
+                    <h3>Week 7: Environment Management</h3>
+                    
+                    <h4>1. Virtual Environments</h4>
+                    <pre><code># Using venv
+python -m venv myenv
+source myenv/bin/activate  # On Windows: myenv\Scripts\activate
+pip install -r requirements.txt
+
+# Using conda
+conda create -n myenv python=3.10
+conda activate myenv
+conda install pandas numpy scikit-learn</code></pre>
+
+                    <h4>2. Dependency Management</h4>
+                    <pre><code># requirements.txt
+pandas==2.0.0
+numpy==1.24.0
+scikit-learn==1.3.0
+matplotlib==3.7.0
+
+# Generate requirements
+pip freeze > requirements.txt</code></pre>
+
+                    <h4>3. Git & Version Control</h4>
+                    <pre><code># Basic Git workflow
+git init
+git add .
+git commit -m "Initial commit"
+git branch feature-branch
+git checkout feature-branch
+# Make changes
+git add .
+git commit -m "Add new feature"
+git checkout main
+git merge feature-branch</code></pre>
+
+                    <h3>Week 8: Testing & Final Project</h3>
+                    
+                    <h4>1. Unit Testing with pytest</h4>
+                    <pre><code>import pytest
+import pandas as pd
+from src.data_processing import clean_data
+
+def test_clean_data():
+    # Arrange
+    df = pd.DataFrame({'A': [1, None, 3], 'B': [4, 5, 6]})
+    
+    # Act
+    result = clean_data(df)
+    
+    # Assert
+    assert result.isna().sum().sum() == 0
+    assert len(result) == 2</code></pre>
+
+                    <h4>2. Development Tools</h4>
+                    <ul>
+                        <li>Jupyter notebooks for exploration</li>
+                        <li>VS Code or PyCharm for development</li>
+                        <li>Pre-commit hooks for code quality</li>
+                        <li>CI/CD basics with GitHub Actions</li>
+                    </ul>
+
+                    <h3>Final Project: Complete Data Science Pipeline</h3>
+                    <p><strong>Build an End-to-End Data Analysis Project:</strong></p>
+                    <ol>
+                        <li>Choose a real dataset (Kaggle, UCI, etc.)</li>
+                        <li>Set up proper project structure</li>
+                        <li>Implement data loading and cleaning functions</li>
+                        <li>Perform exploratory data analysis</li>
+                        <li>Create visualizations</li>
+                        <li>Write unit tests</li>
+                        <li>Document everything</li>
+                        <li>Use Git for version control</li>
+                        <li>Package as a reusable module</li>
+                    </ol>
+
+                    <h3>Resources & Next Steps</h3>
+                    <ul>
+                        <li>Practice on Kaggle competitions</li>
+                        <li>Contribute to open-source projects</li>
+                        <li>Build a portfolio on GitHub</li>
+                        <li>Move on to SQL Mastery study plan</li>
+                    </ul>
+                </div>
+
+                <!-- Tab Content: Assessment -->
+                <div class="tab-content" id="assessment">
+                    <h2>Assessment Checklist</h2>
+                    <p>After completing this 8-week study plan, you should be able to:</p>
+
+                    <h3>Pandas Proficiency</h3>
+                    <ul class="checklist">
+                        <li>Load data from multiple sources (CSV, Excel, SQL, APIs)</li>
+                        <li>Perform complex data manipulation and transformation</li>
+                        <li>Handle missing data appropriately</li>
+                        <li>Use groupby operations and aggregations effectively</li>
+                        <li>Merge and join datasets from different sources</li>
+                        <li>Create pivot tables and cross-tabulations</li>
+                    </ul>
+
+                    <h3>NumPy Skills</h3>
+                    <ul class="checklist">
+                        <li>Create and manipulate NumPy arrays efficiently</li>
+                        <li>Apply vectorized operations instead of loops</li>
+                        <li>Understand and use broadcasting correctly</li>
+                        <li>Perform matrix operations and linear algebra</li>
+                        <li>Use NumPy for statistical calculations</li>
+                    </ul>
+
+                    <h3>Code Quality</h3>
+                    <ul class="checklist">
+                        <li>Write clean, PEP 8 compliant code</li>
+                        <li>Structure projects professionally</li>
+                        <li>Document code with proper docstrings</li>
+                        <li>Use type hints effectively</li>
+                        <li>Implement proper error handling</li>
+                    </ul>
+
+                    <h3>Performance</h3>
+                    <ul class="checklist">
+                        <li>Profile code to identify bottlenecks</li>
+                        <li>Optimize pandas operations for large datasets</li>
+                        <li>Choose appropriate data types</li>
+                        <li>Process data in chunks when necessary</li>
+                        <li>Understand when to use vectorization vs loops</li>
+                    </ul>
+
+                    <h3>Tools & Workflow</h3>
+                    <ul class="checklist">
+                        <li>Set up and manage virtual environments</li>
+                        <li>Use Git for version control</li>
+                        <li>Write and run unit tests</li>
+                        <li>Create reproducible analysis workflows</li>
+                        <li>Package code as reusable modules</li>
+                    </ul>
+
+                    <h3>Self-Assessment Questions</h3>
+                    <ol>
+                        <li>Can you load, clean, and analyze a 1GB+ dataset efficiently?</li>
+                        <li>Do you automatically think in terms of vectorized operations?</li>
+                        <li>Can you explain when to use pandas vs NumPy?</li>
+                        <li>Would your code pass a professional code review?</li>
+                        <li>Can you set up a complete data science project from scratch?</li>
+                    </ol>
+
+                    <p style="margin-top: 2rem; padding: 1.5rem; background: var(--bootcamp-light); border-radius: 8px;">
+                        <strong>✅ Completion Criteria:</strong> You've completed this study plan when you can confidently 
+                        answer "yes" to all self-assessment questions and have checked off all items in the checklist. 
+                        Don't rush—mastery takes practice and real-world application!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3>Completion Status</h3>
+                    <div class="completion-checkbox">
+                        <div class="checkbox-box"></div>
+                        <div class="checkbox-label">Mark as Complete</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Quick Links</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="index.html">← Back to Bootcamp Hub</a></li>
+                        <li><a href="sql-study-plan.html">Next: SQL Mastery →</a></li>
+                        <li><a href="interview-prep.html">Interview Prep</a></li>
+                        <li><a href="practice-problems.html">Practice Problems</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Study Duration</h3>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">
+                        <strong>Estimated:</strong> 8 weeks<br>
+                        <strong>Time commitment:</strong> 10-15 hours/week
+                    </p>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Resources</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="resources.html">Cheat Sheets</a></li>
+                        <li><a href="resources.html">Flashcards</a></li>
+                        <li><a href="#">External Links</a></li>
+                    </ul>
+                </div>
+
+                <a href="index.html" class="back-button">
+                    ← Back to Hub
+                </a>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Learning Journey. Data Science Bootcamp.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                // Scroll to top of content area
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Completion checkbox functionality
+        const completionCheckbox = document.querySelector('.completion-checkbox');
+        const checkboxBox = document.querySelector('.checkbox-box');
+        
+        completionCheckbox.addEventListener('click', () => {
+            checkboxBox.classList.toggle('checked');
+            // In a real implementation, save to localStorage or backend
+        });
+    </script>
+</body>
+</html>

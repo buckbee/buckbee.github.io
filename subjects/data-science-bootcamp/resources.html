@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources Hub - Data Science Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #F4B942 0%, #e8a825 100%);
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .sidebar nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar nav a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .sidebar nav a.active {
+            background: rgba(255,255,255,0.3);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem;
+            background: #f8f9fa;
+        }
+
+        .breadcrumb {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb a {
+            color: #F4B942;
+            text-decoration: none;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .page-intro {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #F4B942;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .tab.active {
+            background: #F4B942;
+            color: white;
+            box-shadow: 0 -2px 8px rgba(244, 185, 66, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .resource-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid #F4B942;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .resource-card h3 {
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .resource-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #F4B942;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: #e8a825;
+            transform: scale(1.05);
+        }
+
+        .flashcard-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .flashcard {
+            background: linear-gradient(135deg, #F4B942 0%, #e8a825 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .flashcard:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(244, 185, 66, 0.4);
+        }
+
+        .flashcard.flipped {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        .flashcard-front, .flashcard-back {
+            text-align: center;
+        }
+
+        .flashcard-back {
+            display: none;
+        }
+
+        .flashcard.flipped .flashcard-front {
+            display: none;
+        }
+
+        .flashcard.flipped .flashcard-back {
+            display: block;
+        }
+
+        .flashcard h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flashcard p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .flashcard-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #F4B942;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e8a825;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .external-links {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .link-section {
+            margin-bottom: 2rem;
+        }
+
+        .link-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #F4B942;
+        }
+
+        .link-list {
+            list-style: none;
+        }
+
+        .link-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .link-list a {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .link-list a:hover {
+            color: #F4B942;
+        }
+
+        .link-tag {
+            background: #f0f0f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .job-market {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .salary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .salary-table th,
+        .salary-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .salary-table th {
+            background: #f8f9fa;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .salary-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .highlight-box {
+            background: #fff9e6;
+            border-left: 4px solid #F4B942;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1.5rem;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>📚 Resources Hub</h2>
+        <nav>
+            <a href="index.html">← Back to Bootcamp</a>
+            <a href="python-study-plan.html">Python Study Plan</a>
+            <a href="sql-study-plan.html">SQL Study Plan</a>
+            <a href="ml-study-plan.html">Machine Learning</a>
+            <a href="cloud-study-plan.html">Cloud Platforms</a>
+            <a href="ai-nlp-study-plan.html">AI & NLP</a>
+            <a href="interview-prep.html">Interview Prep</a>
+            <a href="practice-problems.html">Practice Problems</a>
+            <a href="resources.html" class="active">Resources Hub</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> → 
+            <a href="index.html">Data Science Bootcamp</a> → 
+            Resources Hub
+        </div>
+
+        <h1>🎓 Resources Hub</h1>
+
+        <div class="page-intro">
+            <p><strong>Your complete resource library</strong> - cheat sheets, flashcards, external learning materials, and job market insights for data science careers in Finland and Europe.</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('cheatsheets')">Cheat Sheets</button>
+            <button class="tab" onclick="showTab('flashcards')">Flashcards</button>
+            <button class="tab" onclick="showTab('external')">External Resources</button>
+            <button class="tab" onclick="showTab('jobmarket')">Job Market</button>
+        </div>
+
+        <!-- CHEAT SHEETS TAB -->
+        <div id="cheatsheets" class="tab-content active">
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h3>🐍 Python Essentials</h3>
+                    <p>Data types, control flow, functions, list comprehensions, common patterns</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🔍 SQL Quick Reference</h3>
+                    <p>SELECT queries, JOINs, window functions, CTEs, optimization tips</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🤖 ML Algorithms</h3>
+                    <p>Linear/logistic regression, trees, ensembles, neural networks, when to use each</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>📊 Pandas Cheat Sheet</h3>
+                    <p>DataFrames, indexing, groupby, merging, handling missing data, performance tips</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>📈 Statistics Fundamentals</h3>
+                    <p>Distributions, hypothesis testing, confidence intervals, p-values, effect sizes</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>☁️ AWS Services</h3>
+                    <p>EC2, S3, Lambda, SageMaker, Glue, Athena - core services for data science</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🔥 PyTorch Basics</h3>
+                    <p>Tensors, autograd, building models, training loops, common architectures</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>📝 NLP Concepts</h3>
+                    <p>Tokenization, embeddings, transformers, attention, fine-tuning, prompt engineering</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🎯 Feature Engineering</h3>
+                    <p>Scaling, encoding, feature selection, dimensionality reduction, domain-specific features</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+
+                <div class="resource-card">
+                    <h3>🐳 Docker & Git</h3>
+                    <p>Essential commands, Dockerfile basics, Git workflows, version control best practices</p>
+                    <a href="#" class="download-btn" onclick="alert('PDF generation would happen here'); return false;">Download PDF</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLASHCARDS TAB -->
+        <div id="flashcards" class="tab-content">
+            <div class="flashcard-container">
+                <h2 style="margin-bottom: 1.5rem; color: #2c3e50;">Interactive Flashcards</h2>
+                <p style="margin-bottom: 1rem; color: #666;">Click cards to flip. Use controls to navigate through 100 flashcards across 6 categories.</p>
+                
+                <div class="flashcard-controls">
+                    <button class="btn btn-secondary" onclick="previousCard()">← Previous</button>
+                    <span id="card-counter" style="padding: 0.75rem 1.5rem; background: #f0f0f0; border-radius: 8px; font-weight: 500;">1 / 20</span>
+                    <button class="btn btn-secondary" onclick="nextCard()">Next →</button>
+                    <button class="btn btn-primary" onclick="shuffleCards()">🔀 Shuffle</button>
+                </div>
+
+                <div class="flashcard" onclick="flipCard()">
+                    <div class="flashcard-front">
+                        <h3 id="question">What is a DataFrame in pandas?</h3>
+                    </div>
+                    <div class="flashcard-back">
+                        <p id="answer">A 2-dimensional labeled data structure with columns that can be of different types, similar to a spreadsheet or SQL table. It's the primary data structure in pandas.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; color: #666; margin-top: 1rem;">
+                    <p>Category: <span id="category" style="font-weight: 600; color: #F4B942;">Python</span></p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>💡 Study Tip:</strong> Use spaced repetition - review flashcards after 1 day, 3 days, 7 days, and 14 days for optimal retention.
+            </div>
+        </div>
+
+        <!-- EXTERNAL RESOURCES TAB -->
+        <div id="external" class="tab-content">
+            <div class="external-links">
+                <div class="link-section">
+                    <h3>📚 Online Courses</h3>
+                    <ul class="link-list">
+                        <li><a href="https://www.coursera.org/specializations/data-science-python" target="_blank">Applied Data Science with Python (Coursera) <span class="link-tag">Intermediate</span></a></li>
+                        <li><a href="https://www.udacity.com/course/data-scientist-nanodegree--nd025" target="_blank">Data Scientist Nanodegree (Udacity) <span class="link-tag">Advanced</span></a></li>
+                        <li><a href="https://www.datacamp.com/tracks/data-scientist-with-python" target="_blank">Data Scientist with Python (DataCamp) <span class="link-tag">All Levels</span></a></li>
+                        <li><a href="https://www.fast.ai/" target="_blank">Practical Deep Learning (fast.ai) <span class="link-tag">Free</span></a></li>
+                        <li><a href="https://www.deeplearning.ai/courses/" target="_blank">Deep Learning Specialization (deeplearning.ai) <span class="link-tag">Intermediate</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="link-section">
+                    <h3>📖 Books & Documentation</h3>
+                    <ul class="link-list">
+                        <li><a href="https://jakevdp.github.io/PythonDataScienceHandbook/" target="_blank">Python Data Science Handbook (Jake VanderPlas) <span class="link-tag">Free</span></a></li>
+                        <li><a href="https://www.statlearning.com/" target="_blank">Introduction to Statistical Learning <span class="link-tag">Free PDF</span></a></li>
+                        <li><a href="https://www.deeplearningbook.org/" target="_blank">Deep Learning Book (Goodfellow et al.) <span class="link-tag">Free</span></a></li>
+                        <li><a href="https://huggingface.co/docs" target="_blank">HuggingFace Documentation <span class="link-tag">NLP</span></a></li>
+                        <li><a href="https://scikit-learn.org/stable/user_guide.html" target="_blank">Scikit-learn User Guide <span class="link-tag">Essential</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="link-section">
+                    <h3>💻 Practice Platforms</h3>
+                    <ul class="link-list">
+                        <li><a href="https://leetcode.com/" target="_blank">LeetCode <span class="link-tag">Coding</span></a></li>
+                        <li><a href="https://www.kaggle.com/" target="_blank">Kaggle <span class="link-tag">ML Projects</span></a></li>
+                        <li><a href="https://www.hackerrank.com/domains/sql" target="_blank">HackerRank SQL <span class="link-tag">SQL Practice</span></a></li>
+                        <li><a href="https://mode.com/sql-tutorial/" target="_blank">Mode Analytics SQL Tutorial <span class="link-tag">Free</span></a></li>
+                        <li><a href="https://www.stratascratch.com/" target="_blank">StrataScratch <span class="link-tag">Interview Prep</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="link-section">
+                    <h3>👥 Communities & Forums</h3>
+                    <ul class="link-list">
+                        <li><a href="https://www.reddit.com/r/datascience/" target="_blank">r/datascience <span class="link-tag">Reddit</span></a></li>
+                        <li><a href="https://stackoverflow.com/questions/tagged/python" target="_blank">Stack Overflow <span class="link-tag">Q&A</span></a></li>
+                        <li><a href="https://discord.gg/data-science" target="_blank">Data Science Discord <span class="link-tag">Community</span></a></li>
+                        <li><a href="https://www.meetup.com/topics/data-science/" target="_blank">Meetup Groups <span class="link-tag">Networking</span></a></li>
+                        <li><a href="https://slush.org/" target="_blank">Slush (Helsinki Tech Event) <span class="link-tag">Finland</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="link-section">
+                    <h3>📰 Blogs & News</h3>
+                    <ul class="link-list">
+                        <li><a href="https://towardsdatascience.com/" target="_blank">Towards Data Science <span class="link-tag">Medium</span></a></li>
+                        <li><a href="https://distill.pub/" target="_blank">Distill.pub <span class="link-tag">Research</span></a></li>
+                        <li><a href="https://paperswithcode.com/" target="_blank">Papers with Code <span class="link-tag">ML Research</span></a></li>
+                        <li><a href="https://www.kdnuggets.com/" target="_blank">KDnuggets <span class="link-tag">News</span></a></li>
+                        <li><a href="https://analyticsindiamag.com/" target="_blank">Analytics India Magazine <span class="link-tag">Industry</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- JOB MARKET TAB -->
+        <div id="jobmarket" class="tab-content">
+            <div class="job-market">
+                <h2 style="color: #2c3e50; margin-bottom: 1rem;">🇫🇮 Finland Data Science Job Market</h2>
+                
+                <div class="highlight-box">
+                    <p><strong>Market Overview (2025):</strong> Finland's tech sector is growing rapidly, with Helsinki becoming a major European hub for AI and data science. Major employers include gaming companies (Supercell, Rovio), tech startups (Wolt, Varjo), and established corporations (Nokia, Nordea, Kone).</p>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #2c3e50;">Salary Ranges by Experience</h3>
+                <table class="salary-table">
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Experience</th>
+                            <th>Salary Range (€/year)</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Junior Data Analyst</td>
+                            <td>0-2 years</td>
+                            <td>€35,000 - €45,000</td>
+                            <td>Entry level, SQL/Python basics</td>
+                        </tr>
+                        <tr>
+                            <td>Data Analyst</td>
+                            <td>2-4 years</td>
+                            <td>€45,000 - €60,000</td>
+                            <td>BI tools, dashboards, reporting</td>
+                        </tr>
+                        <tr>
+                            <td>Junior Data Scientist</td>
+                            <td>0-2 years</td>
+                            <td>€45,000 - €60,000</td>
+                            <td>ML basics, model building</td>
+                        </tr>
+                        <tr>
+                            <td>Data Scientist</td>
+                            <td>2-5 years</td>
+                            <td>€60,000 - €80,000</td>
+                            <td>Production models, deployment</td>
+                        </tr>
+                        <tr>
+                            <td>Senior Data Scientist</td>
+                            <td>5+ years</td>
+                            <td>€80,000 - €110,000</td>
+                            <td>Team leadership, architecture</td>
+                        </tr>
+                        <tr>
+                            <td>ML Engineer</td>
+                            <td>3-6 years</td>
+                            <td>€70,000 - €95,000</td>
+                            <td>MLOps, scalable systems</td>
+                        </tr>
+                        <tr>
+                            <td>Principal Data Scientist</td>
+                            <td>7+ years</td>
+                            <td>€100,000 - €140,000</td>
+                            <td>Strategic leadership, research</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #2c3e50;">Top Employers in Finland</h3>
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h3>Wolt</h3>
+                        <p><strong>Industry:</strong> Food delivery tech<br>
+                        <strong>Known for:</strong> Strong data culture, ML-driven operations, fast growth</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Supercell</h3>
+                        <p><strong>Industry:</strong> Gaming<br>
+                        <strong>Known for:</strong> Game analytics, player behavior modeling, high salaries</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Nokia</h3>
+                        <p><strong>Industry:</strong> Telecommunications<br>
+                        <strong>Known for:</strong> Network analytics, AI research, established processes</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Nordea</h3>
+                        <p><strong>Industry:</strong> Banking/Finance<br>
+                        <strong>Known for:</strong> Risk modeling, fraud detection, large datasets</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Reaktor</h3>
+                        <p><strong>Industry:</strong> Consulting<br>
+                        <strong>Known for:</strong> Diverse projects, innovation, learning culture</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Varjo</h3>
+                        <p><strong>Industry:</strong> VR/AR<br>
+                        <strong>Known for:</strong> Computer vision, cutting-edge tech, R&D focus</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #2c3e50;">Key Skills in Demand</h3>
+                <div class="highlight-box">
+                    <h4 style="margin-bottom: 0.75rem;">Must-Have Skills:</h4>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li>Python (pandas, scikit-learn, PyTorch/TensorFlow)</li>
+                        <li>SQL (complex queries, optimization)</li>
+                        <li>Machine Learning fundamentals</li>
+                        <li>Git version control</li>
+                        <li>Data visualization (Tableau, Power BI, or Python)</li>
+                    </ul>
+                    
+                    <h4 style="margin-bottom: 0.75rem;">Highly Valued:</h4>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li>Cloud platforms (AWS, GCP, Azure)</li>
+                        <li>MLOps and model deployment</li>
+                        <li>Natural Language Processing (NLP)</li>
+                        <li>Big data tools (Spark, Airflow)</li>
+                        <li>Docker/Kubernetes containerization</li>
+                    </ul>
+
+                    <h4 style="margin-bottom: 0.75rem;">Finland-Specific:</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>English fluency (Finnish not always required)</li>
+                        <li>EU work permit (if non-EU citizen)</li>
+                        <li>Understanding of GDPR compliance</li>
+                        <li>Collaborative work style (flat hierarchies common)</li>
+                    </ul>
+                </div>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #2c3e50;">Job Search Resources</h3>
+                <div class="external-links">
+                    <ul class="link-list">
+                        <li><a href="https://duunitori.fi/en" target="_blank">Duunitori <span class="link-tag">Finland Jobs</span></a></li>
+                        <li><a href="https://www.linkedin.com/jobs/" target="_blank">LinkedIn Jobs <span class="link-tag">Global</span></a></li>
+                        <li><a href="https://www.indeed.fi/" target="_blank">Indeed Finland <span class="link-tag">Aggregator</span></a></li>
+                        <li><a href="https://www.mol.fi/en/" target="_blank">TE Services <span class="link-tag">Gov't Jobs</span></a></li>
+                        <li><a href="https://thehub.io/" target="_blank">The Hub <span class="link-tag">Startup Jobs</span></a></li>
+                        <li><a href="https://www.glassdoor.com/" target="_blank">Glassdoor <span class="link-tag">Salaries</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 2rem;">
+                    <h4 style="margin-bottom: 0.75rem;">💼 Job Application Tips for Finland:</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Portfolio matters:</strong> GitHub profile with clean, documented projects</li>
+                        <li><strong>CV format:</strong> Keep to 1-2 pages, include photo (common in Finland)</li>
+                        <li><strong>Cover letter:</strong> Personalize for each role, show company research</li>
+                        <li><strong>Interview style:</strong> Direct, honest communication valued; humility over boasting</li>
+                        <li><strong>Timeline:</strong> Hiring process typically 2-6 weeks from application to offer</li>
+                        <li><strong>Negotiation:</strong> Salaries somewhat flexible, benefits packages important</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Flashcard system
+        const flashcards = [
+            // Python (20 cards)
+            { q: "What is a DataFrame in pandas?", a: "A 2-dimensional labeled data structure with columns that can be of different types, similar to a spreadsheet or SQL table. It's the primary data structure in pandas.", category: "Python" },
+            { q: "What's the difference between a list and a tuple in Python?", a: "Lists are mutable (can be changed after creation) while tuples are immutable (cannot be changed). Lists use [], tuples use (). Tuples are slightly faster and can be used as dictionary keys.", category: "Python" },
+            { q: "What is list comprehension?", a: "A concise way to create lists in Python. Syntax: [expression for item in iterable if condition]. Example: [x**2 for x in range(10) if x % 2 == 0]", category: "Python" },
+            { q: "Explain Python's GIL (Global Interpreter Lock)", a: "A mutex that protects access to Python objects, preventing multiple threads from executing Python bytecode simultaneously. This makes single-threaded programs fast but limits multi-threaded performance.", category: "Python" },
+            { q: "What's the difference between .loc and .iloc in pandas?", a: ".loc uses label-based indexing (row/column names), while .iloc uses integer position-based indexing. Example: df.loc['row1', 'col1'] vs df.iloc[0, 0]", category: "Python" },
+            { q: "What is a Python decorator?", a: "A function that modifies the behavior of another function. Uses @decorator syntax. Commonly used for logging, timing, authentication, etc. Example: @staticmethod, @property", category: "Python" },
+            { q: "Explain Python's *args and **kwargs", a: "*args allows passing variable number of positional arguments (tuple). **kwargs allows passing variable number of keyword arguments (dict). Used for flexible function signatures.", category: "Python" },
+            { q: "What is vectorization in NumPy?", a: "Performing operations on entire arrays without explicit loops, leveraging optimized C code underneath. Much faster than Python loops. Example: arr * 2 instead of [x*2 for x in arr]", category: "Python" },
+            { q: "What's the difference between deep copy and shallow copy?", a: "Shallow copy creates new object but references same nested objects. Deep copy creates completely independent copy of all nested objects. Use copy.deepcopy() for deep copies.", category: "Python" },
+            { q: "What is the purpose of __init__.py?", a: "Makes a directory a Python package. Can be empty or contain package initialization code. Required in Python 2, optional in Python 3.3+.", category: "Python" },
+
+            // SQL (20 cards)
+            { q: "What's the difference between WHERE and HAVING?", a: "WHERE filters rows before grouping/aggregation. HAVING filters groups after aggregation. Example: WHERE filters individual sales, HAVING filters total sales by region.", category: "SQL" },
+            { q: "What is a window function?", a: "Performs calculation across a set of rows related to current row, without grouping them. Uses OVER() clause. Examples: ROW_NUMBER(), RANK(), LAG(), LEAD(), running totals.", category: "SQL" },
+            { q: "Explain INNER JOIN vs LEFT JOIN", a: "INNER JOIN returns only matching rows from both tables. LEFT JOIN returns all rows from left table plus matching rows from right (NULLs for non-matches).", category: "SQL" },
+            { q: "What is a CTE (Common Table Expression)?", a: "A temporary named result set defined with WITH clause. Makes complex queries more readable and reusable. Example: WITH cte AS (SELECT ...) SELECT * FROM cte", category: "SQL" },
+            { q: "What's the difference between RANK() and DENSE_RANK()?", a: "RANK() skips numbers after ties (1,2,2,4). DENSE_RANK() doesn't skip (1,2,2,3). ROW_NUMBER() assigns unique numbers even for ties (1,2,3,4).", category: "SQL" },
+            { q: "What is an index and why use it?", a: "A data structure that improves query speed by creating pointers to data. Trade-off: faster reads, slower writes. Use for frequently queried columns, foreign keys, WHERE/JOIN conditions.", category: "SQL" },
+            { q: "Explain the difference between UNION and UNION ALL", a: "UNION removes duplicate rows and is slower. UNION ALL keeps all rows including duplicates and is faster. Use UNION ALL when duplicates are impossible or acceptable.", category: "SQL" },
+            { q: "What is normalization?", a: "Organizing database to reduce redundancy. 1NF: atomic values. 2NF: no partial dependencies. 3NF: no transitive dependencies. Trade-off between redundancy and query complexity.", category: "SQL" },
+            { q: "What's a self-join?", a: "Joining a table to itself. Used to compare rows within same table or hierarchical data. Requires table aliases. Example: finding employees and their managers from employee table.", category: "SQL" },
+            { q: "What is query execution order?", a: "FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT. Important: WHERE filters before GROUP BY, HAVING filters after. Can't use column aliases in WHERE.", category: "SQL" },
+
+            // Machine Learning (20 cards)
+            { q: "What is overfitting?", a: "Model learns training data too well, including noise, performing poorly on new data. Signs: high training accuracy, low validation accuracy. Solutions: regularization, cross-validation, more data, simpler model.", category: "Machine Learning" },
+            { q: "Explain bias-variance tradeoff", a: "Bias: error from wrong assumptions (underfitting). Variance: error from sensitivity to training data (overfitting). Goal: minimize total error = bias² + variance + irreducible error.", category: "Machine Learning" },
+            { q: "What is cross-validation?", a: "Technique to assess model performance by splitting data into k folds, training on k-1 and testing on 1, rotating through all folds. Provides more robust performance estimate than single train-test split.", category: "Machine Learning" },
+            { q: "Difference between bagging and boosting?", a: "Bagging: train models independently in parallel, average predictions (Random Forest). Boosting: train models sequentially, each correcting previous errors (XGBoost, AdaBoost). Boosting usually more accurate but prone to overfitting.", category: "Machine Learning" },
+            { q: "What is regularization?", a: "Adding penalty term to loss function to prevent overfitting. L1 (Lasso): adds sum of absolute weights, promotes sparsity. L2 (Ridge): adds sum of squared weights, shrinks coefficients. ElasticNet: combines both.", category: "Machine Learning" },
+            { q: "Explain precision vs recall", a: "Precision: TP/(TP+FP) - of predicted positives, how many correct? Recall: TP/(TP+FN) - of actual positives, how many found? F1 score: harmonic mean of both. Trade-off depends on problem.", category: "Machine Learning" },
+            { q: "What is gradient descent?", a: "Optimization algorithm that iteratively adjusts parameters to minimize loss function. Moves in direction of steepest descent (negative gradient). Variants: batch, stochastic (SGD), mini-batch.", category: "Machine Learning" },
+            { q: "Explain decision tree splitting", a: "Chooses splits that maximize information gain (or minimize impurity). Classification: uses Gini impurity or entropy. Regression: uses variance reduction. Greedy algorithm, may not find global optimum.", category: "Machine Learning" },
+            { q: "What is feature scaling and why needed?", a: "Transforming features to similar ranges. StandardScaler: (x-mean)/std. MinMaxScaler: (x-min)/(max-min). Needed for distance-based algorithms (KNN, SVM, neural nets), gradient descent convergence. Not needed for tree-based models.", category: "Machine Learning" },
+            { q: "What is the curse of dimensionality?", a: "As dimensions increase, data becomes sparse, distances become less meaningful, models need exponentially more data. Solutions: feature selection, dimensionality reduction (PCA), domain knowledge.", category: "Machine Learning" },
+
+            // Statistics (20 cards)
+            { q: "What is a p-value?", a: "Probability of obtaining results at least as extreme as observed, assuming null hypothesis is true. p < 0.05 typically means reject null. NOT probability that null is true or effect size.", category: "Statistics" },
+            { q: "Explain Type I and Type II errors", a: "Type I (α): false positive, rejecting true null hypothesis. Type II (β): false negative, failing to reject false null hypothesis. Power = 1-β. Trade-off controlled by significance level.", category: "Statistics" },
+            { q: "What is a confidence interval?", a: "Range of values likely to contain true population parameter. 95% CI: if repeated 100 times, 95 intervals would contain true value. Wider intervals = less precision but more confidence.", category: "Statistics" },
+            { q: "Central Limit Theorem?", a: "Sample means of sufficiently large samples from any distribution approach normal distribution. Enables inference about population mean. Typically n>30 sufficient. Foundation for many statistical tests.", category: "Statistics" },
+            { q: "What's the difference between correlation and causation?", a: "Correlation: variables move together. Causation: one causes the other. Correlation doesn't imply causation (confounding variables, reverse causation). Need experiments or causal inference methods for causation.", category: "Statistics" },
+            { q: "Explain A/B testing", a: "Randomized experiment comparing two versions. Random assignment ensures groups are comparable. Statistical tests determine if difference is significant. Important: sample size, statistical power, multiple testing correction.", category: "Statistics" },
+            { q: "What is statistical power?", a: "Probability of detecting an effect if it exists (1-β). Higher power = lower Type II error. Affected by: sample size, effect size, significance level, variance. Typically aim for 80% power.", category: "Statistics" },
+            { q: "Difference between parametric and non-parametric tests?", a: "Parametric: assume distribution (usually normal), more powerful if assumptions met. Non-parametric: don't assume distribution, more robust but less powerful. Examples: t-test vs Mann-Whitney.", category: "Statistics" },
+            { q: "What is multicollinearity?", a: "High correlation between predictor variables in regression. Problems: unstable coefficients, hard to interpret individual effects, inflated standard errors. Detect with VIF. Solutions: remove variables, PCA, regularization.", category: "Statistics" },
+            { q: "Explain Bayesian vs Frequentist statistics", a: "Frequentist: probability as long-run frequency, parameters are fixed. Bayesian: probability as degree of belief, parameters are random variables with prior distributions. Bayesian updates beliefs with data.", category: "Statistics" },
+
+            // Cloud & MLOps (10 cards)
+            { q: "What is S3 in AWS?", a: "Simple Storage Service - object storage for any data type. Highly scalable, durable (99.999999999%). Use cases: data lakes, backups, static websites. Storage classes for different access patterns/costs.", category: "Cloud" },
+            { q: "What is Docker?", a: "Containerization platform packaging applications and dependencies. Containers are lightweight, portable, isolated. Dockerfile defines image, docker-compose manages multi-container apps. Essential for reproducible environments.", category: "Cloud" },
+            { q: "What is CI/CD?", a: "Continuous Integration: automatically test code changes. Continuous Deployment: automatically deploy to production. Tools: GitHub Actions, GitLab CI, Jenkins. Enables rapid, reliable releases.", category: "Cloud" },
+            { q: "What is AWS Lambda?", a: "Serverless compute service running code in response to events. Pay only for compute time used. Auto-scales. Use cases: data processing, APIs, scheduled tasks. Stateless, 15-minute max execution.", category: "Cloud" },
+            { q: "Explain model deployment strategies", a: "Blue-green: two identical environments, switch traffic. Canary: gradual rollout to subset. A/B testing: compare versions. Shadow: run new model alongside old without impact. Rolling: incremental replacement.", category: "Cloud" },
+            { q: "What is model monitoring?", a: "Tracking model performance in production. Monitor: prediction distribution, feature drift, data quality, latency, accuracy. Alerts for degradation. Retraining triggers when performance drops.", category: "Cloud" },
+            { q: "What is feature store?", a: "Centralized repository for feature engineering code and data. Benefits: reusability, consistency between training and serving, discoverability. Examples: Feast, Tecton. Stores feature definitions and computed values.", category: "Cloud" },
+            { q: "What is Kubernetes?", a: "Container orchestration platform. Manages deployment, scaling, networking of containers. Concepts: pods, services, deployments. More complex than Docker but handles production scale. Often called K8s.", category: "Cloud" },
+            { q: "What is API versioning?", a: "Managing multiple API versions simultaneously. Strategies: URL versioning (/v1/, /v2/), header versioning, query parameter. Allows backward compatibility while enabling improvements. Deprecation policy important.", category: "Cloud" },
+            { q: "What is data versioning?", a: "Tracking changes to datasets over time. Tools: DVC, MLflow. Benefits: reproducibility, rollback capability, experiment tracking. Stores metadata + pointers to data, not copies of large files.", category: "Cloud" },
+
+            // Interview Prep (10 cards)
+            { q: "Explain your typical ML project workflow", a: "1) Problem definition 2) Data collection & EDA 3) Feature engineering 4) Model selection & training 5) Evaluation & validation 6) Deployment 7) Monitoring & maintenance. Emphasize iteration and communication.", category: "Interview" },
+            { q: "How do you handle imbalanced datasets?", a: "1) Resampling: oversample minority (SMOTE) or undersample majority 2) Class weights in loss function 3) Different evaluation metrics (F1, precision-recall) 4) Ensemble methods 5) Collect more minority data if possible.", category: "Interview" },
+            { q: "Describe a time you debugged a model", a: "Use STAR method: Situation (low performance), Task (identify issue), Action (checked data quality, feature importance, learning curves, tried simpler model), Result (found data leakage, fixed, improved accuracy by X%).", category: "Interview" },
+            { q: "How do you explain ML to non-technical stakeholders?", a: "Use analogies, avoid jargon. Focus on business value, not algorithm details. Example: 'Model learns patterns from past data like you learn from experience, then applies those patterns to make predictions about new situations.'", category: "Interview" },
+            { q: "What's your experience with production ML?", a: "Discuss: model serving (API, batch), monitoring (drift, performance), retraining pipelines, A/B testing, scaling, latency requirements. Be honest about gaps and eagerness to learn.", category: "Interview" },
+            { q: "How do you stay current with ML advances?", a: "Read papers (arxiv, Papers with Code), follow researchers on Twitter, attend meetups/conferences, online courses, implement new techniques in side projects, participate in Kaggle competitions.", category: "Interview" },
+            { q: "Tell me about a failed project", a: "Be honest, show learning. Example: 'Spent 3 weeks on complex deep learning model that barely beat logistic regression. Learned to start simple, use baselines, and consider ROI of complexity.'", category: "Interview" },
+            { q: "How do you prioritize features to build?", a: "Consider: business impact, technical feasibility, data availability, team capacity. Use frameworks: RICE (Reach, Impact, Confidence, Effort), MoSCoW. Involve stakeholders. Start with MVP.", category: "Interview" },
+            { q: "What's your approach to code review?", a: "Check: correctness, readability, tests, documentation, performance, security. Be constructive, ask questions, learn from others. Automate style checks. Balance perfectionism with shipping.", category: "Interview" },
+            { q: "Why data science and why this company?", a: "Connect personal interests/skills to role. Research company: products, values, tech stack, recent news. Be specific about what excites you. Show how you'd add value. Prepare 2-3 questions to ask.", category: "Interview" }
+        ];
+
+        let currentCardIndex = 0;
+        let isFlipped = false;
+
+        function updateCard() {
+            const card = flashcards[currentCardIndex];
+            document.getElementById('question').textContent = card.q;
+            document.getElementById('answer').textContent = card.a;
+            document.getElementById('category').textContent = card.category;
+            document.getElementById('card-counter').textContent = `${currentCardIndex + 1} / ${flashcards.length}`;
+            
+            // Reset flip state
+            document.querySelector('.flashcard').classList.remove('flipped');
+            isFlipped = false;
+        }
+
+        function flipCard() {
+            const flashcard = document.querySelector('.flashcard');
+            flashcard.classList.toggle('flipped');
+            isFlipped = !isFlipped;
+        }
+
+        function nextCard() {
+            currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+            updateCard();
+        }
+
+        function previousCard() {
+            currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+            updateCard();
+        }
+
+        function shuffleCards() {
+            for (let i = flashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+            }
+            currentCardIndex = 0;
+            updateCard();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextCard();
+            if (e.key === 'ArrowLeft') previousCard();
+            if (e.key === ' ') flipCard();
+        });
+
+        // Initialize
+        updateCard();
+    </script>
+</body>
+</html>

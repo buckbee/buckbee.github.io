@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern AI & NLP Study Plan - Data Science Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* Header Navigation */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links a.active {
+            color: #F4B942;
+            font-weight: 600;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #F4B942 0%, #e8a825 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .duration {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        /* Content Area */
+        .content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #f0f0f0;
+            background: #fafafa;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 0.95rem;
+            color: #666;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .tab.active {
+            color: #F4B942;
+            border-bottom: 3px solid #F4B942;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h2 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .tab-content h3 {
+            color: #F4B942;
+            margin: 2rem 0 1rem;
+            font-size: 1.4rem;
+        }
+
+        .tab-content h4 {
+            color: #555;
+            margin: 1.5rem 0 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .tab-content ul, .tab-content ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        .tab-content li {
+            margin: 0.5rem 0;
+        }
+
+        .tab-content code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .tab-content pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .tab-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .completion-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .completion-toggle:hover {
+            background: #e9ecef;
+        }
+
+        .completion-toggle input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .completion-toggle.completed {
+            background: #d4edda;
+        }
+
+        .quick-links {
+            list-style: none;
+        }
+
+        .quick-links li {
+            margin: 0.75rem 0;
+        }
+
+        .quick-links a {
+            color: #667eea;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-links a:hover {
+            color: #F4B942;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: #fff9e6;
+            border-left: 4px solid #F4B942;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box strong {
+            color: #F4B942;
+        }
+
+        /* Resource Links */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .resource-link {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            color: #667eea;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .resource-link:hover {
+            border-color: #F4B942;
+            background: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">44-Week Learning Journey</a>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../subjects.html">Subjects</a></li>
+                <li><a href="../../progress.html">Progress</a></li>
+                <li><a href="index.html" class="active">Bootcamp</a></li>
+                <li><a href="../../about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>🤖 Modern AI & NLP Study Plan</h1>
+        <p class="duration">Transformers, LLMs & Practical NLP | 12 Weeks</p>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="../../index.html">Home</a> / 
+        <a href="../../subjects.html">Subjects</a> / 
+        <a href="index.html">Bootcamp</a> / 
+        Modern AI & NLP
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('overview')">Overview</button>
+                <button class="tab" onclick="switchTab('week1-2')">Week 1-2</button>
+                <button class="tab" onclick="switchTab('week3-4')">Week 3-4</button>
+                <button class="tab" onclick="switchTab('week5-6')">Week 5-6</button>
+                <button class="tab" onclick="switchTab('week7-8')">Week 7-8</button>
+                <button class="tab" onclick="switchTab('week9-10')">Week 9-10</button>
+                <button class="tab" onclick="switchTab('week11-12')">Week 11-12</button>
+                <button class="tab" onclick="switchTab('assessment')">Assessment</button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <h2>Modern AI: LLMs & Natural Language Processing</h2>
+                <p>Master modern NLP techniques, from fundamentals to cutting-edge transformer architectures and Large Language Models (LLMs). Learn to build production-ready NLP applications using state-of-the-art tools and techniques.</p>
+
+                <div class="highlight-box">
+                    <strong>Focus Areas:</strong> This 12-week plan covers traditional NLP, transformer architecture, LLM APIs, prompt engineering, embeddings, RAG systems, and practical applications for the Finnish job market.
+                </div>
+
+                <h3>Learning Objectives</h3>
+                <ul>
+                    <li>Master NLP fundamentals: tokenization, embeddings, preprocessing</li>
+                    <li>Understand transformer architecture and attention mechanisms</li>
+                    <li>Work with pre-trained models (BERT, GPT, T5)</li>
+                    <li>Use LLM APIs effectively (OpenAI, Anthropic, Hugging Face)</li>
+                    <li>Master prompt engineering techniques</li>
+                    <li>Build RAG (Retrieval-Augmented Generation) systems</li>
+                    <li>Implement vector databases for semantic search</li>
+                    <li>Deploy NLP models in production</li>
+                    <li>Handle multilingual NLP (English, Finnish, Swedish)</li>
+                </ul>
+
+                <h3>Course Structure</h3>
+                <ul>
+                    <li><strong>Week 1-2:</strong> NLP fundamentals, text preprocessing, traditional techniques</li>
+                    <li><strong>Week 3-4:</strong> Word embeddings (Word2Vec, GloVe, FastText)</li>
+                    <li><strong>Week 5-6:</strong> Transformers, attention mechanisms, BERT</li>
+                    <li><strong>Week 7-8:</strong> Large Language Models, prompt engineering, LLM APIs</li>
+                    <li><strong>Week 9-10:</strong> RAG systems, vector databases, semantic search</li>
+                    <li><strong>Week 11-12:</strong> Practical applications, fine-tuning, deployment</li>
+                </ul>
+
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li>Strong Python programming skills</li>
+                    <li>Understanding of machine learning fundamentals</li>
+                    <li>Basic deep learning knowledge (neural networks)</li>
+                    <li>Completed ML study plan recommended</li>
+                </ul>
+
+                <h3>Key Libraries & Tools</h3>
+                <ul>
+                    <li><strong>Hugging Face Transformers:</strong> Pre-trained models and pipelines</li>
+                    <li><strong>LangChain:</strong> Building LLM applications</li>
+                    <li><strong>OpenAI API:</strong> GPT models</li>
+                    <li><strong>spaCy:</strong> Industrial-strength NLP</li>
+                    <li><strong>NLTK:</strong> Natural language toolkit</li>
+                    <li><strong>Sentence Transformers:</strong> Embeddings</li>
+                    <li><strong>Vector DBs:</strong> Pinecone, Weaviate, ChromaDB, FAISS</li>
+                    <li><strong>LlamaIndex:</strong> Data framework for LLMs</li>
+                </ul>
+
+                <h3>Finnish Market Relevance</h3>
+                <ul>
+                    <li>Multilingual NLP for Finnish/English/Swedish</li>
+                    <li>Document processing and information extraction</li>
+                    <li>Customer service chatbots</li>
+                    <li>Content moderation and classification</li>
+                    <li>Semantic search for enterprise knowledge bases</li>
+                </ul>
+            </div>
+
+            <!-- Week 1-2 Tab -->
+            <div id="week1-2" class="tab-content">
+                <h2>Week 1-2: NLP Fundamentals</h2>
+
+                <h3>Text Preprocessing</h3>
+                <h4>Essential Techniques</h4>
+                <pre><code>import nltk
+import spacy
+from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk.stem import PorterStemmer, WordNetLemmatizer
+from nltk.corpus import stopwords
+
+# Download required data
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+text = "Natural Language Processing is transforming how we interact with computers!"
+
+# Tokenization
+words = word_tokenize(text)
+sentences = sent_tokenize(text)
+
+# Lowercasing
+text_lower = text.lower()
+
+# Remove stopwords
+stop_words = set(stopwords.words('english'))
+filtered = [w for w in words if w.lower() not in stop_words]
+
+# Stemming
+stemmer = PorterStemmer()
+stemmed = [stemmer.stem(w) for w in words]
+
+# Lemmatization (better than stemming)
+lemmatizer = WordNetLemmatizer()
+lemmatized = [lemmatizer.lemmatize(w) for w in words]</code></pre>
+
+                <h3>spaCy for Industrial NLP</h3>
+                <pre><code>import spacy
+
+# Load model
+nlp = spacy.load("en_core_web_sm")
+
+doc = nlp("Apple Inc. was founded by Steve Jobs in California.")
+
+# Tokenization
+tokens = [token.text for token in doc]
+
+# Lemmatization
+lemmas = [token.lemma_ for token in doc]
+
+# POS tagging
+pos_tags = [(token.text, token.pos_) for token in doc]
+
+# Named Entity Recognition
+entities = [(ent.text, ent.label_) for ent in doc.ents]
+# Output: [('Apple Inc.', 'ORG'), ('Steve Jobs', 'PERSON'), ('California', 'GPE')]
+
+# Dependency parsing
+for token in doc:
+    print(f"{token.text} -> {token.dep_} -> {token.head.text}")</code></pre>
+
+                <h3>Text Vectorization</h3>
+
+                <h4>Bag of Words & TF-IDF</h4>
+                <pre><code>from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+
+documents = [
+    "Machine learning is great",
+    "Natural language processing is amazing",
+    "Deep learning transforms AI"
+]
+
+# Bag of Words
+bow_vectorizer = CountVectorizer()
+bow_matrix = bow_vectorizer.fit_transform(documents)
+print(bow_vectorizer.get_feature_names_out())
+
+# TF-IDF (better for most tasks)
+tfidf_vectorizer = TfidfVectorizer(max_features=100, ngram_range=(1, 2))
+tfidf_matrix = tfidf_vectorizer.fit_transform(documents)
+
+# Get feature importance
+feature_names = tfidf_vectorizer.get_feature_names_out()
+scores = tfidf_matrix.toarray()[0]
+for name, score in zip(feature_names, scores):
+    if score > 0:
+        print(f"{name}: {score:.3f}")</code></pre>
+
+                <h3>Common NLP Tasks</h3>
+
+                <h4>Sentiment Analysis</h4>
+                <pre><code>from textblob import TextBlob
+
+text = "I love this product! It's amazing and works perfectly."
+blob = TextBlob(text)
+
+# Polarity: -1 (negative) to 1 (positive)
+# Subjectivity: 0 (objective) to 1 (subjective)
+print(f"Polarity: {blob.sentiment.polarity}")
+print(f"Subjectivity: {blob.sentiment.subjectivity}")</code></pre>
+
+                <h4>Text Classification</h4>
+                <pre><code>from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import Pipeline
+
+# Sample data
+texts = ["I love this", "This is terrible", "Amazing product", "Waste of money"]
+labels = [1, 0, 1, 0]  # 1: positive, 0: negative
+
+X_train, X_test, y_train, y_test = train_test_split(texts, labels, test_size=0.2)
+
+# Pipeline
+pipeline = Pipeline([
+    ('tfidf', TfidfVectorizer()),
+    ('clf', MultinomialNB())
+])
+
+pipeline.fit(X_train, y_train)
+print(f"Accuracy: {pipeline.score(X_test, y_test)}")
+
+# Predict
+new_text = ["This is excellent"]
+prediction = pipeline.predict(new_text)</code></pre>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Build text preprocessing pipeline for Finnish text</li>
+                    <li>Implement spam detection using TF-IDF + Naive Bayes</li>
+                    <li>Extract named entities from news articles</li>
+                    <li>Create sentiment analyzer for product reviews</li>
+                    <li>Build text classifier for document categorization</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://spacy.io/" target="_blank" class="resource-link">spaCy Docs</a>
+                    <a href="https://www.nltk.org/" target="_blank" class="resource-link">NLTK</a>
+                    <a href="https://textblob.readthedocs.io/" target="_blank" class="resource-link">TextBlob</a>
+                    <a href="https://scikit-learn.org/stable/modules/feature_extraction.html" target="_blank" class="resource-link">sklearn Text</a>
+                </div>
+            </div>
+
+            <!-- Week 3-4 Tab -->
+            <div id="week3-4" class="tab-content">
+                <h2>Week 3-4: Word Embeddings</h2>
+
+                <h3>Understanding Embeddings</h3>
+                <p>Word embeddings are dense vector representations of words that capture semantic meaning. Unlike one-hot encoding, embeddings place similar words closer together in vector space.</p>
+
+                <h3>Word2Vec</h3>
+                <pre><code>from gensim.models import Word2Vec
+from nltk.tokenize import word_tokenize
+
+# Sample corpus
+sentences = [
+    "machine learning is fascinating",
+    "deep learning transforms artificial intelligence",
+    "natural language processing uses neural networks"
+]
+
+# Tokenize
+tokenized = [word_tokenize(s.lower()) for s in sentences]
+
+# Train Word2Vec model
+model = Word2Vec(
+    sentences=tokenized,
+    vector_size=100,
+    window=5,
+    min_count=1,
+    workers=4,
+    sg=1  # Skip-gram (sg=1) or CBOW (sg=0)
+)
+
+# Get vector for word
+vector = model.wv['machine']
+
+# Find similar words
+similar = model.wv.most_similar('learning', topn=5)
+
+# Word analogy: king - man + woman = queen
+result = model.wv.most_similar(positive=['king', 'woman'], negative=['man'])
+
+# Calculate similarity
+similarity = model.wv.similarity('machine', 'computer')</code></pre>
+
+                <h3>Pre-trained Embeddings (GloVe, FastText)</h3>
+                <pre><code>import gensim.downloader as api
+
+# Load pre-trained GloVe embeddings
+glove_model = api.load("glove-wiki-gigaword-100")
+
+# Use embeddings
+vector = glove_model['computer']
+similar = glove_model.most_similar('computer')
+
+# For FastText (handles out-of-vocabulary words)
+fasttext_model = api.load("fasttext-wiki-news-subwords-300")
+
+# FastText can handle misspellings and rare words
+vector_oov = fasttext_model['computr']  # Typo, but still works!</code></pre>
+
+                <h3>Sentence Embeddings with Sentence-BERT</h3>
+                <pre><code>from sentence_transformers import SentenceTransformer, util
+
+# Load model
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# Encode sentences
+sentences = [
+    "Machine learning is a subset of AI",
+    "Deep learning uses neural networks",
+    "Python is a programming language"
+]
+
+embeddings = model.encode(sentences)
+
+# Calculate similarity
+similarity = util.cos_sim(embeddings[0], embeddings[1])
+print(f"Similarity: {similarity.item():.3f}")
+
+# Semantic search
+query = "What is artificial intelligence?"
+query_embedding = model.encode(query)
+
+# Find most similar sentence
+similarities = util.cos_sim(query_embedding, embeddings)
+best_match = similarities.argmax()
+print(f"Most similar: {sentences[best_match]}")</code></pre>
+
+                <h3>Building Custom Embeddings</h3>
+                <pre><code>import numpy as np
+from sklearn.decomposition import TruncatedSVD
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Create TF-IDF matrix
+documents = [...]  # Your documents
+vectorizer = TfidfVectorizer(max_features=10000)
+tfidf_matrix = vectorizer.fit_transform(documents)
+
+# Reduce dimensions using SVD (Latent Semantic Analysis)
+svd = TruncatedSVD(n_components=300)
+embeddings = svd.fit_transform(tfidf_matrix)
+
+# Now each document has a 300-dim embedding
+doc_embedding = embeddings[0]</code></pre>
+
+                <h3>Practical Application: Document Similarity</h3>
+                <pre><code>from sentence_transformers import SentenceTransformer, util
+import numpy as np
+
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+documents = [
+    "The company reported strong quarterly earnings",
+    "Stock prices surged after earnings announcement",
+    "The weather forecast predicts rain tomorrow",
+    "Financial markets responded positively to news"
+]
+
+# Encode all documents
+embeddings = model.encode(documents)
+
+# Create similarity matrix
+similarity_matrix = util.cos_sim(embeddings, embeddings)
+
+# Find most similar pairs
+for i in range(len(documents)):
+    for j in range(i+1, len(documents)):
+        similarity = similarity_matrix[i][j].item()
+        if similarity > 0.5:  # Threshold
+            print(f"Similarity {similarity:.3f}:")
+            print(f"  - {documents[i]}")
+            print(f"  - {documents[j]}\n")</code></pre>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Train Word2Vec on domain-specific corpus</li>
+                    <li>Build document clustering using embeddings</li>
+                    <li>Implement semantic search engine</li>
+                    <li>Create text similarity API</li>
+                    <li>Visualize embeddings using t-SNE or UMAP</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://radimrehurek.com/gensim/" target="_blank" class="resource-link">Gensim</a>
+                    <a href="https://www.sbert.net/" target="_blank" class="resource-link">Sentence-BERT</a>
+                    <a href="https://nlp.stanford.edu/projects/glove/" target="_blank" class="resource-link">GloVe</a>
+                    <a href="https://fasttext.cc/" target="_blank" class="resource-link">FastText</a>
+                </div>
+            </div>
+
+            <!-- Week 5-6 Tab -->
+            <div id="week5-6" class="tab-content">
+                <h2>Week 5-6: Transformers & BERT</h2>
+
+                <h3>Transformer Architecture</h3>
+                <p>Transformers revolutionized NLP with the attention mechanism, allowing models to process entire sequences in parallel and capture long-range dependencies.</p>
+
+                <h4>Key Concepts</h4>
+                <ul>
+                    <li><strong>Self-Attention:</strong> Allows model to weigh importance of different words</li>
+                    <li><strong>Multi-Head Attention:</strong> Multiple attention mechanisms in parallel</li>
+                    <li><strong>Positional Encoding:</strong> Injects position information</li>
+                    <li><strong>Feed-Forward Networks:</strong> Process attention outputs</li>
+                    <li><strong>Layer Normalization:</strong> Stabilizes training</li>
+                </ul>
+
+                <h3>Hugging Face Transformers</h3>
+                <h4>Basic Usage</h4>
+                <pre><code>from transformers import pipeline
+
+# Sentiment analysis
+classifier = pipeline("sentiment-analysis")
+result = classifier("I love this product!")
+print(result)  # [{'label': 'POSITIVE', 'score': 0.9998}]
+
+# Named Entity Recognition
+ner = pipeline("ner", grouped_entities=True)
+result = ner("Apple Inc. was founded by Steve Jobs in California")
+
+# Question Answering
+qa = pipeline("question-answering")
+context = "Paris is the capital of France and has a population of 2.1 million."
+question = "What is the capital of France?"
+result = qa(question=question, context=context)
+
+# Text Generation
+generator = pipeline("text-generation", model="gpt2")
+result = generator("Once upon a time", max_length=50)
+
+# Translation
+translator = pipeline("translation_en_to_fr")
+result = translator("Hello, how are you?")</code></pre>
+
+                <h3>BERT for Text Classification</h3>
+                <pre><code>from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import Trainer, TrainingArguments
+from datasets import load_dataset
+import torch
+
+# Load pre-trained BERT
+model_name = "bert-base-uncased"
+tokenizer = BertTokenizer.from_pretrained(model_name)
+model = BertForSequenceClassification.from_pretrained(model_name, num_labels=2)
+
+# Tokenize text
+texts = ["This is great!", "This is terrible!"]
+encodings = tokenizer(texts, truncation=True, padding=True, return_tensors="pt")
+
+# Make predictions
+with torch.no_grad():
+    outputs = model(**encodings)
+    predictions = torch.argmax(outputs.logits, dim=-1)
+
+# Fine-tuning example
+dataset = load_dataset("imdb")
+
+def tokenize_function(examples):
+    return tokenizer(examples["text"], truncation=True, padding="max_length")
+
+tokenized_dataset = dataset.map(tokenize_function, batched=True)
+
+training_args = TrainingArguments(
+    output_dir="./results",
+    num_train_epochs=3,
+    per_device_train_batch_size=8,
+    warmup_steps=500,
+    weight_decay=0.01,
+    logging_dir="./logs",
+)
+
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=tokenized_dataset["train"],
+    eval_dataset=tokenized_dataset["test"]
+)
+
+trainer.train()</code></pre>
+
+                <h3>Named Entity Recognition with BERT</h3>
+                <pre><code>from transformers import AutoTokenizer, AutoModelForTokenClassification
+from transformers import pipeline
+
+model_name = "dbmdz/bert-large-cased-finetuned-conll03-english"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForTokenClassification.from_pretrained(model_name)
+
+nlp = pipeline("ner", model=model, tokenizer=tokenizer, grouped_entities=True)
+
+text = "Microsoft CEO Satya Nadella announced new AI features at the Seattle conference."
+entities = nlp(text)
+
+for entity in entities:
+    print(f"{entity['word']}: {entity['entity_group']} (score: {entity['score']:.2f})")</code></pre>
+
+                <h3>Zero-Shot Classification</h3>
+                <pre><code>from transformers import pipeline
+
+classifier = pipeline("zero-shot-classification")
+
+text = "This is a course about Python programming and machine learning."
+candidate_labels = ["education", "politics", "sports", "technology"]
+
+result = classifier(text, candidate_labels)
+
+print(f"Text: {text}")
+for label, score in zip(result['labels'], result['scores']):
+    print(f"{label}: {score:.3f}")</code></pre>
+
+                <h3>Multilingual Models</h3>
+                <pre><code>from transformers import pipeline
+
+# mBERT supports 104 languages
+classifier = pipeline("sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment")
+
+# English
+result_en = classifier("This product is amazing!")
+
+# Finnish
+result_fi = classifier("Tämä tuote on mahtava!")
+
+# Swedish
+result_sv = classifier("Denna produkt är fantastisk!")</code></pre>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Fine-tune BERT for custom text classification</li>
+                    <li>Build multilingual NER system (Finnish/English/Swedish)</li>
+                    <li>Implement zero-shot classifier for your domain</li>
+                    <li>Create question-answering system for documentation</li>
+                    <li>Compare BERT variants (RoBERTa, DistilBERT, ALBERT)</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://huggingface.co/transformers/" target="_blank" class="resource-link">HF Transformers</a>
+                    <a href="https://huggingface.co/models" target="_blank" class="resource-link">Model Hub</a>
+                    <a href="http://jalammar.github.io/illustrated-transformer/" target="_blank" class="resource-link">Illustrated Transformer</a>
+                    <a href="https://arxiv.org/abs/1810.04805" target="_blank" class="resource-link">BERT Paper</a>
+                </div>
+            </div>
+
+            <!-- Week 7-8 Tab -->
+            <div id="week7-8" class="tab-content">
+                <h2>Week 7-8: Large Language Models & Prompt Engineering</h2>
+
+                <h3>Understanding LLMs</h3>
+                <p>Large Language Models (LLMs) like GPT-4, Claude, and LLaMA are trained on massive text corpora and can perform a wide variety of language tasks through prompting alone.</p>
+
+                <h4>Key LLM Characteristics</h4>
+                <ul>
+                    <li><strong>Few-shot learning:</strong> Learn from examples in the prompt</li>
+                    <li><strong>Zero-shot learning:</strong> Perform tasks without examples</li>
+                    <li><strong>Instruction following:</strong> Follow natural language instructions</li>
+                    <li><strong>Reasoning:</strong> Chain-of-thought and step-by-step reasoning</li>
+                    <li><strong>Context window:</strong> Amount of text the model can process</li>
+                </ul>
+
+                <h3>OpenAI API</h3>
+                <pre><code>from openai import OpenAI
+
+client = OpenAI(api_key="your-api-key")
+
+# Simple completion
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Explain machine learning in simple terms."}
+    ],
+    temperature=0.7,
+    max_tokens=150
+)
+
+print(response.choices[0].message.content)
+
+# Streaming response
+stream = client.chat.completions.create(
+    model="gpt-4",
+    messages=[{"role": "user", "content": "Write a short story"}],
+    stream=True
+)
+
+for chunk in stream:
+    if chunk.choices[0].delta.content:
+        print(chunk.choices[0].delta.content, end="")</code></pre>
+
+                <h3>Prompt Engineering Techniques</h3>
+
+                <h4>1. Zero-Shot Prompting</h4>
+                <pre><code># Direct instruction
+prompt = "Classify the sentiment of this review: 'This product exceeded my expectations!'"
+
+# Better with clear format
+prompt = """Classify the sentiment as positive, negative, or neutral.
+Review: "This product exceeded my expectations!"
+Sentiment:"""</code></pre>
+
+                <h4>2. Few-Shot Prompting</h4>
+                <pre><code>prompt = """Classify customer feedback sentiment:
+
+Feedback: "The service was excellent!"
+Sentiment: positive
+
+Feedback: "I'm disappointed with the quality."
+Sentiment: negative
+
+Feedback: "The product arrived on time."
+Sentiment: neutral
+
+Feedback: "This is the best purchase I've ever made!"
+Sentiment:"""</code></pre>
+
+                <h4>3. Chain-of-Thought (CoT)</h4>
+                <pre><code>prompt = """Solve this problem step by step:
+
+Question: A store has 15 apples. They sell 7 and then receive a shipment of 12 more. How many apples do they have now?
+
+Let's think step by step:
+1. Start with 15 apples
+2. Sell 7: 15 - 7 = 8 apples remaining
+3. Receive 12 more: 8 + 12 = 20 apples
+Answer: 20 apples
+
+Question: A tank is 3/4 full. After adding 10 liters, it's 7/8 full. What's the tank capacity?
+
+Let's think step by step:"""</code></pre>
+
+                <h4>4. Role Prompting</h4>
+                <pre><code>prompt = """You are an expert data scientist with 15 years of experience. 
+Explain the bias-variance tradeoff to a junior developer who just started learning ML.
+
+Use analogies and practical examples."""</code></pre>
+
+                <h4>5. Structured Output</h4>
+                <pre><code>prompt = """Extract information from this text and return as JSON:
+
+Text: "John Smith, 35 years old, works as a Software Engineer at Google in Mountain View, California."
+
+Return JSON with fields: name, age, job_title, company, location"""
+
+# Model returns:
+# {
+#   "name": "John Smith",
+#   "age": 35,
+#   "job_title": "Software Engineer",
+#   "company": "Google",
+#   "location": "Mountain View, California"
+# }</code></pre>
+
+                <h3>LangChain for LLM Applications</h3>
+                <pre><code>from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain, SequentialChain
+
+# Create prompt template
+template = """You are a {role}.
+Task: {task}
+Context: {context}
+
+Response:"""
+
+prompt = PromptTemplate(
+    input_variables=["role", "task", "context"],
+    template=template
+)
+
+# Create chain
+llm = OpenAI(temperature=0.7)
+chain = LLMChain(llm=llm, prompt=prompt)
+
+# Run chain
+result = chain.run(
+    role="data scientist",
+    task="explain this ML concept",
+    context="Random Forest algorithm"
+)
+
+# Sequential chains for multi-step tasks
+from langchain.chains import SimpleSequentialChain
+
+# Chain 1: Generate summary
+summary_template = "Summarize this text in 2 sentences: {text}"
+summary_chain = LLMChain(
+    llm=llm,
+    prompt=PromptTemplate(input_variables=["text"], template=summary_template)
+)
+
+# Chain 2: Translate summary
+translate_template = "Translate this to Finnish: {summary}"
+translate_chain = LLMChain(
+    llm=llm,
+    prompt=PromptTemplate(input_variables=["summary"], template=translate_template)
+)
+
+# Combine chains
+overall_chain = SimpleSequentialChain(
+    chains=[summary_chain, translate_chain],
+    verbose=True
+)
+
+result = overall_chain.run("Long English text here...")</code></pre>
+
+                <h3>Function Calling with LLMs</h3>
+                <pre><code>import json
+
+# Define functions
+functions = [
+    {
+        "name": "get_weather",
+        "description": "Get current weather for a location",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "location": {
+                    "type": "string",
+                    "description": "City name"
+                },
+                "unit": {
+                    "type": "string",
+                    "enum": ["celsius", "fahrenheit"]
+                }
+            },
+            "required": ["location"]
+        }
+    }
+]
+
+# Call with function
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[{"role": "user", "content": "What's the weather in Helsinki?"}],
+    functions=functions,
+    function_call="auto"
+)
+
+# Extract function call
+message = response.choices[0].message
+if message.function_call:
+    function_name = message.function_call.name
+    arguments = json.loads(message.function_call.arguments)
+    # Call your actual weather API here
+    weather_data = get_weather(**arguments)</code></pre>
+
+                <h3>Best Practices</h3>
+                <ul>
+                    <li><strong>Be specific:</strong> Clear instructions yield better results</li>
+                    <li><strong>Use examples:</strong> Few-shot prompting improves accuracy</li>
+                    <li><strong>Control output format:</strong> Specify JSON, lists, or structure</li>
+                    <li><strong>Set temperature:</strong> 0 for deterministic, 0.7-1.0 for creative</li>
+                    <li><strong>Handle errors:</strong> Implement retry logic and validation</li>
+                    <li><strong>Monitor costs:</strong> Track token usage and API calls</li>
+                </ul>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Build multi-lingual customer support chatbot</li>
+                    <li>Create document summarization pipeline</li>
+                    <li>Implement structured data extraction from text</li>
+                    <li>Build content moderation system</li>
+                    <li>Create automated report generator</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" class="resource-link">OpenAI Prompt Guide</a>
+                    <a href="https://www.langchain.com/" target="_blank" class="resource-link">LangChain</a>
+                    <a href="https://www.promptingguide.ai/" target="_blank" class="resource-link">Prompt Engineering Guide</a>
+                    <a href="https://learnprompting.org/" target="_blank" class="resource-link">Learn Prompting</a>
+                </div>
+            </div>
+
+            <!-- Week 9-10 Tab -->
+            <div id="week9-10" class="tab-content">
+                <h2>Week 9-10: RAG & Vector Databases</h2>
+
+                <h3>Understanding RAG</h3>
+                <p><strong>Retrieval-Augmented Generation (RAG)</strong> combines information retrieval with LLM generation. Instead of relying solely on the LLM's training data, RAG retrieves relevant context from your documents and includes it in the prompt.</p>
+
+                <h4>Why RAG?</h4>
+                <ul>
+                    <li>Access to private/recent data not in training set</li>
+                    <li>Reduces hallucinations with grounded facts</li>
+                    <li>Cost-effective vs. fine-tuning for many use cases</li>
+                    <li>Easy to update knowledge base</li>
+                </ul>
+
+                <h3>Vector Databases</h3>
+                <p>Store and search embeddings for semantic similarity.</p>
+
+                <h4>FAISS (Facebook AI Similarity Search)</h4>
+                <pre><code>import faiss
+import numpy as np
+from sentence_transformers import SentenceTransformer
+
+# Load embedding model
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# Sample documents
+documents = [
+    "Machine learning is a subset of AI",
+    "Python is popular for data science",
+    "Deep learning uses neural networks",
+    "RAG combines retrieval and generation"
+]
+
+# Create embeddings
+embeddings = model.encode(documents)
+embeddings = np.array(embeddings).astype('float32')
+
+# Create FAISS index
+dimension = embeddings.shape[1]
+index = faiss.IndexFlatL2(dimension)
+index.add(embeddings)
+
+# Search
+query = "What is artificial intelligence?"
+query_embedding = model.encode([query]).astype('float32')
+
+k = 2  # Top 2 results
+distances, indices = index.search(query_embedding, k)
+
+print("Top results:")
+for idx, distance in zip(indices[0], distances[0]):
+    print(f"- {documents[idx]} (distance: {distance:.3f})")</code></pre>
+
+                <h4>ChromaDB</h4>
+                <pre><code>import chromadb
+from chromadb.config import Settings
+
+# Initialize client
+client = chromadb.Client(Settings(
+    chroma_db_impl="duckdb+parquet",
+    persist_directory="./chroma_db"
+))
+
+# Create collection
+collection = client.create_collection(name="documents")
+
+# Add documents
+collection.add(
+    documents=[
+        "Machine learning is a subset of AI",
+        "Python is popular for data science",
+        "Deep learning uses neural networks"
+    ],
+    metadatas=[
+        {"source": "intro"},
+        {"source": "tools"},
+        {"source": "advanced"}
+    ],
+    ids=["doc1", "doc2", "doc3"]
+)
+
+# Query
+results = collection.query(
+    query_texts=["What is AI?"],
+    n_results=2
+)
+
+print(results['documents'])</code></pre>
+
+                <h4>Pinecone (Cloud Vector DB)</h4>
+                <pre><code>import pinecone
+
+# Initialize
+pinecone.init(api_key="your-key", environment="us-west1-gcp")
+
+# Create index
+index_name = "document-search"
+if index_name not in pinecone.list_indexes():
+    pinecone.create_index(
+        name=index_name,
+        dimension=384,  # Match your embedding dimension
+        metric="cosine"
+    )
+
+index = pinecone.Index(index_name)
+
+# Upsert vectors
+vectors = [
+    ("id1", embedding1.tolist(), {"text": "Document 1"}),
+    ("id2", embedding2.tolist(), {"text": "Document 2"})
+]
+index.upsert(vectors=vectors)
+
+# Query
+results = index.query(
+    vector=query_embedding.tolist(),
+    top_k=3,
+    include_metadata=True
+)</code></pre>
+
+                <h3>Building a Complete RAG System</h3>
+                <pre><code>from langchain.document_loaders import DirectoryLoader, TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chains import RetrievalQA
+from langchain.chat_models import ChatOpenAI
+
+class RAGPipeline:
+    def __init__(self, docs_path, openai_key):
+        self.docs_path = docs_path
+        self.embeddings = OpenAIEmbeddings(openai_api_key=openai_key)
+        self.llm = ChatOpenAI(temperature=0, openai_api_key=openai_key)
+        self.vectorstore = None
+        self.qa_chain = None
+    
+    def load_documents(self):
+        """Load documents from directory"""
+        loader = DirectoryLoader(
+            self.docs_path,
+            glob="**/*.txt",
+            loader_cls=TextLoader
+        )
+        documents = loader.load()
+        return documents
+    
+    def split_documents(self, documents):
+        """Split into chunks"""
+        splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200,
+            length_function=len,
+            separators=["\n\n", "\n", " ", ""]
+        )
+        chunks = splitter.split_documents(documents)
+        return chunks
+    
+    def create_vectorstore(self, chunks):
+        """Create vector database"""
+        self.vectorstore = Chroma.from_documents(
+            documents=chunks,
+            embedding=self.embeddings,
+            persist_directory="./chroma_db"
+        )
+    
+    def setup_qa_chain(self):
+        """Setup QA chain"""
+        retriever = self.vectorstore.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": 3}
+        )
+        
+        self.qa_chain = RetrievalQA.from_chain_type(
+            llm=self.llm,
+            chain_type="stuff",
+            retriever=retriever,
+            return_source_documents=True
+        )
+    
+    def query(self, question):
+        """Query the system"""
+        result = self.qa_chain({"query": question})
+        return {
+            "answer": result["result"],
+            "sources": [doc.page_content for doc in result["source_documents"]]
+        }
+    
+    def build(self):
+        """Build complete pipeline"""
+        docs = self.load_documents()
+        chunks = self.split_documents(docs)
+        self.create_vectorstore(chunks)
+        self.setup_qa_chain()
+
+# Usage
+rag = RAGPipeline("./documents", "your-openai-key")
+rag.build()
+
+result = rag.query("What is machine learning?")
+print(f"Answer: {result['answer']}")
+print(f"\nSources: {result['sources']}")</code></pre>
+
+                <h3>Advanced RAG Techniques</h3>
+
+                <h4>Hybrid Search (Keyword + Semantic)</h4>
+                <pre><code>from langchain.retrievers import BM25Retriever, EnsembleRetriever
+
+# BM25 for keyword search
+bm25_retriever = BM25Retriever.from_documents(chunks)
+
+# Vector search
+vector_retriever = vectorstore.as_retriever()
+
+# Combine both
+ensemble_retriever = EnsembleRetriever(
+    retrievers=[bm25_retriever, vector_retriever],
+    weights=[0.5, 0.5]
+)</code></pre>
+
+                <h4>Re-ranking Results</h4>
+                <pre><code>from sentence_transformers import CrossEncoder
+
+# Load re-ranker model
+reranker = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+
+# Get initial results
+initial_results = retriever.get_relevant_documents(query)
+
+# Re-rank
+pairs = [[query, doc.page_content] for doc in initial_results]
+scores = reranker.predict(pairs)
+
+# Sort by score
+reranked = sorted(zip(initial_results, scores), key=lambda x: x[1], reverse=True)
+top_docs = [doc for doc, score in reranked[:3]]</code></pre>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Build RAG system for company documentation</li>
+                    <li>Implement semantic search for knowledge base</li>
+                    <li>Create chatbot with memory and context retrieval</li>
+                    <li>Build FAQ answering system</li>
+                    <li>Implement hybrid search (BM25 + embeddings)</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://www.pinecone.io/learn/retrieval-augmented-generation/" target="_blank" class="resource-link">RAG Guide</a>
+                    <a href="https://www.trychroma.com/" target="_blank" class="resource-link">ChromaDB</a>
+                    <a href="https://www.pinecone.io/" target="_blank" class="resource-link">Pinecone</a>
+                    <a href="https://github.com/facebookresearch/faiss" target="_blank" class="resource-link">FAISS</a>
+                </div>
+            </div>
+
+            <!-- Week 11-12 Tab -->
+            <div id="week11-12" class="tab-content">
+                <h2>Week 11-12: Practical Applications & Deployment</h2>
+
+                <h3>Text Summarization</h3>
+                <pre><code>from transformers import pipeline
+
+# Summarization pipeline
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
+long_text = """[Your long text here]"""
+
+summary = summarizer(
+    long_text,
+    max_length=130,
+    min_length=30,
+    do_sample=False
+)
+
+print(summary[0]['summary_text'])</code></pre>
+
+                <h3>Question Answering System</h3>
+                <pre><code>from transformers import pipeline
+
+qa_pipeline = pipeline(
+    "question-answering",
+    model="deepset/roberta-base-squad2"
+)
+
+context = """Machine learning is a method of data analysis that automates 
+analytical model building. It uses algorithms that iteratively learn from data."""
+
+questions = [
+    "What is machine learning?",
+    "How does it work?"
+]
+
+for question in questions:
+    result = qa_pipeline(question=question, context=context)
+    print(f"Q: {question}")
+    print(f"A: {result['answer']} (confidence: {result['score']:.2f})\n")</code></pre>
+
+                <h3>Named Entity Recognition Pipeline</h3>
+                <pre><code>import spacy
+from collections import defaultdict
+
+nlp = spacy.load("en_core_web_sm")
+
+def extract_entities(text):
+    """Extract and categorize entities"""
+    doc = nlp(text)
+    
+    entities = defaultdict(list)
+    for ent in doc.ents:
+        entities[ent.label_].append({
+            'text': ent.text,
+            'start': ent.start_char,
+            'end': ent.end_char
+        })
+    
+    return dict(entities)
+
+text = """Apple Inc. announced new AI features. CEO Tim Cook presented 
+at the San Francisco conference on January 15, 2024."""
+
+entities = extract_entities(text)
+for label, ents in entities.items():
+    print(f"{label}: {[e['text'] for e in ents]}")</code></pre>
+
+                <h3>Sentiment Analysis at Scale</h3>
+                <pre><code>from transformers import pipeline
+import pandas as pd
+from tqdm import tqdm
+
+sentiment_analyzer = pipeline(
+    "sentiment-analysis",
+    model="distilbert-base-uncased-finetuned-sst-2-english"
+)
+
+def analyze_reviews(reviews, batch_size=16):
+    """Analyze sentiment in batches"""
+    results = []
+    
+    for i in tqdm(range(0, len(reviews), batch_size)):
+        batch = reviews[i:i+batch_size]
+        predictions = sentiment_analyzer(batch)
+        results.extend(predictions)
+    
+    return results
+
+# Load reviews
+df = pd.read_csv('reviews.csv')
+sentiments = analyze_reviews(df['text'].tolist())
+
+df['sentiment'] = [s['label'] for s in sentiments]
+df['confidence'] = [s['score'] for s in sentiments]
+
+# Aggregate stats
+print(df['sentiment'].value_counts())
+print(f"Average confidence: {df['confidence'].mean():.3f}")</code></pre>
+
+                <h3>Building Production NLP API</h3>
+                <pre><code>from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from transformers import pipeline
+import uvicorn
+
+app = FastAPI(title="NLP API")
+
+# Load models at startup
+@app.on_event("startup")
+async def load_models():
+    global sentiment_model, ner_model, qa_model
+    
+    sentiment_model = pipeline("sentiment-analysis")
+    ner_model = pipeline("ner", grouped_entities=True)
+    qa_model = pipeline("question-answering")
+
+# Request models
+class TextRequest(BaseModel):
+    text: str
+
+class QARequest(BaseModel):
+    question: str
+    context: str
+
+# Endpoints
+@app.post("/sentiment")
+async def analyze_sentiment(request: TextRequest):
+    try:
+        result = sentiment_model(request.text)[0]
+        return {
+            "text": request.text,
+            "sentiment": result['label'],
+            "confidence": result['score']
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/entities")
+async def extract_entities(request: TextRequest):
+    try:
+        entities = ner_model(request.text)
+        return {"text": request.text, "entities": entities}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/qa")
+async def answer_question(request: QARequest):
+    try:
+        result = qa_model(
+            question=request.question,
+            context=request.context
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)</code></pre>
+
+                <h3>Monitoring NLP Models</h3>
+                <pre><code>import logging
+from datetime import datetime
+from collections import defaultdict
+
+class NLPMonitor:
+    def __init__(self):
+        self.metrics = defaultdict(list)
+        self.logger = logging.getLogger(__name__)
+    
+    def log_prediction(self, model_name, input_text, output, confidence, latency):
+        """Log model prediction"""
+        self.metrics['predictions'].append({
+            'timestamp': datetime.now(),
+            'model': model_name,
+            'input_length': len(input_text),
+            'confidence': confidence,
+            'latency': latency
+        })
+        
+        # Alert on low confidence
+        if confidence < 0.5:
+            self.logger.warning(
+                f"Low confidence prediction: {confidence:.2f} "
+                f"for model {model_name}"
+            )
+    
+    def get_stats(self):
+        """Get monitoring statistics"""
+        if not self.metrics['predictions']:
+            return {}
+        
+        predictions = self.metrics['predictions']
+        confidences = [p['confidence'] for p in predictions]
+        latencies = [p['latency'] for p in predictions]
+        
+        return {
+            'total_predictions': len(predictions),
+            'avg_confidence': sum(confidences) / len(confidences),
+            'avg_latency': sum(latencies) / len(latencies),
+            'low_confidence_rate': sum(1 for c in confidences if c < 0.5) / len(confidences)
+        }
+
+monitor = NLPMonitor()
+
+# Use in production
+start = time.time()
+result = model(text)
+latency = time.time() - start
+
+monitor.log_prediction(
+    model_name="sentiment-analyzer",
+    input_text=text,
+    output=result['label'],
+    confidence=result['score'],
+    latency=latency
+)</code></pre>
+
+                <h3>Fine-tuning for Custom Domain</h3>
+                <pre><code>from transformers import (
+    AutoTokenizer,
+    AutoModelForSequenceClassification,
+    TrainingArguments,
+    Trainer
+)
+from datasets import Dataset
+
+# Prepare data
+texts = ["Sample text 1", "Sample text 2"]
+labels = [0, 1]
+
+dataset = Dataset.from_dict({
+    'text': texts,
+    'label': labels
+})
+
+# Load pre-trained model
+model_name = "distilbert-base-uncased"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForSequenceClassification.from_pretrained(
+    model_name,
+    num_labels=2
+)
+
+# Tokenize
+def tokenize_function(examples):
+    return tokenizer(
+        examples['text'],
+        padding='max_length',
+        truncation=True,
+        max_length=512
+    )
+
+tokenized_dataset = dataset.map(tokenize_function, batched=True)
+
+# Training arguments
+training_args = TrainingArguments(
+    output_dir='./results',
+    num_train_epochs=3,
+    per_device_train_batch_size=16,
+    warmup_steps=500,
+    weight_decay=0.01,
+    logging_dir='./logs',
+    evaluation_strategy="epoch",
+    save_strategy="epoch",
+    load_best_model_at_end=True
+)
+
+# Train
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=tokenized_dataset,
+    tokenizer=tokenizer
+)
+
+trainer.train()
+
+# Save model
+model.save_pretrained('./my-custom-model')
+tokenizer.save_pretrained('./my-custom-model')</code></pre>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Build end-to-end customer feedback analysis system</li>
+                    <li>Create document classification API</li>
+                    <li>Implement automated content moderation</li>
+                    <li>Build multilingual chatbot (Finnish/English/Swedish)</li>
+                    <li>Create enterprise search with RAG</li>
+                    <li>Fine-tune model for domain-specific task</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://fastapi.tiangolo.com/" target="_blank" class="resource-link">FastAPI</a>
+                    <a href="https://huggingface.co/docs/transformers/training" target="_blank" class="resource-link">HF Training</a>
+                    <a href="https://neptune.ai/blog/nlp-model-monitoring" target="_blank" class="resource-link">NLP Monitoring</a>
+                    <a href="https://www.mlflow.org/" target="_blank" class="resource-link">MLflow</a>
+                </div>
+            </div>
+
+            <!-- Assessment Tab -->
+            <div id="assessment" class="tab-content">
+                <h2>Assessment & Capstone Project</h2>
+
+                <h3>Capstone Project: Enterprise NLP System</h3>
+                <p>Build a complete, production-ready NLP application demonstrating your mastery of modern AI techniques.</p>
+
+                <h4>Project Requirements</h4>
+                <ol>
+                    <li><strong>Problem Statement:</strong> Choose real business problem (customer support, content moderation, document search, etc.)</li>
+                    <li><strong>Data Processing:</strong> Text preprocessing, cleaning, normalization</li>
+                    <li><strong>Multiple NLP Tasks:</strong> Implement at least 3 NLP capabilities (e.g., classification, NER, QA)</li>
+                    <li><strong>RAG System:</strong> Build knowledge base with vector search</li>
+                    <li><strong>LLM Integration:</strong> Use LLM API with proper prompt engineering</li>
+                    <li><strong>API Development:</strong> RESTful API with FastAPI</li>
+                    <li><strong>Monitoring:</strong> Log predictions, track performance metrics</li>
+                    <li><strong>Multilingual:</strong> Support at least 2 languages</li>
+                    <li><strong>Documentation:</strong> API docs, architecture diagram, README</li>
+                    <li><strong>Deployment:</strong> Docker containerization</li>
+                </ol>
+
+                <h4>Example Project Ideas</h4>
+                <ul>
+                    <li><strong>Intelligent Customer Support:</strong> RAG-powered chatbot with ticket classification and sentiment analysis</li>
+                    <li><strong>Content Moderation Platform:</strong> Multi-class classification, toxic content detection, entity extraction</li>
+                    <li><strong>Document Intelligence:</strong> Summarization, QA, entity extraction for legal/medical docs</li>
+                    <li><strong>Product Review Analyzer:</strong> Sentiment analysis, aspect-based analysis, trend detection</li>
+                    <li><strong>Recruitment Assistant:</strong> Resume parsing, candidate matching, interview question generation</li>
+                </ul>
+
+                <h3>Skills Assessment Checklist</h3>
+
+                <h4>NLP Fundamentals</h4>
+                <ul>
+                    <li>☐ Perform text preprocessing (tokenization, normalization)</li>
+                    <li>☐ Use spaCy for industrial NLP tasks</li>
+                    <li>☐ Implement text classification with sklearn</li>
+                    <li>☐ Extract named entities accurately</li>
+                    <li>☐ Handle multilingual text</li>
+                </ul>
+
+                <h4>Embeddings & Similarity</h4>
+                <ul>
+                    <li>☐ Create word embeddings with Word2Vec</li>
+                    <li>☐ Use pre-trained embeddings (GloVe, FastText)</li>
+                    <li>☐ Generate sentence embeddings</li>
+                    <li>☐ Implement semantic similarity search</li>
+                    <li>☐ Build document clustering</li>
+                </ul>
+
+                <h4>Transformers & BERT</h4>
+                <ul>
+                    <li>☐ Understand transformer architecture</li>
+                    <li>☐ Use Hugging Face pipelines</li>
+                    <li>☐ Fine-tune BERT for custom tasks</li>
+                    <li>☐ Implement zero-shot classification</li>
+                    <li>☐ Work with multilingual models</li>
+                </ul>
+
+                <h4>LLMs & Prompt Engineering</h4>
+                <ul>
+                    <li>☐ Use OpenAI/Anthropic APIs effectively</li>
+                    <li>☐ Write effective prompts (zero-shot, few-shot, CoT)</li>
+                    <li>☐ Implement function calling</li>
+                    <li>☐ Build LangChain applications</li>
+                    <li>☐ Handle streaming responses</li>
+                    <li>☐ Manage costs and rate limits</li>
+                </ul>
+
+                <h4>RAG & Vector Databases</h4>
+                <ul>
+                    <li>☐ Build complete RAG system</li>
+                    <li>☐ Use vector databases (FAISS, Chroma, Pinecone)</li>
+                    <li>☐ Implement hybrid search</li>
+                    <li>☐ Optimize chunk size and overlap</li>
+                    <li>☐ Re-rank search results</li>
+                </ul>
+
+                <h4>Production & Deployment</h4>
+                <ul>
+                    <li>☐ Build NLP API with FastAPI</li>
+                    <li>☐ Implement error handling</li>
+                    <li>☐ Add monitoring and logging</li>
+                    <li>☐ Fine-tune models for custom domains</li>
+                    <li>☐ Containerize with Docker</li>
+                    <li>☐ Optimize inference speed</li>
+                </ul>
+
+                <h3>Certification Recommendations</h3>
+                <ul>
+                    <li><strong>Hugging Face NLP Course:</strong> Free comprehensive course</li>
+                    <li><strong>DeepLearning.AI NLP Specialization:</strong> Coursera (Andrew Ng)</li>
+                    <li><strong>FastAPI Course:</strong> TestDriven.io</li>
+                    <li><strong>LangChain for LLM Application Development:</strong> DeepLearning.AI</li>
+                </ul>
+
+                <h3>Portfolio Building Tips</h3>
+                <ol>
+                    <li><strong>GitHub Repository:</strong> Well-documented code with README</li>
+                    <li><strong>Live Demo:</strong> Deploy on Hugging Face Spaces or similar</li>
+                    <li><strong>Blog Post:</strong> Write technical post explaining your project</li>
+                    <li><strong>Metrics:</strong> Show concrete performance improvements</li>
+                    <li><strong>Use Cases:</strong> Demonstrate business value</li>
+                </ol>
+
+                <h3>Next Steps</h3>
+                <ol>
+                    <li><strong>Stay Updated:</strong> Follow NLP papers on arXiv, Twitter</li>
+                    <li><strong>Join Communities:</strong> Hugging Face forums, Reddit r/MachineLearning</li>
+                    <li><strong>Experiment:</strong> Try new models as they're released</li>
+                    <li><strong>Contribute:</strong> Open source contributions build credibility</li>
+                    <li><strong>Network:</strong> Connect with NLP practitioners in Finland</li>
+                </ol>
+
+                <h3>Additional Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://huggingface.co/learn/nlp-course/chapter1/1" target="_blank" class="resource-link">HF NLP Course</a>
+                    <a href="https://www.deeplearning.ai/short-courses/" target="_blank" class="resource-link">DeepLearning.AI</a>
+                    <a href="https://paperswithcode.com/area/natural-language-processing" target="_blank" class="resource-link">Papers with Code</a>
+                    <a href="https://arxiv.org/list/cs.CL/recent" target="_blank" class="resource-link">arXiv NLP</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Completion Card -->
+            <div class="sidebar-card">
+                <h3>Mark Complete</h3>
+                <div id="completionToggle" class="completion-toggle" onclick="toggleCompletion()">
+                    <input type="checkbox" id="completionCheckbox">
+                    <label for="completionCheckbox">I've completed this study plan</label>
+                </div>
+            </div>
+
+            <!-- Quick Links Card -->
+            <div class="sidebar-card">
+                <h3>Quick Links</h3>
+                <ul class="quick-links">
+                    <li><a href="index.html">← Back to Bootcamp</a></li>
+                    <li><a href="interview-prep.html">📋 Interview Prep</a></li>
+                    <li><a href="practice-problems.html">💻 Practice Problems</a></li>
+                    <li><a href="resources.html">📚 Resources</a></li>
+                </ul>
+            </div>
+
+            <!-- Info Card -->
+            <div class="sidebar-card">
+                <h3>Study Plan Info</h3>
+                <div class="info-item">
+                    <span class="info-label">Duration</span>
+                    <span class="info-value">12 Weeks</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Focus</span>
+                    <span class="info-value">Modern AI/NLP</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Level</span>
+                    <span class="info-value">Intermediate-Advanced</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Hours/Week</span>
+                    <span class="info-value">10-15 hours</span>
+                </div>
+            </div>
+
+            <!-- Resources Card -->
+            <div class="sidebar-card">
+                <h3>Key Tools</h3>
+                <ul class="quick-links">
+                    <li><a href="https://huggingface.co/" target="_blank">🤗 Hugging Face</a></li>
+                    <li><a href="https://www.langchain.com/" target="_blank">🦜 LangChain</a></li>
+                    <li><a href="https://platform.openai.com/" target="_blank">🔑 OpenAI API</a></li>
+                    <li><a href="https://spacy.io/" target="_blank">📦 spaCy</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 44-Week Learning Journey | Data Science Bootcamp</p>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Completion toggle functionality
+        function toggleCompletion() {
+            const checkbox = document.getElementById('completionCheckbox');
+            const toggle = document.getElementById('completionToggle');
+            
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                toggle.classList.add('completed');
+                localStorage.setItem('bootcamp_ai_nlp_completed', 'true');
+            } else {
+                toggle.classList.remove('completed');
+                localStorage.removeItem('bootcamp_ai_nlp_completed');
+            }
+        }
+
+        // Load completion state on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const completed = localStorage.getItem('bootcamp_ai_nlp_completed');
+            if (completed === 'true') {
+                const checkbox = document.getElementById('completionCheckbox');
+                const toggle = document.getElementById('completionToggle');
+                checkbox.checked = true;
+                toggle.classList.add('completed');
+            }
+        });
+    </script>
+</body>
+</html>

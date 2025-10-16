@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Platforms Study Plan - Data Science Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* Header Navigation */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links a.active {
+            color: #F4B942;
+            font-weight: 600;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #F4B942 0%, #e8a825 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .duration {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        /* Content Area */
+        .content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #f0f0f0;
+            background: #fafafa;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 0.95rem;
+            color: #666;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .tab.active {
+            color: #F4B942;
+            border-bottom: 3px solid #F4B942;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h2 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .tab-content h3 {
+            color: #F4B942;
+            margin: 2rem 0 1rem;
+            font-size: 1.4rem;
+        }
+
+        .tab-content h4 {
+            color: #555;
+            margin: 1.5rem 0 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .tab-content ul, .tab-content ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        .tab-content li {
+            margin: 0.5rem 0;
+        }
+
+        .tab-content code {
+            background: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .tab-content pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .tab-content pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .completion-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .completion-toggle:hover {
+            background: #e9ecef;
+        }
+
+        .completion-toggle input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .completion-toggle.completed {
+            background: #d4edda;
+        }
+
+        .quick-links {
+            list-style: none;
+        }
+
+        .quick-links li {
+            margin: 0.75rem 0;
+        }
+
+        .quick-links a {
+            color: #667eea;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-links a:hover {
+            color: #F4B942;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: #fff9e6;
+            border-left: 4px solid #F4B942;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box strong {
+            color: #F4B942;
+        }
+
+        /* Resource Links */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .resource-link {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            color: #667eea;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .resource-link:hover {
+            border-color: #F4B942;
+            background: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">44-Week Learning Journey</a>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../subjects.html">Subjects</a></li>
+                <li><a href="../../progress.html">Progress</a></li>
+                <li><a href="index.html" class="active">Bootcamp</a></li>
+                <li><a href="../../about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>☁️ Cloud Platforms Study Plan</h1>
+        <p class="duration">AWS, Azure & GCP for Data Science | 8 Weeks</p>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="../../index.html">Home</a> / 
+        <a href="../../subjects.html">Subjects</a> / 
+        <a href="index.html">Bootcamp</a> / 
+        Cloud Platforms
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('overview')">Overview</button>
+                <button class="tab" onclick="switchTab('week1-2')">Week 1-2</button>
+                <button class="tab" onclick="switchTab('week3-4')">Week 3-4</button>
+                <button class="tab" onclick="switchTab('week5-6')">Week 5-6</button>
+                <button class="tab" onclick="switchTab('week7-8')">Week 7-8</button>
+                <button class="tab" onclick="switchTab('assessment')">Assessment</button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <h2>Cloud Platforms for Data Science</h2>
+                <p>Master cloud computing essentials for data science and machine learning, focusing primarily on AWS while understanding Azure and GCP equivalents. This study plan equips you with practical skills for deploying and managing data science workloads in production cloud environments.</p>
+
+                <div class="highlight-box">
+                    <strong>Focus Strategy:</strong> Choose one primary cloud provider (AWS recommended for Finnish market) and learn it deeply, then understand service equivalents in other clouds.
+                </div>
+
+                <h3>Learning Objectives</h3>
+                <ul>
+                    <li>Deploy and manage cloud storage for data science projects</li>
+                    <li>Set up and use cloud data warehouses (Redshift, BigQuery, Synapse)</li>
+                    <li>Deploy ML models using managed services (SageMaker, Vertex AI, Azure ML)</li>
+                    <li>Configure serverless computing for data pipelines</li>
+                    <li>Implement cloud security and access management</li>
+                    <li>Optimize cloud costs for ML workloads</li>
+                    <li>Build data processing pipelines with cloud tools</li>
+                    <li>Monitor and scale cloud applications</li>
+                </ul>
+
+                <h3>Course Structure</h3>
+                <ul>
+                    <li><strong>Week 1-2:</strong> Cloud fundamentals, storage services, IAM basics</li>
+                    <li><strong>Week 3-4:</strong> Data warehouses, serverless computing, batch processing</li>
+                    <li><strong>Week 5-6:</strong> ML deployment (SageMaker, Vertex AI, Azure ML)</li>
+                    <li><strong>Week 7-8:</strong> Data pipelines, orchestration, cost optimization</li>
+                </ul>
+
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li>Python programming experience</li>
+                    <li>Understanding of data processing workflows</li>
+                    <li>Basic ML knowledge (completed ML study plan recommended)</li>
+                    <li>Command line proficiency</li>
+                </ul>
+
+                <h3>Cloud Platform Comparison</h3>
+                <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0;">
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 1rem; text-align: left;">Service</th>
+                        <th style="padding: 1rem; text-align: left;">AWS</th>
+                        <th style="padding: 1rem; text-align: left;">Azure</th>
+                        <th style="padding: 1rem; text-align: left;">GCP</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #dee2e6;">
+                        <td style="padding: 0.75rem;"><strong>Storage</strong></td>
+                        <td style="padding: 0.75rem;">S3</td>
+                        <td style="padding: 0.75rem;">Blob Storage</td>
+                        <td style="padding: 0.75rem;">Cloud Storage</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #dee2e6;">
+                        <td style="padding: 0.75rem;"><strong>Compute</strong></td>
+                        <td style="padding: 0.75rem;">EC2</td>
+                        <td style="padding: 0.75rem;">Virtual Machines</td>
+                        <td style="padding: 0.75rem;">Compute Engine</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #dee2e6;">
+                        <td style="padding: 0.75rem;"><strong>Data Warehouse</strong></td>
+                        <td style="padding: 0.75rem;">Redshift</td>
+                        <td style="padding: 0.75rem;">Synapse Analytics</td>
+                        <td style="padding: 0.75rem;">BigQuery</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #dee2e6;">
+                        <td style="padding: 0.75rem;"><strong>ML Platform</strong></td>
+                        <td style="padding: 0.75rem;">SageMaker</td>
+                        <td style="padding: 0.75rem;">Azure ML</td>
+                        <td style="padding: 0.75rem;">Vertex AI</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #dee2e6;">
+                        <td style="padding: 0.75rem;"><strong>Serverless</strong></td>
+                        <td style="padding: 0.75rem;">Lambda</td>
+                        <td style="padding: 0.75rem;">Functions</td>
+                        <td style="padding: 0.75rem;">Cloud Functions</td>
+                    </tr>
+                </table>
+
+                <h3>Required Tools & Setup</h3>
+                <ul>
+                    <li><strong>AWS:</strong> AWS CLI, boto3, AWS Free Tier account</li>
+                    <li><strong>Azure:</strong> Azure CLI, Azure SDK for Python, Azure Free Account</li>
+                    <li><strong>GCP:</strong> gcloud CLI, google-cloud libraries, GCP Free Trial</li>
+                    <li><strong>Infrastructure:</strong> Terraform (optional but recommended)</li>
+                </ul>
+            </div>
+
+            <!-- Week 1-2 Tab -->
+            <div id="week1-2" class="tab-content">
+                <h2>Week 1-2: Cloud Fundamentals & Storage</h2>
+
+                <h3>Core Concepts</h3>
+                <ul>
+                    <li>Cloud computing models (IaaS, PaaS, SaaS)</li>
+                    <li>Regions and availability zones</li>
+                    <li>Identity and Access Management (IAM)</li>
+                    <li>Virtual Private Cloud (VPC) basics</li>
+                    <li>Object storage vs. block storage vs. file storage</li>
+                </ul>
+
+                <h3>AWS S3 (Simple Storage Service)</h3>
+                <h4>Key Concepts</h4>
+                <ul>
+                    <li><strong>Buckets:</strong> Top-level containers for objects</li>
+                    <li><strong>Objects:</strong> Files stored in buckets (up to 5TB)</li>
+                    <li><strong>Storage Classes:</strong> Standard, Intelligent-Tiering, Glacier for archival</li>
+                    <li><strong>Lifecycle Policies:</strong> Automate data retention and archiving</li>
+                </ul>
+
+                <h4>Working with S3 in Python</h4>
+                <pre><code>import boto3
+import pandas as pd
+from io import StringIO
+
+# Initialize S3 client
+s3 = boto3.client('s3')
+
+# Upload CSV file
+s3.upload_file('data.csv', 'my-bucket', 'raw/data.csv')
+
+# Read CSV directly from S3
+obj = s3.get_object(Bucket='my-bucket', Key='raw/data.csv')
+df = pd.read_csv(obj['Body'])
+
+# Write DataFrame back to S3
+csv_buffer = StringIO()
+df.to_csv(csv_buffer, index=False)
+s3.put_object(
+    Bucket='my-bucket',
+    Key='processed/output.csv',
+    Body=csv_buffer.getvalue()
+)</code></pre>
+
+                <h3>Azure Blob Storage</h3>
+                <pre><code>from azure.storage.blob import BlobServiceClient
+import pandas as pd
+from io import BytesIO
+
+# Connect to Azure
+blob_service = BlobServiceClient.from_connection_string(conn_str)
+container = blob_service.get_container_client("my-container")
+
+# Upload blob
+with open("data.csv", "rb") as data:
+    container.upload_blob(name="raw/data.csv", data=data)
+
+# Read CSV from blob
+blob_client = blob_service.get_blob_client("my-container", "raw/data.csv")
+blob_data = blob_client.download_blob().readall()
+df = pd.read_csv(BytesIO(blob_data))</code></pre>
+
+                <h3>GCP Cloud Storage</h3>
+                <pre><code>from google.cloud import storage
+import pandas as pd
+
+# Initialize client
+client = storage.Client()
+bucket = client.bucket('my-bucket')
+
+# Upload file
+blob = bucket.blob('raw/data.csv')
+blob.upload_from_filename('data.csv')
+
+# Read CSV from GCS
+content = blob.download_as_bytes()
+df = pd.read_csv(BytesIO(content))</code></pre>
+
+                <h3>IAM Basics</h3>
+                <h4>Key Principles</h4>
+                <ul>
+                    <li><strong>Principle of Least Privilege:</strong> Grant minimum permissions needed</li>
+                    <li><strong>Users vs. Roles:</strong> Use roles for services, users for people</li>
+                    <li><strong>MFA:</strong> Always enable multi-factor authentication</li>
+                    <li><strong>Access Keys:</strong> Rotate regularly, never commit to git</li>
+                </ul>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Create S3 bucket with lifecycle policy (30 days Standard → Glacier)</li>
+                    <li>Build data lake structure: <code>raw/</code>, <code>processed/</code>, <code>curated/</code></li>
+                    <li>Set up IAM role with read-only S3 access</li>
+                    <li>Upload 1GB dataset and implement versioning</li>
+                    <li>Compare storage costs across AWS/Azure/GCP</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://aws.amazon.com/s3/getting-started/" target="_blank" class="resource-link">AWS S3 Docs</a>
+                    <a href="https://learn.microsoft.com/en-us/azure/storage/blobs/" target="_blank" class="resource-link">Azure Blob Docs</a>
+                    <a href="https://cloud.google.com/storage/docs" target="_blank" class="resource-link">GCP Storage Docs</a>
+                    <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3.html" target="_blank" class="resource-link">boto3 Guide</a>
+                </div>
+            </div>
+
+            <!-- Week 3-4 Tab -->
+            <div id="week3-4" class="tab-content">
+                <h2>Week 3-4: Data Warehouses & Serverless Computing</h2>
+
+                <h3>Cloud Data Warehouses</h3>
+
+                <h4>AWS Redshift</h4>
+                <ul>
+                    <li>Columnar storage optimized for analytics</li>
+                    <li>Massively parallel processing (MPP)</li>
+                    <li>Integrates with S3 for data loading</li>
+                    <li>Redshift Spectrum for querying S3 directly</li>
+                </ul>
+
+                <pre><code>import psycopg2
+import pandas as pd
+
+# Connect to Redshift
+conn = psycopg2.connect(
+    host='cluster.redshift.amazonaws.com',
+    port=5439,
+    database='mydb',
+    user='admin',
+    password='password'
+)
+
+# Load data from S3
+cursor = conn.cursor()
+cursor.execute("""
+    COPY sales
+    FROM 's3://my-bucket/data/sales.csv'
+    IAM_ROLE 'arn:aws:iam::123456789:role/RedshiftRole'
+    CSV
+    IGNOREHEADER 1;
+""")
+
+# Query data
+df = pd.read_sql("SELECT * FROM sales WHERE year = 2024", conn)</code></pre>
+
+                <h4>Google BigQuery</h4>
+                <ul>
+                    <li>Serverless, fully managed</li>
+                    <li>Pay per query (no cluster management)</li>
+                    <li>Excellent for ad-hoc analysis</li>
+                    <li>Built-in ML with BigQuery ML</li>
+                </ul>
+
+                <pre><code>from google.cloud import bigquery
+import pandas as pd
+
+# Initialize BigQuery client
+client = bigquery.Client()
+
+# Query data
+query = """
+    SELECT product, SUM(revenue) as total_revenue
+    FROM `project.dataset.sales`
+    WHERE year = 2024
+    GROUP BY product
+"""
+df = client.query(query).to_dataframe()
+
+# Load data from GCS
+job_config = bigquery.LoadJobConfig(
+    source_format=bigquery.SourceFormat.CSV,
+    skip_leading_rows=1
+)
+load_job = client.load_table_from_uri(
+    "gs://my-bucket/data.csv",
+    "project.dataset.table",
+    job_config=job_config
+)</code></pre>
+
+                <h4>Azure Synapse Analytics</h4>
+                <ul>
+                    <li>Unified analytics platform</li>
+                    <li>Combines data warehouse and big data</li>
+                    <li>Deep integration with Power BI</li>
+                </ul>
+
+                <h3>Serverless Computing</h3>
+
+                <h4>AWS Lambda</h4>
+                <pre><code># lambda_function.py
+import json
+import boto3
+import pandas as pd
+
+def lambda_handler(event, context):
+    """Process uploaded CSV file"""
+    s3 = boto3.client('s3')
+    
+    # Get file from S3
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    
+    obj = s3.get_object(Bucket=bucket, Key=key)
+    df = pd.read_csv(obj['Body'])
+    
+    # Process data
+    summary = df.describe().to_dict()
+    
+    # Save results
+    s3.put_object(
+        Bucket=bucket,
+        Key=f"processed/{key}",
+        Body=json.dumps(summary)
+    )
+    
+    return {'statusCode': 200, 'body': 'Processed successfully'}</code></pre>
+
+                <h4>Use Cases for Serverless</h4>
+                <ul>
+                    <li>Event-driven data processing (S3 uploads trigger Lambda)</li>
+                    <li>Scheduled ETL jobs (using CloudWatch Events)</li>
+                    <li>Lightweight API endpoints</li>
+                    <li>Real-time data transformations</li>
+                </ul>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Set up BigQuery and load sample dataset</li>
+                    <li>Create Lambda function triggered by S3 upload</li>
+                    <li>Build data pipeline: S3 → Lambda → Redshift</li>
+                    <li>Compare query performance: Redshift vs. BigQuery</li>
+                    <li>Implement serverless data validation function</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://docs.aws.amazon.com/redshift/" target="_blank" class="resource-link">Redshift Docs</a>
+                    <a href="https://cloud.google.com/bigquery/docs" target="_blank" class="resource-link">BigQuery Docs</a>
+                    <a href="https://docs.aws.amazon.com/lambda/" target="_blank" class="resource-link">AWS Lambda Docs</a>
+                    <a href="https://cloud.google.com/functions/docs" target="_blank" class="resource-link">Cloud Functions</a>
+                </div>
+            </div>
+
+            <!-- Week 5-6 Tab -->
+            <div id="week5-6" class="tab-content">
+                <h2>Week 5-6: ML Deployment on Cloud Platforms</h2>
+
+                <h3>AWS SageMaker</h3>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>End-to-end ML platform</li>
+                    <li>Built-in algorithms and frameworks</li>
+                    <li>Managed training and deployment</li>
+                    <li>Auto-scaling endpoints</li>
+                </ul>
+
+                <h4>Training a Model</h4>
+                <pre><code>import sagemaker
+from sagemaker.sklearn.estimator import SKLearn
+
+# Initialize SageMaker session
+session = sagemaker.Session()
+role = 'arn:aws:iam::123456789:role/SageMakerRole'
+
+# Upload training data to S3
+train_input = session.upload_data(
+    path='train.csv',
+    bucket='my-bucket',
+    key_prefix='sagemaker/data'
+)
+
+# Create estimator
+sklearn_estimator = SKLearn(
+    entry_point='train.py',
+    role=role,
+    instance_type='ml.m5.xlarge',
+    framework_version='1.0-1',
+    py_version='py3'
+)
+
+# Train model
+sklearn_estimator.fit({'train': train_input})</code></pre>
+
+                <h4>Deploying Endpoint</h4>
+                <pre><code># Deploy model to endpoint
+predictor = sklearn_estimator.deploy(
+    initial_instance_count=1,
+    instance_type='ml.t2.medium'
+)
+
+# Make predictions
+import numpy as np
+data = np.array([[1, 2, 3, 4]])
+prediction = predictor.predict(data)
+print(prediction)</code></pre>
+
+                <h3>Google Vertex AI</h3>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Unified ML platform on GCP</li>
+                    <li>AutoML capabilities</li>
+                    <li>Feature Store for reusable features</li>
+                    <li>Model monitoring and explainability</li>
+                </ul>
+
+                <h4>Training Custom Model</h4>
+                <pre><code>from google.cloud import aiplatform
+
+aiplatform.init(project='my-project', location='us-central1')
+
+# Create custom training job
+job = aiplatform.CustomTrainingJob(
+    display_name='sklearn-training',
+    script_path='train.py',
+    container_uri='us-docker.pkg.dev/vertex-ai/training/sklearn-cpu.1-0:latest',
+    requirements=['scikit-learn', 'pandas']
+)
+
+# Run training
+model = job.run(
+    dataset=dataset,
+    model_display_name='my-model',
+    machine_type='n1-standard-4'
+)</code></pre>
+
+                <h3>Azure Machine Learning</h3>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Designer for no-code ML</li>
+                    <li>Automated ML (AutoML)</li>
+                    <li>MLOps capabilities with Azure DevOps integration</li>
+                    <li>Responsible AI dashboard</li>
+                </ul>
+
+                <h4>Training with Azure ML</h4>
+                <pre><code>from azureml.core import Workspace, Experiment, ScriptRunConfig
+from azureml.core.compute import AmlCompute
+
+# Connect to workspace
+ws = Workspace.from_config()
+
+# Create compute cluster
+compute_target = AmlCompute(ws, 'cpu-cluster')
+
+# Configure training run
+config = ScriptRunConfig(
+    source_directory='./src',
+    script='train.py',
+    compute_target=compute_target,
+    environment=ws.environments['sklearn-env']
+)
+
+# Submit experiment
+experiment = Experiment(ws, 'my-experiment')
+run = experiment.submit(config)</code></pre>
+
+                <h3>Cost Optimization Tips</h3>
+                <ul>
+                    <li><strong>Use spot instances</strong> for training (up to 90% savings)</li>
+                    <li><strong>Right-size instances</strong> - start small, scale as needed</li>
+                    <li><strong>Auto-scaling</strong> for inference endpoints</li>
+                    <li><strong>Batch transform</strong> instead of real-time for large datasets</li>
+                    <li><strong>Monitor spending</strong> with cloud cost management tools</li>
+                </ul>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Train scikit-learn model on SageMaker</li>
+                    <li>Deploy model to SageMaker endpoint and test</li>
+                    <li>Compare training costs: SageMaker vs. Vertex AI vs. Azure ML</li>
+                    <li>Implement A/B testing with two model versions</li>
+                    <li>Set up model monitoring for drift detection</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://docs.aws.amazon.com/sagemaker/" target="_blank" class="resource-link">SageMaker Docs</a>
+                    <a href="https://cloud.google.com/vertex-ai/docs" target="_blank" class="resource-link">Vertex AI Docs</a>
+                    <a href="https://learn.microsoft.com/en-us/azure/machine-learning/" target="_blank" class="resource-link">Azure ML Docs</a>
+                    <a href="https://sagemaker-examples.readthedocs.io/" target="_blank" class="resource-link">SageMaker Examples</a>
+                </div>
+            </div>
+
+            <!-- Week 7-8 Tab -->
+            <div id="week7-8" class="tab-content">
+                <h2>Week 7-8: Data Pipelines & Orchestration</h2>
+
+                <h3>AWS Data Pipeline Tools</h3>
+
+                <h4>AWS Glue (ETL Service)</h4>
+                <ul>
+                    <li>Serverless ETL service</li>
+                    <li>Data catalog for metadata</li>
+                    <li>Automatic schema discovery</li>
+                    <li>PySpark support</li>
+                </ul>
+
+                <pre><code>import sys
+from awsglue.transforms import *
+from awsglue.utils import getResolvedOptions
+from pyspark.context import SparkContext
+from awsglue.context import GlueContext
+from awsglue.job import Job
+
+# Initialize Glue context
+sc = SparkContext()
+glueContext = GlueContext(sc)
+spark = glueContext.spark_session
+job = Job(glueContext)
+
+# Read from S3
+datasource = glueContext.create_dynamic_frame.from_catalog(
+    database="my_database",
+    table_name="raw_data"
+)
+
+# Transform
+transformed = datasource.filter(lambda x: x["year"] == 2024)
+
+# Write to S3
+glueContext.write_dynamic_frame.from_options(
+    frame=transformed,
+    connection_type="s3",
+    connection_options={"path": "s3://my-bucket/processed/"},
+    format="parquet"
+)</code></pre>
+
+                <h4>AWS Step Functions (Orchestration)</h4>
+                <ul>
+                    <li>Coordinate multiple AWS services</li>
+                    <li>Visual workflow designer</li>
+                    <li>Error handling and retries</li>
+                    <li>State machine pattern</li>
+                </ul>
+
+                <h3>Apache Airflow on Cloud</h3>
+
+                <h4>AWS MWAA (Managed Workflows for Apache Airflow)</h4>
+                <pre><code>from airflow import DAG
+from airflow.operators.python_operator import PythonOperator
+from airflow.providers.amazon.aws.operators.s3 import S3FileTransformOperator
+from datetime import datetime, timedelta
+
+default_args = {
+    'owner': 'data-team',
+    'depends_on_past': False,
+    'start_date': datetime(2024, 1, 1),
+    'email_on_failure': True,
+    'retries': 2,
+    'retry_delay': timedelta(minutes=5)
+}
+
+dag = DAG(
+    'data_pipeline',
+    default_args=default_args,
+    schedule_interval='@daily',
+    catchup=False
+)
+
+def process_data():
+    # Your processing logic
+    pass
+
+# Tasks
+extract = PythonOperator(
+    task_id='extract_data',
+    python_callable=extract_from_source,
+    dag=dag
+)
+
+transform = S3FileTransformOperator(
+    task_id='transform_data',
+    source_s3_key='s3://bucket/raw/data.csv',
+    dest_s3_key='s3://bucket/processed/data.parquet',
+    transform_script='transform.py',
+    dag=dag
+)
+
+load = PythonOperator(
+    task_id='load_to_warehouse',
+    python_callable=load_to_redshift,
+    dag=dag
+)
+
+# Dependencies
+extract >> transform >> load</code></pre>
+
+                <h4>GCP Composer (Managed Airflow)</h4>
+                <ul>
+                    <li>Fully managed Apache Airflow</li>
+                    <li>Deep GCP service integration</li>
+                    <li>Automatic scaling</li>
+                </ul>
+
+                <h3>Azure Data Factory</h3>
+                <ul>
+                    <li>Visual ETL tool</li>
+                    <li>Code-free data integration</li>
+                    <li>Pre-built connectors</li>
+                    <li>Mapping data flows</li>
+                </ul>
+
+                <h3>Infrastructure as Code (Terraform)</h3>
+                <pre><code># main.tf - Example S3 bucket + Lambda
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+# S3 Bucket
+resource "aws_s3_bucket" "data_lake" {
+  bucket = "my-data-lake"
+  
+  tags = {
+    Environment = "production"
+    Purpose     = "data-science"
+  }
+}
+
+# Lambda Function
+resource "aws_lambda_function" "processor" {
+  filename      = "lambda_function.zip"
+  function_name = "data_processor"
+  role          = aws_iam_role.lambda_role.arn
+  handler       = "lambda_function.lambda_handler"
+  runtime       = "python3.9"
+  
+  environment {
+    variables = {
+      BUCKET_NAME = aws_s3_bucket.data_lake.id
+    }
+  }
+}</code></pre>
+
+                <h3>Cost Optimization Strategies</h3>
+                <ul>
+                    <li><strong>Reserved Instances:</strong> Save 30-70% for predictable workloads</li>
+                    <li><strong>Spot Instances:</strong> Up to 90% savings for flexible jobs</li>
+                    <li><strong>S3 Intelligent Tiering:</strong> Automatic cost optimization</li>
+                    <li><strong>Serverless First:</strong> Pay only for what you use</li>
+                    <li><strong>Monitoring:</strong> AWS Cost Explorer, Azure Cost Management, GCP Billing</li>
+                </ul>
+
+                <h3>Practice Exercises</h3>
+                <ol>
+                    <li>Build Airflow DAG for daily ETL pipeline</li>
+                    <li>Create Glue job to transform CSV to Parquet</li>
+                    <li>Set up Step Functions workflow for ML pipeline</li>
+                    <li>Implement error handling and alerting in pipeline</li>
+                    <li>Deploy infrastructure using Terraform</li>
+                    <li>Optimize cloud spending - identify cost savings</li>
+                </ol>
+
+                <h3>Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://docs.aws.amazon.com/glue/" target="_blank" class="resource-link">AWS Glue Docs</a>
+                    <a href="https://airflow.apache.org/docs/" target="_blank" class="resource-link">Apache Airflow</a>
+                    <a href="https://www.terraform.io/docs" target="_blank" class="resource-link">Terraform Docs</a>
+                    <a href="https://aws.amazon.com/architecture/" target="_blank" class="resource-link">AWS Architecture</a>
+                </div>
+            </div>
+
+            <!-- Assessment Tab -->
+            <div id="assessment" class="tab-content">
+                <h2>Assessment & Capstone Project</h2>
+
+                <h3>Capstone Project: End-to-End Cloud ML Pipeline</h3>
+                <p>Build a complete, production-ready machine learning pipeline on your chosen cloud platform.</p>
+
+                <h4>Project Requirements</h4>
+                <ol>
+                    <li><strong>Data Storage:</strong> Set up data lake with raw/processed/curated structure</li>
+                    <li><strong>Data Pipeline:</strong> Automated ETL using Glue/Dataflow/Data Factory</li>
+                    <li><strong>Data Warehouse:</strong> Load processed data into Redshift/BigQuery/Synapse</li>
+                    <li><strong>Model Training:</strong> Train ML model using SageMaker/Vertex AI/Azure ML</li>
+                    <li><strong>Model Deployment:</strong> Deploy model as REST API endpoint</li>
+                    <li><strong>Orchestration:</strong> Schedule pipeline with Airflow/Step Functions</li>
+                    <li><strong>Monitoring:</strong> Implement logging and alerting</li>
+                    <li><strong>Infrastructure:</strong> Define infrastructure as code (Terraform)</li>
+                    <li><strong>Cost Management:</strong> Optimize and document cloud spending</li>
+                    <li><strong>Documentation:</strong> Architecture diagram + README</li>
+                </ol>
+
+                <h4>Example Project Ideas</h4>
+                <ul>
+                    <li><strong>Churn Prediction:</strong> Daily pipeline predicting customer churn</li>
+                    <li><strong>Fraud Detection:</strong> Real-time fraud scoring API</li>
+                    <li><strong>Demand Forecasting:</strong> Sales forecasting pipeline</li>
+                    <li><strong>Recommendation System:</strong> Product recommendation service</li>
+                    <li><strong>Sentiment Analysis:</strong> Social media sentiment pipeline</li>
+                </ul>
+
+                <h3>Skills Assessment Checklist</h3>
+                
+                <h4>Storage & Data Management</h4>
+                <ul>
+                    <li>☐ Create and configure cloud storage buckets</li>
+                    <li>☐ Implement data lifecycle policies</li>
+                    <li>☐ Set up proper IAM permissions</li>
+                    <li>☐ Work with different storage classes/tiers</li>
+                    <li>☐ Upload/download files programmatically</li>
+                </ul>
+
+                <h4>Data Warehousing</h4>
+                <ul>
+                    <li>☐ Create and query data warehouse</li>
+                    <li>☐ Load data from object storage</li>
+                    <li>☐ Optimize query performance</li>
+                    <li>☐ Implement data partitioning</li>
+                    <li>☐ Understand cost implications</li>
+                </ul>
+
+                <h4>ML Deployment</h4>
+                <ul>
+                    <li>☐ Train model using cloud platform</li>
+                    <li>☐ Deploy model to managed endpoint</li>
+                    <li>☐ Make predictions via API</li>
+                    <li>☐ Implement batch predictions</li>
+                    <li>☐ Monitor model performance</li>
+                    <li>☐ Update/version models</li>
+                </ul>
+
+                <h4>Pipeline & Orchestration</h4>
+                <ul>
+                    <li>☐ Build automated ETL pipeline</li>
+                    <li>☐ Schedule recurring jobs</li>
+                    <li>☐ Handle errors and retries</li>
+                    <li>☐ Create DAG with dependencies</li>
+                    <li>☐ Implement data quality checks</li>
+                </ul>
+
+                <h4>Serverless & Functions</h4>
+                <ul>
+                    <li>☐ Create serverless function</li>
+                    <li>☐ Trigger function from events</li>
+                    <li>☐ Process data in Lambda/Functions</li>
+                    <li>☐ Handle function timeouts and limits</li>
+                </ul>
+
+                <h4>Cost & Optimization</h4>
+                <ul>
+                    <li>☐ Estimate costs before building</li>
+                    <li>☐ Monitor actual spending</li>
+                    <li>☐ Identify cost-saving opportunities</li>
+                    <li>☐ Use appropriate instance types</li>
+                    <li>☐ Implement auto-scaling</li>
+                </ul>
+
+                <h4>Security & Best Practices</h4>
+                <ul>
+                    <li>☐ Follow least privilege principle</li>
+                    <li>☐ Use IAM roles instead of access keys</li>
+                    <li>☐ Enable MFA for accounts</li>
+                    <li>☐ Encrypt data at rest and in transit</li>
+                    <li>☐ Implement network security (VPC, security groups)</li>
+                </ul>
+
+                <h3>Certification Recommendations</h3>
+                <p>Consider pursuing these certifications to validate your skills:</p>
+
+                <h4>AWS</h4>
+                <ul>
+                    <li><strong>AWS Certified Cloud Practitioner</strong> (foundational)</li>
+                    <li><strong>AWS Certified Solutions Architect - Associate</strong></li>
+                    <li><strong>AWS Certified Machine Learning - Specialty</strong></li>
+                </ul>
+
+                <h4>Azure</h4>
+                <ul>
+                    <li><strong>Microsoft Certified: Azure Fundamentals</strong> (AZ-900)</li>
+                    <li><strong>Microsoft Certified: Azure Data Scientist Associate</strong> (DP-100)</li>
+                </ul>
+
+                <h4>GCP</h4>
+                <ul>
+                    <li><strong>Google Cloud Digital Leader</strong> (foundational)</li>
+                    <li><strong>Professional Data Engineer</strong></li>
+                    <li><strong>Professional Machine Learning Engineer</strong></li>
+                </ul>
+
+                <h3>Next Steps</h3>
+                <ol>
+                    <li><strong>Build portfolio project</strong> showcasing cloud skills</li>
+                    <li><strong>Document your work</strong> on GitHub with architecture diagrams</li>
+                    <li><strong>Consider certification</strong> based on your target role</li>
+                    <li><strong>Stay updated</strong> with cloud provider announcements</li>
+                    <li><strong>Practice cost optimization</strong> - crucial for interviews</li>
+                </ol>
+
+                <h3>Additional Resources</h3>
+                <div class="resource-grid">
+                    <a href="https://aws.amazon.com/training/" target="_blank" class="resource-link">AWS Training</a>
+                    <a href="https://learn.microsoft.com/en-us/training/" target="_blank" class="resource-link">Microsoft Learn</a>
+                    <a href="https://cloud.google.com/training" target="_blank" class="resource-link">GCP Training</a>
+                    <a href="https://www.cloudskillsboost.google/" target="_blank" class="resource-link">Google Qwiklabs</a>
+                    <a href="https://aws.amazon.com/free/" target="_blank" class="resource-link">AWS Free Tier</a>
+                    <a href="https://azure.microsoft.com/en-us/free/" target="_blank" class="resource-link">Azure Free</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- Completion Card -->
+            <div class="sidebar-card">
+                <h3>Mark Complete</h3>
+                <div id="completionToggle" class="completion-toggle" onclick="toggleCompletion()">
+                    <input type="checkbox" id="completionCheckbox">
+                    <label for="completionCheckbox">I've completed this study plan</label>
+                </div>
+            </div>
+
+            <!-- Quick Links Card -->
+            <div class="sidebar-card">
+                <h3>Quick Links</h3>
+                <ul class="quick-links">
+                    <li><a href="index.html">← Back to Bootcamp</a></li>
+                    <li><a href="interview-prep.html">📋 Interview Prep</a></li>
+                    <li><a href="practice-problems.html">💻 Practice Problems</a></li>
+                    <li><a href="resources.html">📚 Resources</a></li>
+                </ul>
+            </div>
+
+            <!-- Info Card -->
+            <div class="sidebar-card">
+                <h3>Study Plan Info</h3>
+                <div class="info-item">
+                    <span class="info-label">Duration</span>
+                    <span class="info-value">8 Weeks</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Focus</span>
+                    <span class="info-value">AWS Primary</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Level</span>
+                    <span class="info-value">Intermediate</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Hours/Week</span>
+                    <span class="info-value">8-12 hours</span>
+                </div>
+            </div>
+
+            <!-- Resources Card -->
+            <div class="sidebar-card">
+                <h3>Platform Resources</h3>
+                <ul class="quick-links">
+                    <li><a href="https://aws.amazon.com/free/" target="_blank">🆓 AWS Free Tier</a></li>
+                    <li><a href="https://azure.microsoft.com/en-us/free/" target="_blank">🆓 Azure Free Account</a></li>
+                    <li><a href="https://cloud.google.com/free" target="_blank">🆓 GCP Free Trial</a></li>
+                    <li><a href="https://www.terraform.io/downloads" target="_blank">🛠️ Terraform</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 44-Week Learning Journey | Data Science Bootcamp</p>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Completion toggle functionality
+        function toggleCompletion() {
+            const checkbox = document.getElementById('completionCheckbox');
+            const toggle = document.getElementById('completionToggle');
+            
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                toggle.classList.add('completed');
+                localStorage.setItem('bootcamp_cloud_completed', 'true');
+            } else {
+                toggle.classList.remove('completed');
+                localStorage.removeItem('bootcamp_cloud_completed');
+            }
+        }
+
+        // Load completion state on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const completed = localStorage.getItem('bootcamp_cloud_completed');
+            if (completed === 'true') {
+                const checkbox = document.getElementById('completionCheckbox');
+                const toggle = document.getElementById('completionToggle');
+                checkbox.checked = true;
+                toggle.classList.add('completed');
+            }
+        });
+    </script>
+</body>
+</html>
