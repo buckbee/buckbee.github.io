@@ -6,6 +6,88 @@
     <title>Machine Learning Study Plan - Data Science Bootcamp</title>
     <link rel="stylesheet" href="../../styles.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bootcamp: #F4B942;
+            --bootcamp-dark: #d89f2a;
+            --bootcamp-light: #fef3c7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--bootcamp) 0%, var(--bootcamp-dark) 100%);
+            color: var(--text);
+            padding: 2.5rem 0;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--surface); }
+        .hero p { font-size: 1rem; color: rgba(255,255,255,0.95); }
+
         .page-header {
             background: linear-gradient(135deg, #F4B942 0%, #D4A942 100%);
             color: white;
@@ -251,29 +333,34 @@
 </head>
 <body>
     <header>
-        <nav>
-            <h1>44-Week Learning Journey</h1>
-            <ul class="nav-links">
-                <li><a href="../../index.html" class="nav-item">Home</a></li>
-                <li><a href="../../subjects.html" class="nav-item">Subjects</a></li>
-                <li><a href="../../progress.html" class="nav-item">Progress</a></li>
-                <li><a href="index.html" class="nav-item active">Bootcamp</a></li>
-                <li><a href="../../about.html" class="nav-item">About</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <nav>
+                <div class="logo">🎓 Learning Journey</div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../subjects.html">Subjects</a></li>
+                    <li><a href="../../progress.html">Progress</a></li>
+                    <li><a href="index.html" class="bootcamp-link">Bootcamp</a></li>
+                    <li><a href="../../about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
+    <div class="container">
+        <div class="hero">
+            <div class="container">
+                <h1>🤖 Machine Learning Fundamentals</h1>
+                <p>8-Week Comprehensive Study Plan</p>
+            </div>
+        </div>
+
         <div class="breadcrumb">
-            <a href="../../index.html">Home</a> / 
-            <a href="../../subjects.html">Subjects</a> / 
-            <a href="index.html">Data Science Bootcamp</a> / 
-            Machine Learning
+            <a href="../../index.html">Home</a> / <a href="../../subjects.html">Subjects</a> / <a href="index.html">Data Science Bootcamp</a> / Machine Learning
         </div>
 
         <div class="page-header">
-            <h1>🤖 Machine Learning Fundamentals</h1>
-            <p class="duration">8-Week Comprehensive Study Plan</p>
+            <h2 style="margin:0;">Course Overview</h2>
         </div>
 
         <div class="main-container">
@@ -1536,10 +1623,12 @@ with open('model.pkl', 'rb') as f:
                 </div>
             </aside>
         </div>
-    </main>
+    </div>
 
     <footer>
-        <p>&copy; 2024 Analog Design Learning Journey. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2025 Learning Journey. Data Science Bootcamp for Finnish Job Market.</p>
+        </div>
     </footer>
 
     <script>
