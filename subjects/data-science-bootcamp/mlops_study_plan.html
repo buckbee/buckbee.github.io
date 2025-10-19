@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLOps & Production ML | Data Science Bootcamp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bootcamp: #F4B942;
+            --bootcamp-dark: #d89f2a;
+            --bootcamp-light: #fef3c7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.bootcamp-link {
+            color: var(--bootcamp-dark);
+            font-weight: 600;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--bootcamp) 0%, var(--bootcamp-dark) 100%);
+            color: var(--text);
+            padding: 3rem 0;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header .meta {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .breadcrumb {
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--bootcamp-dark);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .content-area {
+            min-width: 0;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        .tab-list {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            border-color: var(--bootcamp);
+            background: var(--bootcamp-light);
+        }
+
+        .tab-button.active {
+            background: var(--bootcamp);
+            border-color: var(--bootcamp);
+            color: var(--text);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background: var(--surface);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .tab-content h3 {
+            font-size: 1.25rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .tab-content h4 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .tab-content p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .tab-content ul, .tab-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .tab-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+
+        .tab-content code {
+            background: var(--bootcamp-light);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .tab-content pre {
+            background: #1e293b;
+            color: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .tab-content pre code {
+            background: transparent;
+            padding: 0;
+            color: #f1f5f9;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .completion-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bootcamp-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .completion-checkbox:hover {
+            background: var(--bootcamp);
+        }
+
+        .checkbox-box {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--bootcamp-dark);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .checkbox-box.checked {
+            background: var(--bootcamp);
+        }
+
+        .checkbox-box.checked::after {
+            content: '✓';
+            color: var(--text);
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .checkbox-label {
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .sidebar-links {
+            list-style: none;
+        }
+
+        .sidebar-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .sidebar-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .sidebar-links a:hover {
+            color: var(--bootcamp-dark);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bootcamp);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .back-button:hover {
+            background: var(--bootcamp-dark);
+        }
+
+        /* Checklist Styles */
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            color: var(--bootcamp);
+        }
+
+        footer {
+            background: var(--text);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 968px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .tab-list {
+                overflow-x: auto;
+                flex-wrap: nowrap;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">🎓 Learning Journey</div>
+                <ul class="nav-links">
+                    <li><a href="../../index.html">Home</a></li>
+                    <li><a href="../../subjects.html">Subjects</a></li>
+                    <li><a href="../../progress.html">Progress</a></li>
+                    <li><a href="index.html" class="bootcamp-link">Bootcamp</a></li>
+                    <li><a href="../../about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>🚀 MLOps & Production ML</h1>
+            <div class="meta">8-Week Comprehensive Study Plan</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="../../index.html">Home</a> / <a href="../../subjects.html">Subjects</a> / <a href="index.html">Data Science Bootcamp</a> / <span>MLOps Study Plan</span>
+        </div>
+
+        <div class="main-layout">
+            <div class="content-area">
+                <!-- Tab Navigation -->
+                <div class="tab-navigation">
+                    <div class="tab-list">
+                        <button class="tab-button active" data-tab="overview">Overview</button>
+                        <button class="tab-button" data-tab="week1-2">Week 1-2: Docker</button>
+                        <button class="tab-button" data-tab="week3-4">Week 3-4: FastAPI</button>
+                        <button class="tab-button" data-tab="week5-6">Week 5-6: Versioning</button>
+                        <button class="tab-button" data-tab="week7">Week 7: Monitoring</button>
+                        <button class="tab-button" data-tab="week8">Week 8: CI/CD</button>
+                        <button class="tab-button" data-tab="project">Complete Project</button>
+                        <button class="tab-button" data-tab="assessment">Assessment</button>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Overview -->
+                <div class="tab-content active" id="overview">
+                    <h2>Study Plan Overview</h2>
+                    <p>
+                        Master MLOps fundamentals essential for deploying and maintaining production ML systems. This 8-week plan covers Docker containerization, API development, model versioning, monitoring, and CI/CD pipelines for machine learning applications.
+                    </p>
+
+                    <h3>What You'll Learn</h3>
+                    <ul>
+                        <li>Containerize ML applications with Docker and Docker Compose</li>
+                        <li>Build production-ready ML APIs using FastAPI</li>
+                        <li>Track experiments and version models with MLflow, DVC, and W&B</li>
+                        <li>Monitor model performance and detect data drift in production</li>
+                        <li>Implement CI/CD pipelines for automated ML workflows</li>
+                        <li>Deploy models to cloud platforms with proper testing</li>
+                    </ul>
+
+                    <h3>Prerequisites</h3>
+                    <ul>
+                        <li>Strong Python programming skills</li>
+                        <li>Understanding of machine learning fundamentals</li>
+                        <li>Basic familiarity with Git and command line</li>
+                        <li>Experience training and evaluating ML models</li>
+                    </ul>
+
+                    <h3>Key Technologies</h3>
+                    <ul>
+                        <li><strong>Containerization:</strong> Docker, Docker Compose</li>
+                        <li><strong>API Development:</strong> FastAPI, uvicorn</li>
+                        <li><strong>Experiment Tracking:</strong> MLflow, Weights & Biases, DVC</li>
+                        <li><strong>Monitoring:</strong> Prometheus, Grafana</li>
+                        <li><strong>CI/CD:</strong> GitHub Actions, pytest</li>
+                        <li><strong>Cloud Platforms:</strong> AWS SageMaker, Azure ML, GCP Vertex AI</li>
+                    </ul>
+
+                    <h3>Learning Resources</h3>
+                    <ul>
+                        <li><strong>Community:</strong> mlops.community</li>
+                        <li><strong>Course:</strong> Made With ML (madewithml.com)</li>
+                        <li><strong>Course:</strong> Full Stack Deep Learning</li>
+                        <li><strong>Documentation:</strong> FastAPI, MLflow, Docker official docs</li>
+                        <li><strong>Practice:</strong> Cloud provider ML documentation</li>
+                    </ul>
+
+                    <h3>Weekly Structure</h3>
+                    <p>Each week includes:</p>
+                    <ul>
+                        <li>Conceptual learning and tool setup (3-4 hours)</li>
+                        <li>Hands-on implementation exercises (4-5 hours)</li>
+                        <li>Practice projects and integration (3-4 hours)</li>
+                        <li>Review and troubleshooting (1-2 hours)</li>
+                    </ul>
+                </div>
+
+                <!-- Tab Content: Week 1-2 -->
+                <div class="tab-content" id="week1-2">
+                    <h2>Week 1-2: Docker & Containerization</h2>
+                    
+                    <h3>Why Docker for ML?</h3>
+                    <ul>
+                        <li>Consistent environments across development, testing, and production</li>
+                        <li>Easy deployment and scaling</li>
+                        <li>Isolate dependencies and avoid conflicts</li>
+                        <li>Reproducibility across different systems</li>
+                    </ul>
+
+                    <h3>Docker Fundamentals</h3>
+                    <h4>Creating a Dockerfile for ML Applications</h4>
+                    <pre><code># Dockerfile for ML Application
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Expose port for API
+EXPOSE 8000
+
+# Command to run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]</code></pre>
+
+                    <h4>Requirements File Example</h4>
+                    <pre><code># requirements.txt
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+scikit-learn==1.3.2
+pandas==2.1.3
+numpy==1.26.2
+joblib==1.3.2
+pydantic==2.5.0</code></pre>
+
+                    <h3>Essential Docker Commands</h3>
+                    <pre><code># Build image
+docker build -t ml-model:v1 .
+
+# Run container
+docker run -p 8000:8000 ml-model:v1
+
+# Run with volume mounting (for development)
+docker run -p 8000:8000 -v $(pwd):/app ml-model:v1
+
+# List running containers
+docker ps
+
+# Stop container
+docker stop &lt;container_id&gt;
+
+# Remove container
+docker rm &lt;container_id&gt;
+
+# View logs
+docker logs &lt;container_id&gt;
+
+# Execute command in running container
+docker exec -it &lt;container_id&gt; bash</code></pre>
+
+                    <h3>Docker Compose for Multi-Container Apps</h3>
+                    <pre><code># docker-compose.yml
+version: '3.8'
+
+services:
+  ml-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_PATH=/models/model.pkl
+      - REDIS_HOST=redis
+    volumes:
+      - ./models:/models
+    depends_on:
+      - redis
+    
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+  
+  monitoring:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+volumes:
+  redis-data:</code></pre>
+
+                    <h4>Docker Compose Commands</h4>
+                    <pre><code># Start all services
+docker-compose up -d
+
+# Stop all services
+docker-compose down
+
+# View logs
+docker-compose logs -f ml-api</code></pre>
+
+                    <h3>Practice Exercises</h3>
+                    <ol>
+                        <li>Containerize a simple ML model (scikit-learn classifier)</li>
+                        <li>Create multi-stage Docker build for smaller images</li>
+                        <li>Use Docker Compose with model + database + cache</li>
+                        <li>Push image to Docker Hub or container registry</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Week 3-4 -->
+                <div class="tab-content" id="week3-4">
+                    <h2>Week 3-4: API Development with FastAPI</h2>
+                    
+                    <h3>Building ML Model API</h3>
+                    <h4>Basic FastAPI Application</h4>
+                    <pre><code># main.py
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import joblib
+import numpy as np
+from typing import List
+
+# Initialize FastAPI app
+app = FastAPI(title="ML Model API", version="1.0.0")
+
+# Load model at startup
+model = joblib.load('models/model.pkl')
+scaler = joblib.load('models/scaler.pkl')
+
+# Define request/response models
+class PredictionRequest(BaseModel):
+    features: List[float]
+    
+class PredictionResponse(BaseModel):
+    prediction: int
+    probability: float
+
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "model_loaded": model is not None}
+
+# Single prediction endpoint
+@app.post("/predict", response_model=PredictionResponse)
+async def predict(request: PredictionRequest):
+    try:
+        # Prepare features
+        features = np.array(request.features).reshape(1, -1)
+        features_scaled = scaler.transform(features)
+        
+        # Make prediction
+        prediction = model.predict(features_scaled)[0]
+        probability = model.predict_proba(features_scaled)[0][1]
+        
+        return PredictionResponse(
+            prediction=int(prediction),
+            probability=float(probability)
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+
+                    <h3>Batch Predictions</h3>
+                    <pre><code># Batch prediction endpoint
+class BatchPredictionRequest(BaseModel):
+    data: List[List[float]]
+
+@app.post("/predict/batch")
+async def predict_batch(request: BatchPredictionRequest):
+    try:
+        features = np.array(request.data)
+        features_scaled = scaler.transform(features)
+        
+        predictions = model.predict(features_scaled)
+        probabilities = model.predict_proba(features_scaled)[:, 1]
+        
+        return {
+            "predictions": predictions.tolist(),
+            "probabilities": probabilities.tolist()
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))</code></pre>
+
+                    <h3>Testing the API</h3>
+                    <pre><code># test_api.py
+import requests
+
+BASE_URL = "http://localhost:8000"
+
+# Test health check
+response = requests.get(f"{BASE_URL}/health")
+print("Health:", response.json())
+
+# Test single prediction
+data = {"features": [1.5, 2.3, 4.1, 0.8]}
+response = requests.post(f"{BASE_URL}/predict", json=data)
+print("Prediction:", response.json())
+
+# Test batch prediction
+batch_data = {
+    "data": [
+        [1.5, 2.3, 4.1, 0.8],
+        [2.1, 1.9, 3.7, 1.2]
+    ]
+}
+response = requests.post(f"{BASE_URL}/predict/batch", json=batch_data)
+print("Batch:", response.json())</code></pre>
+
+                    <h3>Advanced Features</h3>
+                    <h4>Middleware and Logging</h4>
+                    <pre><code>from fastapi.middleware.cors import CORSMiddleware
+import logging
+import time
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Logging setup
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Request logging middleware
+@app.middleware("http")
+async def log_requests(request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    logger.info(f"{request.method} {request.url} - {process_time:.2f}s")
+    return response</code></pre>
+
+                    <h4>Background Tasks</h4>
+                    <pre><code>from fastapi import BackgroundTasks
+
+def log_prediction(features, prediction):
+    logger.info(f"Prediction logged: {features} -> {prediction}")
+
+@app.post("/predict/with-logging")
+async def predict_with_logging(
+    request: PredictionRequest,
+    background_tasks: BackgroundTasks
+):
+    result = await predict(request)
+    background_tasks.add_task(log_prediction, request.features, result.prediction)
+    return result</code></pre>
+
+                    <h3>Week 3-4 Project</h3>
+                    <ol>
+                        <li>Build a complete ML API with multiple endpoints</li>
+                        <li>Implement request validation with Pydantic</li>
+                        <li>Add authentication and rate limiting</li>
+                        <li>Create comprehensive API documentation</li>
+                        <li>Containerize the API with Docker</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Week 5-6 -->
+                <div class="tab-content" id="week5-6">
+                    <h2>Week 5-6: Model Versioning & Experiment Tracking</h2>
+                    
+                    <h3>MLflow Integration</h3>
+                    <h4>Training with MLflow Tracking</h4>
+                    <pre><code># train_with_mlflow.py
+import mlflow
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
+
+# Set tracking URI
+mlflow.set_tracking_uri("http://localhost:5000")
+mlflow.set_experiment("customer-churn-prediction")
+
+# Load data
+X, y = load_data()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Train with MLflow tracking
+with mlflow.start_run(run_name="random-forest-v1"):
+    # Log parameters
+    params = {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 5,
+        "random_state": 42
+    }
+    mlflow.log_params(params)
+    
+    # Train model
+    model = RandomForestClassifier(**params)
+    model.fit(X_train, y_train)
+    
+    # Make predictions
+    y_pred = model.predict(X_test)
+    y_pred_proba = model.predict_proba(X_test)[:, 1]
+    
+    # Log metrics
+    metrics = {
+        "accuracy": accuracy_score(y_test, y_pred),
+        "f1_score": f1_score(y_test, y_pred),
+        "roc_auc": roc_auc_score(y_test, y_pred_proba)
+    }
+    mlflow.log_metrics(metrics)
+    
+    # Log model
+    mlflow.sklearn.log_model(model, "model")
+    
+    # Log artifacts
+    import matplotlib.pyplot as plt
+    from sklearn.metrics import confusion_matrix
+    import seaborn as sns
+    
+    cm = confusion_matrix(y_test, y_pred)
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt='d')
+    plt.savefig("confusion_matrix.png")
+    mlflow.log_artifact("confusion_matrix.png")</code></pre>
+
+                    <h3>DVC (Data Version Control)</h3>
+                    <pre><code># Initialize DVC
+dvc init
+
+# Track data files
+dvc add data/raw/dataset.csv
+git add data/raw/dataset.csv.dvc .gitignore
+git commit -m "Add raw data"
+
+# Configure remote storage
+dvc remote add -d myremote s3://mybucket/dvcstore
+dvc push
+
+# Create pipeline
+dvc run -n preprocess \
+    -d data/raw/dataset.csv \
+    -o data/processed/train.csv \
+    python preprocess.py
+
+dvc run -n train \
+    -d data/processed/train.csv \
+    -o models/model.pkl \
+    -M metrics.json \
+    python train.py
+
+# Reproduce pipeline
+dvc repro</code></pre>
+
+                    <h3>Weights & Biases Integration</h3>
+                    <pre><code># train_with_wandb.py
+import wandb
+
+# Initialize wandb
+wandb.init(
+    project="customer-churn",
+    config={
+        "learning_rate": 0.01,
+        "epochs": 100,
+        "batch_size": 32,
+        "architecture": "RandomForest"
+    }
+)
+
+config = wandb.config
+
+# Train model
+model = RandomForestClassifier(n_estimators=config.epochs)
+model.fit(X_train, y_train)
+
+# Log metrics
+wandb.log({
+    "accuracy": accuracy_score(y_test, y_pred),
+    "f1": f1_score(y_test, y_pred)
+})
+
+# Log model artifacts
+wandb.sklearn.plot_classifier(model, X_train, X_test, y_train, y_test, 
+                              y_pred, y_pred_proba, labels=['0', '1'])
+
+wandb.finish()</code></pre>
+
+                    <h3>Week 5-6 Project</h3>
+                    <ol>
+                        <li>Set up MLflow tracking server</li>
+                        <li>Train multiple model versions with different hyperparameters</li>
+                        <li>Track all experiments and compare results</li>
+                        <li>Version datasets with DVC</li>
+                        <li>Create reproducible training pipeline</li>
+                        <li>Load and serve best model from MLflow registry</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Week 7 -->
+                <div class="tab-content" id="week7">
+                    <h2>Week 7: Model Monitoring & Observability</h2>
+                    
+                    <h3>Monitoring Setup with Prometheus</h3>
+                    <pre><code># monitoring.py
+from prometheus_client import Counter, Histogram, Gauge, start_http_server
+import time
+
+# Define metrics
+prediction_counter = Counter('predictions_total', 'Total number of predictions')
+prediction_latency = Histogram('prediction_latency_seconds', 'Prediction latency')
+model_accuracy = Gauge('model_accuracy', 'Current model accuracy')
+data_drift_score = Gauge('data_drift_score', 'Data drift detection score')
+
+@prediction_latency.time()
+def make_prediction(features):
+    prediction_counter.inc()
+    result = model.predict(features)
+    return result
+
+# Start Prometheus metrics server
+start_http_server(8001)</code></pre>
+
+                    <h3>Data Drift Detection</h3>
+                    <pre><code># drift_detection.py
+from scipy import stats
+import numpy as np
+
+class DataDriftDetector:
+    def __init__(self, reference_data):
+        self.reference_data = reference_data
+        self.reference_stats = self._compute_stats(reference_data)
+    
+    def _compute_stats(self, data):
+        return {
+            'mean': data.mean(),
+            'std': data.std(),
+            'min': data.min(),
+            'max': data.max()
+        }
+    
+    def detect_drift(self, new_data, threshold=0.05):
+        """Use Kolmogorov-Smirnov test to detect drift"""
+        drift_detected = {}
+        
+        for col in new_data.columns:
+            statistic, p_value = stats.ks_2samp(
+                self.reference_data[col],
+                new_data[col]
+            )
+            
+            drift_detected[col] = {
+                'drift': p_value < threshold,
+                'p_value': p_value,
+                'statistic': statistic
+            }
+        
+        return drift_detected
+    
+    def compute_psi(self, reference, current, buckets=10):
+        """Calculate Population Stability Index"""
+        breakpoints = np.arange(0, buckets + 1) / buckets * 100
+        
+        ref_percents = np.histogram(reference, bins=breakpoints)[0] / len(reference)
+        cur_percents = np.histogram(current, bins=breakpoints)[0] / len(current)
+        
+        ref_percents = np.where(ref_percents == 0, 0.0001, ref_percents)
+        cur_percents = np.where(cur_percents == 0, 0.0001, cur_percents)
+        
+        psi = np.sum((cur_percents - ref_percents) * np.log(cur_percents / ref_percents))
+        return psi</code></pre>
+
+                    <h3>Model Performance Monitoring</h3>
+                    <pre><code># performance_monitoring.py
+from datetime import datetime, timedelta
+from sklearn.metrics import accuracy_score, f1_score
+
+class ModelPerformanceMonitor:
+    def __init__(self, model, metrics_db):
+        self.model = model
+        self.metrics_db = metrics_db
+        
+    def log_prediction(self, features, prediction, actual=None):
+        """Log each prediction for monitoring"""
+        record = {
+            'timestamp': datetime.now(),
+            'features': features,
+            'prediction': prediction,
+            'actual': actual
+        }
+        self.metrics_db.append(record)
+    
+    def compute_rolling_metrics(self, window_days=7):
+        """Compute metrics over rolling window"""
+        cutoff = datetime.now() - timedelta(days=window_days)
+        recent_data = [r for r in self.metrics_db if r['timestamp'] > cutoff]
+        
+        labeled_data = [r for r in recent_data if r['actual'] is not None]
+        
+        if not labeled_data:
+            return None
+        
+        y_true = [r['actual'] for r in labeled_data]
+        y_pred = [r['prediction'] for r in labeled_data]
+        
+        return {
+            'accuracy': accuracy_score(y_true, y_pred),
+            'f1_score': f1_score(y_true, y_pred),
+            'n_predictions': len(recent_data),
+            'n_labeled': len(labeled_data)
+        }
+    
+    def check_performance_degradation(self, baseline_f1, threshold=0.05):
+        """Check if model performance has degraded"""
+        current_metrics = self.compute_rolling_metrics()
+        
+        if current_metrics is None:
+            return False
+        
+        degradation = baseline_f1 - current_metrics['f1_score']
+        
+        if degradation > threshold:
+            return True, f"F1 dropped by {degradation:.3f}"
+        
+        return False, "Performance stable"</code></pre>
+
+                    <h3>Alerting System</h3>
+                    <pre><code># alerts.py
+import smtplib
+from email.mime.text import MIMEText
+from slack_sdk import WebClient
+
+class AlertManager:
+    def __init__(self, config):
+        self.config = config
+        self.slack_client = WebClient(token=config['slack_token'])
+    
+    def send_slack_alert(self, channel, message):
+        """Send Slack alert"""
+        try:
+            self.slack_client.chat_postMessage(
+                channel=channel,
+                text=message
+            )
+        except Exception as e:
+            print(f"Error sending Slack message: {e}")
+    
+    def trigger_drift_alert(self, drift_results):
+        """Alert on data drift"""
+        drifted_features = [f for f, r in drift_results.items() if r['drift']]
+        
+        if drifted_features:
+            message = f"⚠️ Data drift detected in: {', '.join(drifted_features)}"
+            self.send_slack_alert('#ml-alerts', message)
+    
+    def trigger_performance_alert(self, metrics, baseline):
+        """Alert on performance degradation"""
+        if metrics['f1_score'] < baseline - 0.05:
+            message = f"⚠️ Model performance degraded: F1={metrics['f1_score']:.3f}"
+            self.send_slack_alert('#ml-alerts', message)</code></pre>
+
+                    <h3>Week 7 Project</h3>
+                    <ol>
+                        <li>Implement Prometheus metrics for your ML API</li>
+                        <li>Create data drift detection pipeline</li>
+                        <li>Set up performance monitoring dashboard</li>
+                        <li>Configure alerting for drift and degradation</li>
+                        <li>Simulate production scenarios and test alerts</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Week 8 -->
+                <div class="tab-content" id="week8">
+                    <h2>Week 8: CI/CD for ML</h2>
+                    
+                    <h3>GitHub Actions Workflow</h3>
+                    <pre><code># .github/workflows/ml-pipeline.yml
+name: ML Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
+    
+    - name: Run tests
+      run: |
+        pytest tests/ --cov=src --cov-report=xml
+    
+    - name: Upload coverage
+      uses: codecov/codecov-action@v2
+
+  train:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    
+    - name: Download data with DVC
+      run: |
+        pip install dvc[s3]
+        dvc pull
+    
+    - name: Train model
+      run: python train.py
+      env:
+        MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_URI }}
+    
+    - name: Upload model artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: model
+        path: models/
+
+  deploy:
+    needs: train
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Download model
+      uses: actions/download-artifact@v2
+      with:
+        name: model
+        path: models/
+    
+    - name: Build Docker image
+      run: docker build -t ml-model:${{ github.sha }} .
+    
+    - name: Push to registry
+      run: |
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+        docker push ml-model:${{ github.sha }}</code></pre>
+
+                    <h3>Model Testing</h3>
+                    <pre><code># tests/test_model.py
+import pytest
+import numpy as np
+import joblib
+
+@pytest.fixture
+def model():
+    return joblib.load('models/model.pkl')
+
+@pytest.fixture
+def sample_data():
+    return np.array([[1.0, 2.0, 3.0, 4.0]])
+
+def test_model_loads():
+    """Test that model can be loaded"""
+    model = joblib.load('models/model.pkl')
+    assert model is not None
+
+def test_prediction_shape(model, sample_data):
+    """Test prediction output shape"""
+    predictions = model.predict(sample_data)
+    assert predictions.shape == (1,)
+
+def test_prediction_range(model, sample_data):
+    """Test predictions are in valid range"""
+    predictions = model.predict_proba(sample_data)
+    assert np.all(predictions >= 0) and np.all(predictions <= 1)
+
+def test_model_performance(model):
+    """Test model meets minimum performance threshold"""
+    X_test = np.load('data/X_test.npy')
+    y_test = np.load('data/y_test.npy')
+    
+    from sklearn.metrics import f1_score
+    predictions = model.predict(X_test)
+    f1 = f1_score(y_test, predictions)
+    
+    assert f1 > 0.75, f"Model F1 score {f1} below threshold"
+
+def test_inference_time(model, sample_data):
+    """Test inference completes within time limit"""
+    import time
+    start = time.time()
+    model.predict(sample_data)
+    duration = time.time() - start
+    
+    assert duration < 0.1, f"Inference took {duration}s"</code></pre>
+
+                    <h3>Week 8 Project</h3>
+                    <ol>
+                        <li>Create complete CI/CD pipeline with GitHub Actions</li>
+                        <li>Write comprehensive unit tests for model and API</li>
+                        <li>Automate model training and evaluation</li>
+                        <li>Implement automated deployment on passing tests</li>
+                        <li>Add code quality checks (linting, formatting)</li>
+                    </ol>
+                </div>
+
+                <!-- Tab Content: Complete Project -->
+                <div class="tab-content" id="project">
+                    <h2>Complete MLOps Project</h2>
+                    
+                    <h3>Project Structure</h3>
+                    <pre><code>ml-project/
+├── .github/
+│   └── workflows/
+│       └── ml-pipeline.yml
+├── data/
+│   ├── raw/
+│   └── processed/
+├── models/
+│   └── .gitkeep
+├── notebooks/
+│   └── exploration.ipynb
+├── src/
+│   ├── __init__.py
+│   ├── data/
+│   │   ├── __init__.py
+│   │   └── preprocessing.py
+│   ├── features/
+│   │   ├── __init__.py
+│   │   └── engineering.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── train.py
+│   │   └── predict.py
+│   └── api/
+│       ├── __init__.py
+│       └── main.py
+├── tests/
+│   ├── test_preprocessing.py
+│   ├── test_model.py
+│   └── test_api.py
+├── monitoring/
+│   ├── drift_detection.py
+│   └── performance_monitor.py
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── dvc.yaml
+└── README.md</code></pre>
+
+                    <h3>Final Integration Project</h3>
+                    <p><strong>Build a Complete Production ML System:</strong></p>
+                    
+                    <h4>Phase 1: Setup (Week 1-2)</h4>
+                    <ol>
+                        <li>Initialize project with proper structure</li>
+                        <li>Set up Git repository and DVC for data versioning</li>
+                        <li>Create Docker containers for all services</li>
+                        <li>Configure docker-compose for local development</li>
+                    </ol>
+
+                    <h4>Phase 2: Model Development (Week 3-4)</h4>
+                    <ol>
+                        <li>Train model with MLflow experiment tracking</li>
+                        <li>Build FastAPI service for model predictions</li>
+                        <li>Implement batch and real-time prediction endpoints</li>
+                        <li>Add request validation and error handling</li>
+                    </ol>
+
+                    <h4>Phase 3: Monitoring (Week 5-6)</h4>
+                    <ol>
+                        <li>Implement Prometheus metrics collection</li>
+                        <li>Create data drift detection pipeline</li>
+                        <li>Set up performance monitoring dashboard</li>
+                        <li>Configure alerting for anomalies</li>
+                    </ol>
+
+                    <h4>Phase 4: Automation (Week 7-8)</h4>
+                    <ol>
+                        <li>Write comprehensive unit and integration tests</li>
+                        <li>Create CI/CD pipeline with GitHub Actions</li>
+                        <li>Automate model training and deployment</li>
+                        <li>Deploy to cloud platform (AWS/GCP/Azure)</li>
+                    </ol>
+
+                    <h3>Tools Integration Checklist</h3>
+                    <ul class="checklist">
+                        <li>Docker containers for all components</li>
+                        <li>FastAPI service with multiple endpoints</li>
+                        <li>MLflow for experiment tracking and model registry</li>
+                        <li>DVC for data and model versioning</li>
+                        <li>Prometheus and Grafana for monitoring</li>
+                        <li>GitHub Actions for CI/CD automation</li>
+                        <li>Pytest for comprehensive testing</li>
+                        <li>Cloud deployment (optional but recommended)</li>
+                    </ul>
+
+                    <h3>Deliverables</h3>
+                    <ul>
+                        <li>Fully containerized ML application</li>
+                        <li>Production-ready API with documentation</li>
+                        <li>Automated training and deployment pipeline</li>
+                        <li>Monitoring and alerting system</li>
+                        <li>Comprehensive test suite</li>
+                        <li>Complete project documentation</li>
+                    </ul>
+                </div>
+
+                <!-- Tab Content: Assessment -->
+                <div class="tab-content" id="assessment">
+                    <h2>Assessment Checklist</h2>
+                    <p>After completing this 8-week study plan, you should be able to:</p>
+
+                    <h3>Docker & Containerization</h3>
+                    <ul class="checklist">
+                        <li>Containerize ML applications with Docker</li>
+                        <li>Create efficient multi-stage Docker builds</li>
+                        <li>Use Docker Compose for multi-container applications</li>
+                        <li>Manage container networking and volumes</li>
+                        <li>Push images to container registries</li>
+                    </ul>
+
+                    <h3>API Development</h3>
+                    <ul class="checklist">
+                        <li>Build production-ready ML APIs with FastAPI</li>
+                        <li>Implement proper request/response validation</li>
+                        <li>Handle errors and exceptions gracefully</li>
+                        <li>Add authentication and rate limiting</li>
+                        <li>Create comprehensive API documentation</li>
+                        <li>Implement batch and streaming predictions</li>
+                    </ul>
+
+                    <h3>Experiment Tracking & Versioning</h3>
+                    <ul class="checklist">
+                        <li>Track experiments systematically with MLflow</li>
+                        <li>Version models and datasets with DVC</li>
+                        <li>Compare model performance across experiments</li>
+                        <li>Use model registry for production deployments</li>
+                        <li>Create reproducible training pipelines</li>
+                    </ul>
+
+                    <h3>Monitoring & Observability</h3>
+                    <ul class="checklist">
+                        <li>Monitor model performance in production</li>
+                        <li>Detect data drift using statistical tests</li>
+                        <li>Set up alerting systems for anomalies</li>
+                        <li>Implement logging and metrics collection</li>
+                        <li>Create dashboards for visualization</li>
+                    </ul>
+
+                    <h3>CI/CD & Testing</h3>
+                    <ul class="checklist">
+                        <li>Set up CI/CD pipelines for ML workflows</li>
+                        <li>Write tests for ML systems (unit, integration)</li>
+                        <li>Automate model training and evaluation</li>
+                        <li>Implement automated deployment strategies</li>
+                        <li>Use version control effectively</li>
+                    </ul>
+
+                    <h3>Cloud Deployment</h3>
+                    <ul class="checklist">
+                        <li>Deploy models to cloud platforms</li>
+                        <li>Configure auto-scaling for ML services</li>
+                        <li>Set up cloud-based monitoring</li>
+                        <li>Manage infrastructure as code</li>
+                        <li>Implement security best practices</li>
+                    </ul>
+
+                    <h3>Self-Assessment Questions</h3>
+                    <ol>
+                        <li>Can you containerize and deploy an ML model from scratch?</li>
+                        <li>Do you understand how to track and version ML experiments?</li>
+                        <li>Can you detect when a model's performance is degrading?</li>
+                        <li>Would your ML system pass a production readiness review?</li>
+                        <li>Can you set up a complete CI/CD pipeline for ML?</li>
+                        <li>Do you know how to monitor models in production?</li>
+                    </ol>
+
+                    <h3>Practice Resources</h3>
+                    <ul>
+                        <li><strong>MLOps Community:</strong> mlops.community</li>
+                        <li><strong>Made With ML:</strong> madewithml.com</li>
+                        <li><strong>Full Stack Deep Learning:</strong> fullstackdeeplearning.com</li>
+                        <li><strong>Cloud Platforms:</strong> AWS SageMaker, Azure ML, GCP Vertex AI docs</li>
+                        <li><strong>GitHub:</strong> Explore MLOps projects and templates</li>
+                    </ul>
+
+                    <p style="margin-top: 2rem; padding: 1.5rem; background: var(--bootcamp-light); border-radius: 8px;">
+                        <strong>✅ Completion Criteria:</strong> You've completed this study plan when you can build, deploy, monitor, and maintain a production ML system end-to-end. Focus on building real projects and integrating all components together—practical experience is key to mastering MLOps!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h3>Completion Status</h3>
+                    <div class="completion-checkbox">
+                        <div class="checkbox-box"></div>
+                        <div class="checkbox-label">Mark as Complete</div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Quick Links</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="index.html">← Back to Bootcamp Hub</a></li>
+                        <li><a href="python-study-plan.html">Python for Data Science</a></li>
+                        <li><a href="sql-study-plan.html">SQL Mastery</a></li>
+                        <li><a href="interview-prep.html">Interview Prep</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Study Duration</h3>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">
+                        <strong>Estimated:</strong> 8 weeks<br>
+                        <strong>Time commitment:</strong> 12-15 hours/week
+                    </p>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Key Technologies</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="#">Docker & Kubernetes</a></li>
+                        <li><a href="#">FastAPI</a></li>
+                        <li><a href="#">MLflow & DVC</a></li>
+                        <li><a href="#">Prometheus</a></li>
+                        <li><a href="#">GitHub Actions</a></li>
+                    </ul>
+                </div>
+
+                <a href="index.html" class="back-button">
+                    ← Back to Hub
+                </a>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Learning Journey. Data Science Bootcamp.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+                
+                // Scroll to top of content area
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Completion checkbox functionality
+        const completionCheckbox = document.querySelector('.completion-checkbox');
+        const checkboxBox = document.querySelector('.checkbox-box');
+        
+        completionCheckbox.addEventListener('click', () => {
+            checkboxBox.classList.toggle('checked');
+            // In a real implementation, save to localStorage or backend
+        });
+    </script>
+</body>
+</html>
